@@ -17,6 +17,18 @@
 - Logo / partner branding assets
 - First batch of projects, papers, or activity highlights
 
+## Application form email delivery
+
+The `/join` form posts to `/api/apply`, which sends an email through Resend.
+
+Set these Vercel environment variables:
+
+- `RESEND_API_KEY`
+- `CONTACT_TO_EMAIL=baowen435@gmail.com`
+- `CONTACT_FROM_EMAIL=JCIE Applications <your-verified-sender@example.com>`
+
+Until `RESEND_API_KEY` is configured, the form will ask applicants to email `baowen435@gmail.com` directly.
+
 ## Domain suggestions
 
 - `jcie.szu.edu.cn`

@@ -47,6 +47,12 @@ Replace placeholders in `src/content/site.ts`:
 - `siteConfig.applyFormUrl`
 - `siteConfig.githubUrl`
 
+Configure application-form email delivery in Vercel:
+
+- `RESEND_API_KEY`
+- `CONTACT_TO_EMAIL=baowen435@gmail.com`
+- `CONTACT_FROM_EMAIL=JCIE Applications <your-verified-sender@example.com>`
+
 ## Deployment
 
 Recommended: Vercel.
