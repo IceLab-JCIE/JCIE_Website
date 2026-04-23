@@ -32,7 +32,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
         </div>
 
         <div className="mt-8 text-center text-xs text-slate-400">
-          {locale === 'zh' ? '深圳大学 - 南澳大学 联合创新与工程中心' : 'Shenzhen University - University of South Australia Joint Centre for Innovation & Engineering'}
+          {locale === 'zh' ? '深圳大学 - 谢菲尔德大学 联合创新与工程中心' : 'Shenzhen University - University of Sheffield Joint Centre for Innovation & Engineering'}
         </div>
       </div>
     </footer>
