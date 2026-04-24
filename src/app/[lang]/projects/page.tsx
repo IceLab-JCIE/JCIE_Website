@@ -13,7 +13,7 @@ export const projectsData = [
     area: 'EDA',
     status: 'ongoing',
     statusZh: '进行中',
-    lead: '凯期',
+    lead: '黄凯期',
     github: '#',
   },
   {
@@ -25,7 +25,7 @@ export const projectsData = [
     area: 'EDA',
     status: 'ongoing',
     statusZh: '进行中',
-    lead: '博豪',
+    lead: '刘博豪',
     github: '#',
   },
   {
@@ -37,7 +37,7 @@ export const projectsData = [
     area: 'EDA',
     status: 'ongoing',
     statusZh: '进行中',
-    lead: '沁心',
+    lead: '梅沁心',
     github: '#',
   },
   {
@@ -49,7 +49,7 @@ export const projectsData = [
     area: 'LCA',
     status: 'ongoing',
     statusZh: '进行中',
-    lead: '凯期',
+    lead: '黄凯期',
     github: '#',
   },
   {
@@ -61,7 +61,7 @@ export const projectsData = [
     area: 'LCA',
     status: 'ongoing',
     statusZh: '进行中',
-    lead: '靖海',
+    lead: '商靖海',
     github: '#',
   },
   {
@@ -73,7 +73,7 @@ export const projectsData = [
     area: 'LCA',
     status: 'ongoing',
     statusZh: '进行中',
-    lead: '凯期、佳展',
+    lead: '黄凯期、刘佳展',
     github: '#',
   },
   {
@@ -85,7 +85,7 @@ export const projectsData = [
     area: 'LCA',
     status: 'ongoing',
     statusZh: '进行中',
-    lead: '佳展',
+    lead: '刘佳展',
     github: '#',
   },
   {
@@ -97,7 +97,7 @@ export const projectsData = [
     area: 'LCA',
     status: 'ongoing',
     statusZh: '进行中',
-    lead: '宝文',
+    lead: '区宝文',
     github: '#',
   },
   {
@@ -109,7 +109,7 @@ export const projectsData = [
     area: 'EDA',
     status: 'ongoing',
     statusZh: '进行中',
-    lead: '宝文',
+    lead: '区宝文',
     github: '#',
   },
 ];
