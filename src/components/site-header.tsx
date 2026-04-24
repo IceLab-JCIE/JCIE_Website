@@ -9,6 +9,7 @@ type SiteHeaderProps = { locale: Locale };
 const navItems = [
   { href: '', labelZh: '概览', labelEn: 'Overview' },
   { href: '/people', labelZh: '成员', labelEn: 'People' },
+  { href: '/news', labelZh: '动态', labelEn: 'News' },
   { href: '/publications', labelZh: '论文', labelEn: 'Publications' },
   { href: '/projects', labelZh: '项目', labelEn: 'Projects' },
   { href: '/join', labelZh: '加入', labelEn: 'Join' },
