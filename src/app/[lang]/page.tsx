@@ -12,7 +12,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
   const overviewTitleZh = '我们是谁';
   const overviewTitleEn = 'Who We are';
-  const overviewDescZh = 'JCIE 是深圳大学与谢菲尔德大学联合成立的研究中心，聚焦 AI + 工程真实问题。我们只做真实项目、真实论文和真实开源成果。';
+  const overviewDescZh = 'JCIE 是深圳大学与谢菲尔德大学联合成立的研究中心，聚焦 AI + 工程问题。我们只做真实项目、真实论文和真实开源成果。';
   const overviewDescEn = 'JCIE is a joint research centre between Shenzhen University and University of Sheffield, focused on AI + engineering real-world problems. We only build real projects, real papers, and real open-source outcomes.';
 
   return (
