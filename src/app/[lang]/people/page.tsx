@@ -27,7 +27,7 @@ export default async function PeoplePage({ params }: { params: Promise<{ lang: s
       <SectionHeading
         eyebrow={locale === 'zh' ? '团队' : 'People'}
         title={locale === 'zh' ? '团队成员' : 'Team Members'}
-        description={locale === 'zh' ? '四个层级：Wei → Directors → Lead → Member' : 'Four tiers: Wei → Directors → Lead → Member'}
+        description={locale === 'zh' ? '导师 → 管理层 → 负责人 → 成员' : 'Advisor → Directors → Lead → Member'}
       />
 
       {/* Wei */}
@@ -116,7 +116,7 @@ export default async function PeoplePage({ params }: { params: Promise<{ lang: s
       <section className="mt-16 rounded-lg border border-slate-200 bg-slate-50 p-8 text-center">
         <h2 className="text-xl font-semibold text-slate-900">{locale === 'zh' ? '想成为下一个 JCIE 成员' : 'Want to become a JCIE member'}</h2>
         <p className="mt-4 text-sm text-slate-600">
-          {locale === 'zh' ? '我们欢迎有想法、愿意自驱、能扛压力的同学' : 'We welcome students with ambition, self-drive, and grit'}
+          {locale === 'zh' ? '我们欢迎有想法、愿意自驱的同学' : 'We welcome students with ambition and self-drive'}
         </p>
         <Link href={`/${locale}/join`} className="mt-6 inline-block rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800">
           {locale === 'zh' ? '申请加入' : 'Apply Now'}
