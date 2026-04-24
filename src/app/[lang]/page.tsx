@@ -47,7 +47,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <section className="mb-16">
         <SectionHeading eyebrow={locale === 'zh' ? '概览' : 'Overview'} title={locale === 'zh' ? overviewTitleZh : overviewTitleEn} description={locale === 'zh' ? overviewDescZh : overviewDescEn} />
 
-        <div className="mt-10 grid gap-8 lg:grid-cols-3">
+        <div className="mt-10 grid gap-8 lg:grid-cols-2">
           {/* Mission */}
           <div className="rounded-lg border border-slate-200/70 bg-white/65 p-6 backdrop-blur">
             <h3 className="text-lg font-semibold text-slate-900">{locale === 'zh' ? '我们为什么存在' : 'Why we exist'}</h3>
@@ -68,20 +68,6 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
             </ul>
           </div>
 
-          {/* Structure */}
-          <div className="rounded-lg border border-slate-200/70 bg-white/65 p-6 backdrop-blur">
-            <h3 className="text-lg font-semibold text-slate-900">{locale === 'zh' ? '组织架构' : 'How we organize'}</h3>
-            <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-              <div className="rounded bg-white/70 px-3 py-2 text-slate-700">Wei</div>
-              <div className="rounded bg-white/70 px-3 py-2 text-slate-700">{locale === 'zh' ? '导师' : 'Advisor'}</div>
-              <div className="rounded bg-white/70 px-3 py-2 text-slate-700">Directors</div>
-              <div className="rounded bg-white/70 px-3 py-2 text-slate-700">{locale === 'zh' ? '管理层' : 'Management'}</div>
-              <div className="rounded bg-white/70 px-3 py-2 text-slate-700">Lead</div>
-              <div className="rounded bg-white/70 px-3 py-2 text-slate-700">{locale === 'zh' ? '项目负责人' : 'Project Lead'}</div>
-              <div className="rounded bg-white/70 px-3 py-2 text-slate-700">Member</div>
-              <div className="rounded bg-white/70 px-3 py-2 text-slate-700">{locale === 'zh' ? '成员' : 'Member'}</div>
-            </div>
-          </div>
         </div>
       </section>
 
