@@ -13,7 +13,7 @@ export const projectsData = [
     area: 'EDA',
     status: 'ongoing',
     statusZh: '进行中',
-    lead: 'Lead: 凯期',
+    lead: '凯期',
     github: '#',
   },
   {
@@ -25,7 +25,7 @@ export const projectsData = [
     area: 'EDA',
     status: 'ongoing',
     statusZh: '进行中',
-    lead: 'Lead: 博豪',
+    lead: '博豪',
     github: '#',
   },
   {
@@ -37,7 +37,7 @@ export const projectsData = [
     area: 'LCA',
     status: 'ongoing',
     statusZh: '进行中',
-    lead: 'Lead: 沁心',
+    lead: '沁心',
     github: '#',
   },
   {
@@ -49,7 +49,7 @@ export const projectsData = [
     area: 'LCA',
     status: 'ongoing',
     statusZh: '进行中',
-    lead: 'Lead: 凯期',
+    lead: '凯期',
     github: '#',
   },
   {
@@ -61,7 +61,7 @@ export const projectsData = [
     area: 'LCA',
     status: 'ongoing',
     statusZh: '进行中',
-    lead: 'Lead: 靖海',
+    lead: '靖海',
     github: '#',
   },
   {
@@ -73,7 +73,7 @@ export const projectsData = [
     area: 'LCA',
     status: 'ongoing',
     statusZh: '进行中',
-    lead: 'Lead: 凯期、佳展',
+    lead: '凯期、佳展',
     github: '#',
   },
   {
@@ -85,7 +85,7 @@ export const projectsData = [
     area: 'LCA',
     status: 'ongoing',
     statusZh: '进行中',
-    lead: 'Lead: 佳展',
+    lead: '佳展',
     github: '#',
   },
   {
@@ -97,7 +97,7 @@ export const projectsData = [
     area: 'LCA',
     status: 'ongoing',
     statusZh: '进行中',
-    lead: 'Lead: 宝文',
+    lead: '宝文',
     github: '#',
   },
   {
@@ -109,7 +109,7 @@ export const projectsData = [
     area: 'EDA',
     status: 'ongoing',
     statusZh: '进行中',
-    lead: 'Lead: 宝文',
+    lead: '宝文',
     github: '#',
   },
 ];
@@ -193,7 +193,7 @@ export default async function ProjectsPage({ params }: { params: Promise<{ lang:
       <section className="mt-16 rounded-lg border border-slate-200 bg-slate-50 p-8 text-center">
         <h2 className="text-xl font-semibold text-slate-900">{locale === 'zh' ? '想参与这些项目' : 'Want to work on these projects'}</h2>
         <p className="mt-4 text-sm text-slate-600">
-          {locale === 'zh' ? '加入后直接进入真实项目，没有练手期' : 'Join and enter real projects immediately, no sandbox period'}
+          {locale === 'zh' ? '加入后直接进入真实项目，我们没有练手期' : 'Join and enter real projects immediately, no sandbox period'}
         </p>
         <Link href={`/${locale}/join`} className="mt-6 inline-block rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800">
           {locale === 'zh' ? '申请加入' : 'Apply Now'}
