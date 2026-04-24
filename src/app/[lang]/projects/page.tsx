@@ -34,7 +34,7 @@ export const projectsData = [
     titleZh: 'EDA 优化算法引擎开发与开源',
     summary: 'Organizing and Open-Sourcing EDA Optimization Algorithms, with Future Incorporation of Optimization Algorithm Development',
     summaryZh: 'EDA优化算法整理开源后续加入优化算法开发。',
-    area: 'LCA',
+    area: 'EDA',
     status: 'ongoing',
     statusZh: '进行中',
     lead: '沁心',
@@ -78,7 +78,7 @@ export const projectsData = [
   },
   {
     id: 'proj-7',
-    title: 'LCI Optimization',
+    title: 'LCA Optimization',
     titleZh: 'LCA优化',
     summary: 'Integrating large language model agents with operations research optimization techniques into life cycle assessment (LCA) to enable end-to-end automated decision-making, from bill of materials analysis to green material substitution.',
     summaryZh: '将大模型智能体与运筹优化技术引入生命周期评估（LCA），实现从物料清单到绿色材料替代的端到端自动化决策。',
