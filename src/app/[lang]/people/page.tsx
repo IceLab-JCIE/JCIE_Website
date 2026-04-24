@@ -14,6 +14,14 @@ export default async function PeoplePage({ params }: { params: Promise<{ lang: s
   const leads = members.filter((m) => m.role === 'lead');
   const membersList = members.filter((m) => m.role === 'member');
 
+  const groupedDirectors = Object.values(
+    directors.reduce((acc, director) => {
+      const key = director.nameEn || director.name;
+      (acc[key] ||= []).push(director);
+      return acc;
+    }, {} as Record<string, typeof directors>)
+  );
+
   return (
     <div className="mx-auto w-full max-w-6xl px-6 py-16">
       <SectionHeading
@@ -53,8 +61,8 @@ export default async function PeoplePage({ params }: { params: Promise<{ lang: s
 
         {directors.length > 0 ? (
           <div className="mt-6 grid gap-6 lg:grid-cols-3">
-            {directors.map((member) => (
-              <MemberCard key={member.id} member={member} locale={locale} />
+            {groupedDirectors.map((group) => (
+              <DirectorCard key={group[0]?.id ?? 'director'} directors={group} locale={locale} />
             ))}
           </div>
         ) : (
@@ -163,6 +171,42 @@ function MemberCard({ member, locale, compact = false }: { member: typeof member
               </a>
             )}
           </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function DirectorCard({ directors, locale }: { directors: typeof members; locale: Locale }) {
+  const base = directors[0];
+  if (!base) return null;
+
+  const name = locale === 'zh' ? base.name : (base.nameEn || base.name);
+  const titles = Array.from(
+    new Set(
+      directors
+        .map((d) => (locale === 'zh' ? d.title : (d.titleEn || d.title)))
+        .filter((t): t is string => Boolean(t && t.trim()))
+    )
+  );
+
+  return (
+    <article className="rounded-lg border border-slate-200 bg-white p-6">
+      <div className="flex gap-4">
+        <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-slate-100 text-xl font-medium text-slate-400">
+          {name.charAt(0)}
+        </div>
+        <div className="flex-1">
+          <h3 className="text-base font-medium text-slate-900">{name}</h3>
+          {titles.length > 0 && (
+            <div className="mt-2 flex flex-wrap gap-2">
+              {titles.map((t) => (
+                <span key={t} className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
+                  {t}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </article>
