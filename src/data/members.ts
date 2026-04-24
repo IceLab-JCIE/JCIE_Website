@@ -102,7 +102,7 @@ export const members: Member[] = [
   // },
 
   // Members (成员)
-  { id: 'member-zhaojunan', name: '招俊安', role: 'member' },
+  { id: 'member-zhaojunan', name: '招俊安', nameEn: 'Zhao Junan', role: 'member' },
   { id: 'member-maizirui', name: '麦梓睿', nameEn: 'Maizirui Mai', role: 'member' },
   { id: 'member-yuanyizhong', name: '苑艺钟', nameEn: 'Yuan Yizhong', role: 'member' },
   { id: 'member-tanghaohao', name: '唐浩浩', nameEn: 'Tang Haohao', role: 'member' },
