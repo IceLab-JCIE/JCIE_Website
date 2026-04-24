@@ -12,7 +12,7 @@ authors:
   - Jose L. Casamayor
 venue: Procedia CIRP
 year: 2025
-area: EDA
+area: LCA
 link: https://doi.org/10.1016/j.procir.2025.01.046
 ---
 
