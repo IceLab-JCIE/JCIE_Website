@@ -1,6 +1,6 @@
 ---
 hero_title: Build meaningful research that survives outside the lab
-hero_lead: We work on real AI + engineering problems and turn effort into verifiable outcomes—papers, tools, and open-source work that can be reproduced and used.
+hero_lead: We work on real AI + engineering problems and turn effort into verifiable outcomes that can be reproduced and used.
 hero_cta_primary: Apply Now
 hero_cta_secondary: Meet the Team
 
@@ -9,7 +9,7 @@ overview_title: Who We Are
 overview_description: JCIE is a joint centre between Shenzhen University and the University of Sheffield, focused on AI for EDA and AI for LCA—driven by real problems and real outputs.
 
 mission_title: Why we exist
-mission_body: Talented students are everywhere, but far fewer have work that truly proves ability. In applications and interviews, people look beyond GPA: real projects, reproducible results, and concrete outputs. We help you stand out with work others can evaluate.
+mission_body: Talented students are everywhere, but far fewer have work that truly proves ability. In applications and interviews, people look beyond GPA: project experience, research experience, and concrete outputs. We help you stand out in the fierce competition.
 
 beliefs_title: What we believe
 beliefs_items:
