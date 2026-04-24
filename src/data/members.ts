@@ -1,6 +1,11 @@
 export type MemberRole = 'wei' | 'director' | 'lead' | 'member';
 
-export type DirectorPosition = 'president' | 'recruitment' | 'communications' | 'computing' | 'ai_infra';
+export type DirectorPosition =
+  | 'president'
+  | 'recruitment'
+  | 'communications'
+  | 'computing'
+  | 'ai_infra';
 
 export interface Member {
   id: string;
@@ -21,57 +26,41 @@ export interface Member {
 }
 
 export const members: Member[] = [
-  // Wei (导师)
+  // Advisor (导师)
   {
     id: 'wei',
-    name: 'Wei',
-    nameEn: 'Wei',
+    name: '\u90A2\u709C', // 邢炜
+    nameEn: 'Wei Xing',
     role: 'wei',
-    title: '战略 + 对外 + 选题 + 写作',
-    titleEn: 'Strategy + External Relations + Topic Selection + Writing',
-    bio: '判断什么值得做。拆解路径。主导论文写作。最终把关质量。对外代表 JCIE。',
-    bioEn: 'Determines what is worth doing. Breaks down the path. Leads paper writing. Final quality control. External representative of JCIE.',
-    photo: '/images/wei.jpg',
+    title: '\u5BFC\u5E08',
+    titleEn: 'Advisor',
+    bio: 'JCIE \u5BFC\u5E08\u3002',
+    bioEn: 'Advisor of JCIE.',
   },
-  // Directors (管理层) - 需要填写实际信息
+
+  // Leads (项目负责人)
+  { id: 'lead-kaiqi', name: '\u51EF\u671F', role: 'lead', title: 'Lead', titleEn: 'Project Lead' }, // 凯期
+  { id: 'lead-qinxin', name: '\u6C81\u5FC3', role: 'lead', title: 'Lead', titleEn: 'Project Lead' }, // 沁心
+  { id: 'lead-zhuohua', name: '\u5353\u94E7', role: 'lead', title: 'Lead', titleEn: 'Project Lead' }, // 卓铧
+  { id: 'lead-baowen', name: '\u5B9D\u6587', role: 'lead', title: 'Lead', titleEn: 'Project Lead' }, // 宝文
+  { id: 'lead-jinghai', name: '\u9756\u6D77', role: 'lead', title: 'Lead', titleEn: 'Project Lead' }, // 靖海
+  { id: 'lead-jiazhan', name: '\u4F73\u5C55', role: 'lead', title: 'Lead', titleEn: 'Project Lead' }, // 佳展
+  { id: 'lead-bohao', name: '\u535A\u8C6A', role: 'lead', title: 'Lead', titleEn: 'Project Lead' }, // 博豪
+  { id: 'lead-xixi', name: '\u7199\u66E6', role: 'lead', title: 'Lead', titleEn: 'Project Lead' }, // 熙曦
+
+  // Directors (管理层) - TODO: fill real info
   // {
   //   id: 'director-1',
-  //   name: '姓名',
-  //   nameEn: 'Name',
+  //   name: 'Name',
   //   role: 'director',
   //   directorPosition: 'president',
-  //   title: '统筹运营、例会组织、论文 deadline 追踪',
-  //   titleEn: 'Operations, meeting organization, paper deadline tracking',
-  //   bio: '简介',
-  //   bioEn: 'Bio',
-  //   photo: '/images/member-1.jpg',
   // },
-  // Lead (项目负责人) - 需要填写实际信息
-  // {
-  //   id: 'lead-1',
-  //   name: '姓名',
-  //   nameEn: 'Name',
-  //   role: 'lead',
-  //   title: '项目负责人',
-  //   titleEn: 'Project Lead',
-  //   bio: '简介',
-  //   bioEn: 'Bio',
-  //   researchArea: 'AI for EDA',
-  //   photo: '/images/lead-1.jpg',
-  // },
-  // Member (成员) - 需要填写实际信息
+
+  // Members (成员) - TODO: fill real info
   // {
   //   id: 'member-1',
-  //   name: '姓名',
-  //   nameEn: 'Name',
+  //   name: 'Name',
   //   role: 'member',
-  //   title: '成员',
-  //   titleEn: 'Member',
-  //   bio: '简介',
-  //   bioEn: 'Bio',
-  //   researchArea: 'AI for EDA',
-  //   year: '大二',
-  //   photo: '/images/member-1.jpg',
   // },
 ];
 
@@ -83,37 +72,57 @@ export function getDirectorsByPosition(position: DirectorPosition): Member[] {
   return members.filter((m) => m.role === 'director' && m.directorPosition === position);
 }
 
-export const directorPositions: { key: DirectorPosition; label: Record<string, string>; description: Record<string, string> }[] = [
+export const directorPositions: {
+  key: DirectorPosition;
+  label: Record<string, string>;
+  description: Record<string, string>;
+}[] = [
   {
     key: 'president',
     label: { zh: 'President', en: 'President' },
-    description: { zh: '统筹运营、例会组织、论文 deadline 追踪', en: 'Operations, meeting organization, paper deadline tracking' },
+    description: {
+      zh: '\u7EDF\u7B79\u8FD0\u8425\u3001\u4F8B\u4F1A\u7EC4\u7EC7\u3001\u8BBA\u6587 deadline \u8DDF\u8FDB',
+      en: 'Operations, meeting organization, paper deadline tracking',
+    },
   },
   {
     key: 'recruitment',
     label: { zh: 'Director of Recruitment', en: 'Director of Recruitment' },
-    description: { zh: '招新漏斗、面试流程、新人 onboarding', en: 'Recruitment funnel, interview process, new member onboarding' },
+    description: {
+      zh: '\u62DB\u65B0\u6F0F\u6597\u3001\u9762\u8BD5\u6D41\u7A0B\u3001\u65B0\u4EBA onboarding',
+      en: 'Recruitment funnel, interview process, new member onboarding',
+    },
   },
   {
     key: 'communications',
     label: { zh: 'Director of Communications', en: 'Director of Communications' },
-    description: { zh: '月度培训/讲座组织、对外宣传、内容输出', en: 'Monthly training/lectures, external communications, content output' },
+    description: {
+      zh: '\u6708\u5EA6\u57F9\u8BAD/\u8BB2\u5EA7\u7EC4\u7EC7\u3001\u5BF9\u5916\u5BA3\u4F20\u3001\u5185\u5BB9\u8F93\u51FA',
+      en: 'Monthly training/lectures, external communications, content output',
+    },
   },
   {
     key: 'computing',
     label: { zh: 'Director of Computing', en: 'Director of Computing' },
-    description: { zh: '服务器管理、算力分配、权限管理', en: 'Server management, computing resource allocation, permission management' },
+    description: {
+      zh: '\u670D\u52A1\u5668\u7BA1\u7406\u3001\u7B97\u529B\u5206\u914D\u3001\u6743\u9650\u7BA1\u7406',
+      en: 'Server management, computing resource allocation, permission management',
+    },
   },
   {
     key: 'ai_infra',
     label: { zh: 'Director of AI Infra', en: 'Director of AI Infra' },
-    description: { zh: '开发组织内部 AI 工具，赋能全组', en: 'Develop internal AI tools to empower the team' },
+    description: {
+      zh: '\u5F00\u53D1\u7EC4\u5185 AI \u5DE5\u5177\uFF0C\u8D4B\u80FD\u5168\u7EC4',
+      en: 'Develop internal AI tools to empower the team',
+    },
   },
 ];
 
 export const roleLabels: Record<MemberRole, Record<string, string>> = {
-  wei: { zh: '导师', en: 'Advisor' },
-  director: { zh: '管理层', en: 'Directors' },
-  lead: { zh: '项目负责人', en: 'Project Lead' },
-  member: { zh: '成员', en: 'Member' },
+  wei: { zh: '\u5BFC\u5E08', en: 'Advisor' },
+  director: { zh: '\u7BA1\u7406\u5C42', en: 'Directors' },
+  lead: { zh: 'Lead', en: 'Project Lead' },
+  member: { zh: '\u6210\u5458', en: 'Member' },
 };
+
