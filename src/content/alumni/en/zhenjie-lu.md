@@ -1,5 +1,5 @@
 ---
 id: zhenjie-lu
 name: Zhenjie Lu
-destination:
+destination: Southern University of Science and Technology
 ---

@@ -1,7 +1,7 @@
 ---
 id: zhenjie-lu
 name: 卢振杰
-destination:
+destination: 南方科技大学
 publications:
   - title: "Aro: Autoregressive operator learning for transferable and multi-fidelity 3d-ic thermal analysis with active learning"
     venue: ICCAD
