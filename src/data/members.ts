@@ -25,6 +25,22 @@ export interface Member {
   year?: string;
 }
 
+export interface Alumni {
+  id: string;
+  name: string;
+  nameEn?: string;
+  destination?: string;
+  destinationEn?: string;
+  publications?: Publication[];
+}
+
+export interface Publication {
+  title: string;
+  venue: string;
+  year: number;
+  link?: string;
+}
+
 export const members: Member[] = [
   // Advisor
   {
