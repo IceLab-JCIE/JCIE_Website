@@ -23,6 +23,15 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
   const { data } = await getPageContent('home', locale);
   const alumni = await getAlumni();
+  const featuredAlumni = [...alumni].sort((a, b) => {
+    const publicationDiff = getPublicationCount(b) - getPublicationCount(a);
+    if (publicationDiff !== 0) return publicationDiff;
+
+    const latestYearDiff = getLatestPublicationYear(b) - getLatestPublicationYear(a);
+    if (latestYearDiff !== 0) return latestYearDiff;
+
+    return (b.nameEn || b.name).localeCompare(a.nameEn || a.name);
+  });
 
   const heroTitle = getString(data, 'hero_title');
   const heroLead = getString(data, 'hero_lead');
@@ -156,7 +165,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       </section>
 
       {/* Outstanding Members */}
-      {alumni.length > 0 && (
+      {featuredAlumni.length > 0 && (
         <section className="mb-16">
           <SectionHeading
             eyebrow={locale === 'zh' ? '成果' : 'Achievements'}
@@ -164,8 +173,8 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
             description={locale === 'zh' ? '已毕业成员的去向与成果' : 'Alumni destinations and achievements'}
           />
           <div className="mt-10 grid gap-6 lg:grid-cols-2">
-            {alumni.map((member) => (
-              <AlumniCard key={member.id} member={member} locale={locale} />
+            {featuredAlumni.map((member, index) => (
+              <AlumniCard key={member.id} member={member} locale={locale} rank={index} />
             ))}
           </div>
         </section>
@@ -183,26 +192,57 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   );
 }
 
-function AlumniCard({ member, locale }: { member: Alumni; locale: Locale }) {
+function getPublicationCount(member: Alumni) {
+  return member.publications?.length ?? 0;
+}
+
+function getLatestPublicationYear(member: Alumni) {
+  if (!member.publications || member.publications.length === 0) return 0;
+  return Math.max(...member.publications.map((publication) => publication.year));
+}
+
+function AlumniCard({ member, locale, rank }: { member: Alumni; locale: Locale; rank: number }) {
   const name = locale === 'zh' ? member.name : (member.nameEn || member.name);
   const destination = locale === 'zh' ? member.destination : (member.destinationEn || member.destination);
   const destinationLabel = locale === 'zh' ? '去向' : 'Destination';
   const publicationsLabel = locale === 'zh' ? '发表论文' : 'Publications';
+  const publicationCount = getPublicationCount(member);
+  const publicationCountLabel = locale === 'zh' ? `${publicationCount} 篇` : `${publicationCount} papers`;
+  const topTag = locale === 'zh' ? '高产成员' : 'Top Contributor';
+  const latestYear = getLatestPublicationYear(member);
+  const latestYearText = latestYear > 0 ? (locale === 'zh' ? `最新 ${latestYear}` : `Latest ${latestYear}`) : '';
 
   return (
-    <article className="rounded-lg border border-slate-200 bg-white p-6">
-      <h3 className="text-lg font-semibold text-slate-900">{name}</h3>
+    <article className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 p-6 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-lg">
+      <div className="pointer-events-none absolute -right-14 -top-14 h-28 w-28 rounded-full bg-slate-100/80 blur-2xl" />
+      <div className="relative flex items-start justify-between gap-3">
+        <div>
+          {rank < 2 && (
+            <span className="mb-2 inline-flex rounded-full bg-slate-900 px-2.5 py-1 text-xs font-medium text-white">
+              {topTag}
+            </span>
+          )}
+          <h3 className="text-xl font-semibold text-slate-900">{name}</h3>
+        </div>
+        <span className="inline-flex rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-600">
+          {publicationCountLabel}
+        </span>
+      </div>
       {destination && (
-        <div className="mt-4">
-          <span className="text-sm font-medium text-slate-500">{destinationLabel}：</span>
+        <div className="mt-4 flex items-center gap-2 text-sm">
+          <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
+          <span className="font-medium text-slate-500">{destinationLabel}：</span>
           <span className="text-sm text-slate-700">{destination}</span>
         </div>
       )}
-      {member.publications && member.publications.length > 0 && (
-        <div className="mt-4">
-          <h4 className="text-sm font-medium text-slate-500">{publicationsLabel}</h4>
+      {publicationCount > 0 && (
+        <div className="mt-5 rounded-xl border border-slate-100 bg-slate-50/75 p-4">
+          <div className="flex items-center justify-between">
+            <h4 className="text-sm font-medium text-slate-500">{publicationsLabel}</h4>
+            {latestYearText && <span className="text-xs text-slate-500">{latestYearText}</span>}
+          </div>
           <ul className="mt-2 space-y-2">
-            {member.publications.map((pub, index) => (
+            {(member.publications ?? []).map((pub, index) => (
               <PublicationItem key={index} publication={pub} />
             ))}
           </ul>
