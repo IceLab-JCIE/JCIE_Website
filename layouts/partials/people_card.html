@@ -8,10 +8,16 @@
 {{ $github := $p.Params.github }}
 {{ $email := $p.Params.email }}
 
+{{ $photoSrc := "" }}
+{{ if $photo }}
+  {{/* Frontmatter often uses "/people/x.png"; trim the leading slash so relURL respects baseURL subpaths. */}}
+  {{ $photoSrc = relURL (strings.TrimPrefix "/" $photo) }}
+{{ end }}
+
 {{ if $compact }}
   <article class="card">
-    {{ if $photo }}
-      <img src="{{ $photo | relURL }}" alt="{{ $name }}" width="48" height="48" loading="lazy" decoding="async" style="border-radius:12px; background:#f1f5f9; object-fit:cover;">
+    {{ if $photoSrc }}
+      <img src="{{ $photoSrc }}" alt="{{ $name }}" width="48" height="48" loading="lazy" decoding="async" style="border-radius:12px; background:#f1f5f9; object-fit:cover;">
     {{ else }}
       <div style="width:48px;height:48px;border-radius:12px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-weight:600;color:rgba(15,23,42,0.45);">
         {{ if $name }}{{ slicestr $name 0 1 }}{{ else }}?{{ end }}
@@ -25,8 +31,8 @@
 {{ else }}
   <article class="card">
     <div style="display:flex; gap:14px;">
-      {{ if $photo }}
-        <img src="{{ $photo | relURL }}" alt="{{ $name }}" width="56" height="56" loading="lazy" decoding="async" style="border-radius:14px; background:#f1f5f9; object-fit:cover;">
+      {{ if $photoSrc }}
+        <img src="{{ $photoSrc }}" alt="{{ $name }}" width="56" height="56" loading="lazy" decoding="async" style="border-radius:14px; background:#f1f5f9; object-fit:cover;">
       {{ else }}
         <div style="width:56px;height:56px;border-radius:14px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-weight:600;color:rgba(15,23,42,0.45);">
           {{ if $name }}{{ slicestr $name 0 1 }}{{ else }}?{{ end }}

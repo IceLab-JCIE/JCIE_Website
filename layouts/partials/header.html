@@ -2,12 +2,12 @@
 {{ $lang := .Lang }}
 
   {{ $nav := slice
-  (dict "key" "home" "href" (relLangURL "/") "label" (cond (eq $lang "zh") "首页" "Home"))
-  (dict "key" "people" "href" (relLangURL "/people/") "label" (cond (eq $lang "zh") "成员" "People"))
-  (dict "key" "projects" "href" (relLangURL "/projects/") "label" (cond (eq $lang "zh") "项目" "Projects"))
-  (dict "key" "publications" "href" (relLangURL "/publications/") "label" (cond (eq $lang "zh") "论文" "Publications"))
-  (dict "key" "news" "href" (relLangURL "/news/") "label" (cond (eq $lang "zh") "动态" "News"))
-  (dict "key" "join" "href" (relLangURL "/join/") "label" (cond (eq $lang "zh") "加入" "Join"))
+  (dict "key" "home" "href" (relLangURL "") "label" (cond (eq $lang "zh") "首页" "Home"))
+  (dict "key" "people" "href" (relLangURL "people/") "label" (cond (eq $lang "zh") "成员" "People"))
+  (dict "key" "projects" "href" (relLangURL "projects/") "label" (cond (eq $lang "zh") "项目" "Projects"))
+  (dict "key" "publications" "href" (relLangURL "publications/") "label" (cond (eq $lang "zh") "论文" "Publications"))
+  (dict "key" "news" "href" (relLangURL "news/") "label" (cond (eq $lang "zh") "动态" "News"))
+  (dict "key" "join" "href" (relLangURL "join/") "label" (cond (eq $lang "zh") "加入" "Join"))
 }}
 
 {{ $here := .RelPermalink }}
@@ -15,7 +15,7 @@
 <header class="topbar">
   <div class="container">
     <div class="topbar-inner">
-      <a class="brand" href="{{ relLangURL "/" }}">
+      <a class="brand" href="{{ relLangURL "" }}">
         <span class="brand-title">{{ $site.shortName }}</span>
         <span class="brand-sub">{{ index $site.meta.tagline $lang }}</span>
       </a>

@@ -7,7 +7,6 @@
   ) }}
 
   <div class="card-muted" style="margin-top:18px;">
-    <a class="btn btn-primary" href="{{ relLangURL "/" }}">{{ cond (eq $lang "zh") "返回首页" "Back Home" }}</a>
+    <a class="btn btn-primary" href="{{ relLangURL "" }}">{{ cond (eq $lang "zh") "返回首页" "Back Home" }}</a>
   </div>
 {{ end }}
-

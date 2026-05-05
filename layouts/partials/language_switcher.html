@@ -1,6 +1,6 @@
 {{ $lang := .Lang }}
 {{ $other := cond (eq $lang "zh") "en" "zh" }}
-{{ $otherHref := (relLangURL "/") }}
+{{ $otherHref := (relLangURL "") }}
 {{ $matches := where .AllTranslations "Lang" $other }}
 {{ with $matches }}
   {{ $otherHref = (index . 0).RelPermalink }}

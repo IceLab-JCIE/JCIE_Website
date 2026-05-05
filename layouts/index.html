@@ -7,8 +7,8 @@
       <h1>{{ $p.hero_title }}</h1>
       <p>{{ $p.hero_lead }}</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="{{ relLangURL "/join/" }}">{{ $p.hero_cta_primary }}</a>
-        <a class="btn btn-ghost" href="{{ relLangURL "/people/" }}">{{ $p.hero_cta_secondary }}</a>
+        <a class="btn btn-primary" href="{{ relLangURL "join/" }}">{{ $p.hero_cta_primary }}</a>
+        <a class="btn btn-ghost" href="{{ relLangURL "people/" }}">{{ $p.hero_cta_secondary }}</a>
       </div>
     </div>
   </section>
@@ -66,7 +66,7 @@
     <div class="card-muted" style="text-align:center;">
       <div class="small muted">{{ $p.publications_card_text }}</div>
       <div style="margin-top:12px;">
-        <a class="btn btn-primary" href="{{ relLangURL "/publications/" }}">{{ $p.publications_card_button }}</a>
+        <a class="btn btn-primary" href="{{ relLangURL "publications/" }}">{{ $p.publications_card_button }}</a>
       </div>
     </div>
   </section>
@@ -93,7 +93,7 @@
     <h3 class="font-display" style="margin:0;">{{ $p.join_cta_title }}</h3>
     <div class="small muted" style="margin-top:10px;">{{ $p.join_cta_body }}</div>
     <div style="margin-top:14px;">
-      <a class="btn btn-primary" href="{{ relLangURL "/join/" }}">{{ $p.join_cta_button }}</a>
+      <a class="btn btn-primary" href="{{ relLangURL "join/" }}">{{ $p.join_cta_button }}</a>
     </div>
   </section>
 {{ end }}

@@ -7,11 +7,10 @@
   ) }}
 
   <div style="margin-top:14px;">
-    <a class="tiny" href="{{ relLangURL "/news/" }}">{{ cond (eq $lang "zh") "← 返回动态" "← Back to News" }}</a>
+    <a class="tiny" href="{{ relLangURL "news/" }}">{{ cond (eq $lang "zh") "← 返回动态" "← Back to News" }}</a>
   </div>
 
   <article class="card prose" style="margin-top:18px;">
     {{ .Content }}
   </article>
 {{ end }}
-
