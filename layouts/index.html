@@ -91,7 +91,7 @@
       "title" (cond (eq $lang "zh") "优秀学生" "Outstanding Students")
       "description" (cond (eq $lang "zh") "部分优秀成员展示" "Selected outstanding members")
     ) }}
-    <section class="grid-4" style="margin-top:18px;">
+    <section class="grid-2" style="margin-top:18px;">
       {{ range (first 4 $outstanding) }}
         {{ partial "outstanding_student_card.html" (dict "page" $page "person" . "lang" $lang "pubIndex" $pubIndex) }}
       {{ end }}
