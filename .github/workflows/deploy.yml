@@ -32,12 +32,12 @@ jobs:
 
       - name: Import XLSX (if present)
         run: |
-          if [ -f "data/site.xlsx" ]; then
+          if [ -f "xlsx/site.xlsx" ]; then
             python -m pip install --upgrade pip
             python -m pip install openpyxl
-            python scripts/import_xlsx.py data/site.xlsx --root .
+            python scripts/import_xlsx.py xlsx/site.xlsx --root .
           else
-            echo "data/site.xlsx not found; skipping XLSX import."
+            echo "xlsx/site.xlsx not found; skipping XLSX import."
           fi
 
       - name: Setup Hugo
