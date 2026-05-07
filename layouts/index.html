@@ -80,9 +80,9 @@
   {{ $outstanding = sort $outstanding "outstanding_order" "asc" }}
   {{ if gt (len $outstanding) 0 }}
     {{ partial "section_heading.html" (dict
-      "eyebrow" (cond (eq $lang "zh") "鎴愭灉" "Achievements")
-      "title" (cond (eq $lang "zh") "浼樼瀛︾敓" "Outstanding Students")
-      "description" (cond (eq $lang "zh") "閮ㄥ垎浼樼鎴愬憳灞曠ず" "Selected outstanding members")
+      "eyebrow" (cond (eq $lang "zh") "成果" "Achievements")
+      "title" (cond (eq $lang "zh") "优秀学生" "Outstanding Students")
+      "description" (cond (eq $lang "zh") "部分优秀成员展示" "Selected outstanding members")
     ) }}
     <section class="grid-4" style="margin-top:18px;">
       {{ range (first 4 $outstanding) }}
