@@ -1,16 +1,29 @@
-{{ $p := .page }}
+{{ $page := .page }}
+{{ $person := .person }}
 {{ $compact := .compact }}
-{{ $name := $p.Params.name }}
-{{ $title := $p.Params.title }}
-{{ $year := $p.Params.year }}
-{{ $area := $p.Params.researchArea }}
-{{ $photo := $p.Params.photo }}
-{{ $github := $p.Params.github }}
-{{ $email := $p.Params.email }}
+{{ $lang := .lang | default $page.Lang }}
+
+{{ $name := "" }}
+{{ with $person.name }}
+  {{ $name = (index . $lang) | default (index . "en") | default "" }}
+{{ end }}
+
+{{ $title := "" }}
+{{ with $person.title }}
+  {{ $title = (index . $lang) | default (index . "en") | default "" }}
+{{ end }}
+
+{{ $joinYear := $person.join_year }}
+{{ $photo := $person.photo }}
+
+{{ $bio := "" }}
+{{ with $person.bio }}
+  {{ $bio = (index . $lang) | default "" }}
+{{ end }}
 
 {{ $photoSrc := "" }}
 {{ if $photo }}
-  {{/* Frontmatter often uses "/people/x.png"; trim the leading slash so relURL respects baseURL subpaths. */}}
+  {{/* Frontmatter/data often uses "/people/x.png"; trim leading slash so relURL respects baseURL subpaths. */}}
   {{ $photoSrc = relURL (strings.TrimPrefix "/" $photo) }}
 {{ end }}
 
@@ -32,9 +45,7 @@
       </div>
     {{ end }}
     <h3 style="margin:12px 0 0;">{{ $name }}</h3>
-    {{ with $year }}<div class="tiny" style="margin-top:4px;">{{ . }}</div>{{ end }}
-    {{ with $area }}<div class="small muted" style="margin-top:8px;">{{ . }}</div>{{ end }}
-    {{ with $github }}<div style="margin-top:10px;"><a class="tiny" href="{{ . }}" target="_blank" rel="noopener noreferrer">GitHub</a></div>{{ end }}
+    {{ with $joinYear }}<div class="tiny" style="margin-top:4px;">{{ . }}</div>{{ end }}
   </article>
 {{ else }}
   <article class="card">
@@ -57,13 +68,10 @@
       <div style="flex:1;">
         <h3 style="margin:0;">{{ $name }}</h3>
         {{ with $title }}<div class="small muted" style="margin-top:4px;">{{ . }}</div>{{ end }}
-        {{ if $p.Content }}
-          <div class="prose small" style="margin-top:10px;">{{ $p.Content }}</div>
+        {{ if $bio }}
+          <div class="prose small" style="margin-top:10px;">{{ $page.RenderString $bio }}</div>
         {{ end }}
-        <div style="margin-top:10px; display:flex; gap:14px; flex-wrap:wrap;">
-          {{ with $github }}<a class="tiny" href="{{ . }}" target="_blank" rel="noopener noreferrer">GitHub</a>{{ end }}
-          {{ with $email }}<a class="tiny" href="mailto:{{ . }}">Email</a>{{ end }}
-        </div>
+        {{ with $joinYear }}<div class="tiny" style="margin-top:10px;">{{ . }}</div>{{ end }}
       </div>
     </div>
   </article>

@@ -1,46 +1,48 @@
 {{ define "main" }}
   {{ $lang := .Lang }}
+  {{ $page := . }}
   {{ partial "section_heading.html" (dict
-    "eyebrow" (cond (eq $lang "zh") "团队" "People")
-    "title" (cond (eq $lang "zh") "团队成员" "Team Members")
-    "description" (cond (eq $lang "zh") "导师 / 成员" "Mentor / Members")
+    "eyebrow" (cond (eq $lang "zh") "鍥㈤槦" "People")
+    "title" (cond (eq $lang "zh") "鍥㈤槦鎴愬憳" "Team Members")
+    "description" (cond (eq $lang "zh") "瀵煎笀 / 鎴愬憳" "Mentor / Members")
   ) }}
 
-  {{ $pages := .Pages }}
-  {{ $wei := where $pages "Params.role" "wei" }}
-  {{ $members := where $pages "Params.role" "!=" "wei" }}
+  {{ $peopleData := index hugo.Data "people" | default (dict) }}
+  {{ $people := $peopleData.people | default (slice) }}
+  {{ $mentor := where $people "role" "mentor" }}
+  {{ $members := where $people "role" "!=" "mentor" }}
 
-  {{ if gt (len $wei) 0 }}
+  {{ if gt (len $mentor) 0 }}
     <section style="margin-top:18px;">
-      <h3 class="font-display" style="margin:0; font-size:18px;">{{ cond (eq $lang "zh") "导师" "Mentor" }}</h3>
+      <h3 class="font-display" style="margin:0; font-size:18px;">{{ cond (eq $lang "zh") "瀵煎笀" "Mentor" }}</h3>
       <div class="grid-2" style="margin-top:12px;">
-        {{ range $wei }}
-          {{ partial "people_card.html" (dict "page" . "compact" false) }}
+        {{ range $mentor }}
+          {{ partial "people_card.html" (dict "page" $page "person" . "lang" $lang "compact" false) }}
         {{ end }}
       </div>
     </section>
   {{ end }}
 
   <section style="margin-top:28px;">
-    <h3 class="font-display" style="margin:0; font-size:18px;">{{ cond (eq $lang "zh") "成员" "Members" }}</h3>
+    <h3 class="font-display" style="margin:0; font-size:18px;">{{ cond (eq $lang "zh") "鎴愬憳" "Members" }}</h3>
     {{ if gt (len $members) 0 }}
       <div class="grid-4" style="margin-top:12px;">
         {{ range $members }}
-          {{ partial "people_card.html" (dict "page" . "compact" true) }}
+          {{ partial "people_card.html" (dict "page" $page "person" . "lang" $lang "compact" true) }}
         {{ end }}
       </div>
     {{ else }}
       <div class="card-muted" style="margin-top:12px; text-align:center;">
-        <div class="small muted">{{ cond (eq $lang "zh") "成员待补充" "Members to be added" }}</div>
+        <div class="small muted">{{ cond (eq $lang "zh") "鎴愬憳寰呰ˉ鍏? "Members to be added" }}</div>
       </div>
     {{ end }}
   </section>
 
   <section class="card-muted" style="margin-top:54px; text-align:center;">
-    <h3 class="font-display" style="margin:0;">{{ cond (eq $lang "zh") "想成为下一个 JCIE 成员" "Want to become a JCIE member" }}</h3>
-    <div class="small muted" style="margin-top:10px;">{{ cond (eq $lang "zh") "我们欢迎有想法、愿意自驱的同学" "We welcome students with ambition and self-drive" }}</div>
+    <h3 class="font-display" style="margin:0;">{{ cond (eq $lang "zh") "鎯虫垚涓轰笅涓€涓?JCIE 鎴愬憳" "Want to become a JCIE member" }}</h3>
+    <div class="small muted" style="margin-top:10px;">{{ cond (eq $lang "zh") "鎴戜滑娆㈣繋鏈夋兂娉曘€佹効鎰忚嚜椹辩殑鍚屽" "We welcome students with ambition and self-drive" }}</div>
     <div style="margin-top:14px;">
-      <a class="btn btn-primary" href="{{ relLangURL "join/" }}">{{ cond (eq $lang "zh") "申请加入" "Apply Now" }}</a>
+      <a class="btn btn-primary" href="{{ relLangURL "join/" }}">{{ cond (eq $lang "zh") "鐢宠鍔犲叆" "Apply Now" }}</a>
     </div>
   </section>
 {{ end }}

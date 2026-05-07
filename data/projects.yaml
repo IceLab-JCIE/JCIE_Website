@@ -1,5 +1,6 @@
 projects:
-  - id: "proj-1"
+  -
+    id: "proj-1"
     area: "EDA"
     status: "ongoing"
     github: "#"
@@ -12,8 +13,8 @@ projects:
     summary:
       zh: "利用神经算子学习偏微分方程的映射。"
       en: "Learning the mapping of partial differential equations using neural operators."
-
-  - id: "proj-2"
+  -
+    id: "proj-2"
     area: "EDA"
     status: "ongoing"
     github: "#"
@@ -26,8 +27,8 @@ projects:
     summary:
       zh: "整理并开源 EDA 良率算法，后续加入良率算法开发。"
       en: "Organizing and open-sourcing EDA yield algorithms, with future incorporation of yield algorithm development."
-
-  - id: "proj-3"
+  -
+    id: "proj-3"
     area: "EDA"
     status: "ongoing"
     github: "#"
@@ -40,8 +41,8 @@ projects:
     summary:
       zh: "整理并开源 EDA 优化算法，后续加入优化算法开发。"
       en: "Organizing and open-sourcing EDA optimization algorithms, with future incorporation of optimization algorithm development."
-
-  - id: "proj-4"
+  -
+    id: "proj-4"
     area: "LCA"
     status: "ongoing"
     github: "#"
@@ -54,8 +55,8 @@ projects:
     summary:
       zh: "基于 LLM 从非结构化 EPD 中抽取关键环境指标（如 GWP），构建结构化知识库。"
       en: "LLM-based framework to extract key environmental indicators (e.g., GWP) from unstructured EPDs and build a structured knowledge base."
-
-  - id: "proj-5"
+  -
+    id: "proj-5"
     area: "LCA"
     status: "ongoing"
     github: "#"
@@ -68,8 +69,8 @@ projects:
     summary:
       zh: "结合大模型与微调小模型预测 ecoinvent 表格数值，并扩展到更多未知数据集。"
       en: "Predicting numerical values in ecoinvent tables using LLM + fine-tuned small models; extend to additional unknown datasets."
-
-  - id: "proj-6"
+  -
+    id: "proj-6"
     area: "LCA"
     status: "ongoing"
     github: "#"
@@ -82,8 +83,8 @@ projects:
     summary:
       zh: "基于 LLM Agent 的端到端自动化流程：BOM 解析、数据库检索匹配（如 Ecoinvent）、碳排计算与 LCA 报告生成，减少人工干预。"
       en: "Automated end-to-end LLM-agent workflow: BOM parsing, database retrieval/matching (e.g., Ecoinvent), emission calculation, and LCA report generation."
-
-  - id: "proj-7"
+  -
+    id: "proj-7"
     area: "LCA"
     status: "ongoing"
     github: "#"
@@ -96,8 +97,8 @@ projects:
     summary:
       zh: "结合大模型智能体与运筹优化，将 LCA 从物料清单分析扩展到绿色材料替代的端到端自动化决策。"
       en: "Integrating LLM agents with operations research optimization to enable end-to-end automated decision-making from BOM analysis to greener material substitution."
-
-  - id: "proj-8"
+  -
+    id: "proj-8"
     area: "LCA"
     status: "ongoing"
     github: "#"
@@ -110,8 +111,8 @@ projects:
     summary:
       zh: "使用 AI 辅助 LCI 清单的组件与环境数据库（如 Ecoinvent）中的名称与活动进行匹配。"
       en: "Using AI to assist matching components in LCI inventories with corresponding names and activities in environmental databases (e.g., Ecoinvent)."
-
-  - id: "proj-9"
+  -
+    id: "proj-9"
     area: "EDA"
     status: "ongoing"
     github: "#"
