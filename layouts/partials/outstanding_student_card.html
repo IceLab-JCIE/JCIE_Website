@@ -18,35 +18,39 @@
 <article class="card" style="position:relative; overflow:hidden;">
   <div style="position:absolute; right:-56px; top:-56px; width:112px; height:112px; border-radius:999px; background:rgba(15,23,42,0.05); filter:blur(18px);"></div>
   <div style="position:relative;">
-    <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
-      <div style="min-width:180px; flex:0 0 220px;">
-        <h3 style="margin:0; line-height:1.2;">{{ $name }}</h3>
-        {{ with $dest }}
-          <div class="tiny" style="margin-top:8px;">
-            <span class="tiny" style="font-weight:600; color:rgba(15,23,42,0.55);">{{ cond (eq $lang "zh") "去向" "Destination" }}:</span>
-            {{ . }}
-          </div>
-        {{ end }}
+    <div>
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
+        <div style="min-width:0;">
+          <h3 style="margin:0; line-height:1.2;">{{ $name }}</h3>
+          {{ with $dest }}
+            <div class="tiny" style="margin-top:8px;">
+              <span class="tiny" style="font-weight:600; color:rgba(15,23,42,0.55);">{{ cond (eq $lang "zh") "去向" "Destination" }}:</span>
+              {{ . }}
+            </div>
+          {{ end }}
+        </div>
       </div>
 
       {{ if gt (len $pubIds) 0 }}
-        <div style="flex:1; min-width:260px; border:1px solid rgba(15,23,42,0.06); background:rgba(245,247,250,0.65); border-radius:14px; padding:12px;">
-          <div class="tiny" style="font-weight:600;">{{ cond (eq $lang "zh") "论文成果" "Publications" }}</div>
-          <ul style="margin:10px 0 0; padding-left:18px;">
-            {{ range $pubIds }}
-              {{ $pub := $pubIndex.Get . }}
-              {{ if $pub }}
-                <li class="small muted">
-                  {{ if and $pub.link (ne $pub.link "#") }}
-                    <a href="{{ $pub.link }}" target="_blank" rel="noopener noreferrer">{{ $pub.title }}</a>
-                  {{ else }}
-                    {{ $pub.title }}
-                  {{ end }}
-                  <span class="tiny"> — {{ $pub.venue }}, {{ $pub.year }}</span>
-                </li>
+        <div style="margin-top:14px; padding-top:14px; border-top:1px solid rgba(15,23,42,0.06);">
+          <div style="background:rgba(245,247,250,0.62); border-radius:14px; padding:12px;">
+            <div class="tiny" style="font-weight:600;">{{ cond (eq $lang "zh") "论文成果" "Publications" }}</div>
+            <ul style="margin:10px 0 0; padding-left:18px;">
+              {{ range $pubIds }}
+                {{ $pub := $pubIndex.Get . }}
+                {{ if $pub }}
+                  <li class="small muted">
+                    {{ if and $pub.link (ne $pub.link "#") }}
+                      <a href="{{ $pub.link }}" target="_blank" rel="noopener noreferrer">{{ $pub.title }}</a>
+                    {{ else }}
+                      {{ $pub.title }}
+                    {{ end }}
+                    <span class="tiny"> — {{ $pub.venue }}, {{ $pub.year }}</span>
+                  </li>
+                {{ end }}
               {{ end }}
-            {{ end }}
-          </ul>
+            </ul>
+          </div>
         </div>
       {{ end }}
     </div>
