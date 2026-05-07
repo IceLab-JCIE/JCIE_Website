@@ -1,221 +1,238 @@
 publications:
-  - id: aspdac-2023-entropy-reduction
-    title: "High-dimensional Yield Estimation Using Shrinkage Deep Features and Maximization of Integral Entropy Reduction"
-    authors:
-      - Shuo Yin
-      - Guohao Dai
-      - Wei W. Xing
-    venue: ASP-DAC
-    year: 2023
-    area: EDA
-    link: https://dl.acm.org/doi/abs/10.1145/3566097.3567907
-  - id: dac-2023-yield-barrier
-    title: "Seeking the Yield Barrier: High-dimensional SRAM Evaluation Through Optimal Manifold"
-    authors:
-      - Yanfang Liu
-      - Guohao Dai
-      - Wei W. Xing
-    venue: DAC
-    year: 2023
-    area: EDA
-    link: https://ieeexplore.ieee.org/abstract/document/10247952/
-  - id: dac-2024-every-failure
-    title: "Every Failure Is a Lesson: Utilizing All Failure Samples to Deliver Tuning-Free Efficient Yield Evaluation"
-    authors:
-      - Wei Xing
-      - Yanfang Liu
-      - Weijian Fan
-      - Lei He
-    venue: DAC
-    year: 2024
-    area: EDA
-    link: https://dl.acm.org/doi/abs/10.1145/3649329.3657381
-  - id: dac-2024-kato
-    title: "Kato: Knowledge Alignment and Transfer for Transistor Sizing of Different Design and Technology"
-    authors:
-      - Wei W. Xing
-      - Weijian Fan
-      - Zhuohua Liu
-      - Yuan Yao
-      - Yuanqi Hu
-    venue: DAC
-    year: 2024
-    area: EDA
-    link: https://dl.acm.org/doi/abs/10.1145/3649329.3657380
-  - id: dac-2026-breaking-tuning-barrier
-    title: "Breaking the Tuning Barrier: Zero-Hyperparameters Yield Multi-Corner Analysis Via Learned Priors"
-    authors:
-      - Wei W. Xing
-      - Kaiqi Huang
-      - Jiazhan Liu
-      - Hong Qiu
-      - Shan Shen
-    venue: DAC
-    year: 2026
-    area: EDA
-    link: "#"
-  - id: dac-2025-exploiting
+  -
+    id: "dac-2025-exploiting"
     title: "Exploiting Function-Family Structure in Analog Circuit Optimization"
     authors:
-      - Zhuohua Liu
-      - Kaiqi Huang
-      - Qinxin Mei
-      - Yuanqi Hu
-      - Wei W. Xing
-    venue: DAC
+      - "Zhuohua Liu"
+      - "Kaiqi Huang"
+      - "Qinxin Mei"
+      - "Yuanqi Hu"
+      - "Wei W. Xing"
+    venue: "DAC"
     year: 2026
-    area: EDA
-    link: https://arxiv.org/abs/2512.00712
-  - id: dac-2026-openacmv2
+    area: "EDA"
+    link: "https://arxiv.org/abs/2512.00712"
+  -
+    id: "dac-2026-breaking-tuning-barrier"
+    title: "Breaking the Tuning Barrier: Zero-Hyperparameters Yield Multi-Corner Analysis Via Learned Priors"
+    authors:
+      - "Wei W. Xing"
+      - "Kaiqi Huang"
+      - "Jiazhan Liu"
+      - "Hong Qiu"
+      - "Shan Shen"
+    venue: "DAC"
+    year: 2026
+    area: "EDA"
+    link: "#"
+  -
+    id: "dac-2026-openacmv2"
     title: "OpenACMv2: An Accuracy-Constrained Co-Optimization Framework for Approximate DCiM"
     authors:
-      - Yiqi Zhou
-      - Yue Yuan
-      - Yikai Wang
-      - Bohao Liu
-      - Qinxin Mei
-      - Zhuohua Liu
-      - Shan Shen
-      - Wei Xing
-      - Daying Sun
-      - Li Li
-      - Guozhu Liu
-    venue: DAC
+      - "Yiqi Zhou"
+      - "Yue Yuan"
+      - "Yikai Wang"
+      - "Bohao Liu"
+      - "Qinxin Mei"
+      - "Zhuohua Liu"
+      - "Shan Shen"
+      - "Wei Xing"
+      - "Daying Sun"
+      - "Li Li"
+      - "Guozhu Liu"
+    venue: "DAC"
     year: 2026
-    area: EDA
+    area: "EDA"
     link: "#"
-  - id: est-semanet
-    title: "SemaNet: Bridging Words and Numbers for Predicting Missing Environmental Data in Life Cycle Assessment"
-    authors:
-      - Bin Chen
-      - Hong Chen
-      - Zhishan Quan
-      - Wei He
-      - Visakan Kadirkamanathan
-      - Jose L. Casamayor
-      - Wei W. Xing
-    venue: Environmental Science & Technology
-    year: 2025
-    area: LCA
-    link: https://doi.org/10.1021/acs.est.5c07557
-  - id: iccad-2023-opt
-    title: "OPT: Optimal Proposal Transfer for Efficient Yield Optimization for Analog and SRAM Circuits"
-    authors:
-      - Yanfang Liu
-      - Guohao Dai
-      - Yuanqing Cheng
-      - Wang Kang
-      - Wei W. Xing
-    venue: ICCAD
-    year: 2023
-    area: EDA
-    link: https://ieeexplore.ieee.org/abstract/document/10323689/
-  - id: iccad-2024-aro
-    title: "Aro: Autoregressive Operator Learning for Transferable and Multi-fidelity 3D-IC Thermal Analysis with Active Learning"
-    authors:
-      - Mingyue Wang
-      - Yuanqing Cheng
-      - Weiheng Zeng
-      - Zhenjie Lu
-      - Vasilis F. Pavlidis
-      - Wei Xing
-    venue: ICCAD
-    year: 2024
-    area: EDA
-    link: https://dl.acm.org/doi/abs/10.1145/3676536.3676713
-  - id: iccad-2025-astra
-    title: "ASTRA: Automatic Sizing of Transistors with Reasoning Agents"
-    authors:
-      - Wei W. Xing
-      - Baowen Ou
-      - Yuxuan Zhang
-      - Zhuohua Liu
-      - Yuanqi Hu
-    venue: ICCAD
-    year: 2025
-    area: EDA
-    link: https://ieeexplore.ieee.org/abstract/document/11240675/
-  - id: iccad-2025-dive
-    title: "DIVE: Dynamic Information-Guided Variable Expansion for Deeper Analog Circuit Optimization"
-    authors:
-      - Zhuohua Liu
-      - Weilun Xie
-      - Yuxuan Zhang
-      - Chen Wang
-      - Yuanqi Hu
-      - Wei W. Xing
-    venue: ICCAD
-    year: 2025
-    area: EDA
-    link: https://ieeexplore.ieee.org/abstract/document/11240976/
-  - id: iccd-2025-openyield
-    title: "OpenYield: An Open-Source SRAM Yield Analysis and Optimization Benchmark Suite"
-    authors:
-      - Shan Shen
-      - Xingyang Li
-      - Zhuohua Liu
-      - Junhao Ma
-      - Yikai Wang
-      - Yiheng Wu
-      - Yuquan Sun
-      - Wei W. Xing
-    venue: ICCD
-    year: 2025
-    area: EDA
-    link: https://ieeexplore.ieee.org/abstract/document/11310974/
-  - id: ijhe-2023-sofc
-    title: "Multi-fidelity Design Optimization of Solid Oxide Fuel Cells Using a Bayesian Feature Enhanced Stochastic Collocation"
-    authors:
-      - Wei W. Xing
-      - Akeel A. Shah
-      - Guohao Dai
-      - Ziyang Zhang
-      - Ting Guo
-      - Hong Qiu
-      - Puiki Leung
-      - Qian Xu
-      - Xun Zhu
-      - Qiang Liao
-    venue: IJHE
-    year: 2023
-    area: EDA
-    link: https://www.sciencedirect.com/science/article/pii/S0360319923017007
-  - id: iseda-2025-design-space-folding
-    title: 'Design Space Folding: A "Free-lunch" Add-on for Efficient Design Convergence in Transistor Sizing'
-    authors:
-      - Zhuohua Liu
-      - Yuxuan Zhang
-      - Weilun Xie
-      - Yuanqi Hu
-      - Wei W. Xing
-    venue: ISEDA
-    year: 2025
-    area: EDA
-    link: https://ieeexplore.ieee.org/abstract/document/11100880/
-  - id: iseda-2026-portable
+  -
+    id: "iseda-2026-portable"
     title: "Portable Expertise for Analog Sizing: A Data-Agnostic Foundation Model Approach"
     authors:
-      - Zhuohua Liu鈥?
-      - Kaiqi Huang鈥?
-      - Qinxin Mei
-      - Yuanqi Hu
-      - Wei W. Xing
-    venue: ISEDA
+      - "Zhuohua Liu鈥?"
+      - "Kaiqi Huang鈥?"
+      - "Qinxin Mei"
+      - "Yuanqi Hu"
+      - "Wei W. Xing"
+    venue: "ISEDA"
     year: 2026
-    area: EDA
-    link: #
-  - id: procedia-cirp-2025-adaptive-lci
+    area: "EDA"
+    link: "#"
+  -
+    id: "est-semanet"
+    title: "SemaNet: Bridging Words and Numbers for Predicting Missing Environmental Data in Life Cycle Assessment"
+    authors:
+      - "Bin Chen"
+      - "Hong Chen"
+      - "Zhishan Quan"
+      - "Wei He"
+      - "Visakan Kadirkamanathan"
+      - "Jose L. Casamayor"
+      - "Wei W. Xing"
+    venue: "Environmental Science & Technology"
+    year: 2025
+    area: "LCA"
+    link: "https://doi.org/10.1021/acs.est.5c07557"
+  -
+    id: "iccad-2025-astra"
+    title: "ASTRA: Automatic Sizing of Transistors with Reasoning Agents"
+    authors:
+      - "Wei W. Xing"
+      - "Baowen Ou"
+      - "Yuxuan Zhang"
+      - "Zhuohua Liu"
+      - "Yuanqi Hu"
+    venue: "ICCAD"
+    year: 2025
+    area: "EDA"
+    link: "https://ieeexplore.ieee.org/abstract/document/11240675/"
+  -
+    id: "iccad-2025-dive"
+    title: "DIVE: Dynamic Information-Guided Variable Expansion for Deeper Analog Circuit Optimization"
+    authors:
+      - "Zhuohua Liu"
+      - "Weilun Xie"
+      - "Yuxuan Zhang"
+      - "Chen Wang"
+      - "Yuanqi Hu"
+      - "Wei W. Xing"
+    venue: "ICCAD"
+    year: 2025
+    area: "EDA"
+    link: "https://ieeexplore.ieee.org/abstract/document/11240976/"
+  -
+    id: "iccd-2025-openyield"
+    title: "OpenYield: An Open-Source SRAM Yield Analysis and Optimization Benchmark Suite"
+    authors:
+      - "Shan Shen"
+      - "Xingyang Li"
+      - "Zhuohua Liu"
+      - "Junhao Ma"
+      - "Yikai Wang"
+      - "Yiheng Wu"
+      - "Yuquan Sun"
+      - "Wei W. Xing"
+    venue: "ICCD"
+    year: 2025
+    area: "EDA"
+    link: "https://ieeexplore.ieee.org/abstract/document/11310974/"
+  -
+    id: "iseda-2025-design-space-folding"
+    title: "Design Space Folding: A \"Free-lunch\" Add-on for Efficient Design Convergence in Transistor Sizing"
+    authors:
+      - "Zhuohua Liu"
+      - "Yuxuan Zhang"
+      - "Weilun Xie"
+      - "Yuanqi Hu"
+      - "Wei W. Xing"
+    venue: "ISEDA"
+    year: 2025
+    area: "EDA"
+    link: "https://ieeexplore.ieee.org/abstract/document/11100880/"
+  -
+    id: "procedia-cirp-2025-adaptive-lci"
     title: "Adaptive LCI Data Completion: Integrating Neural Processes and Active Learning for Enhanced Life Cycle Assessment"
     authors:
-      - Wei W. Xing
-      - Hong Chen
-      - Zidong Chen
-      - Zhishan Quan
-      - Bertrand Laratte
-      - Mark Walsh
-      - Jing Pu
-      - Jose L. Casamayor
-    venue: Procedia CIRP
+      - "Wei W. Xing"
+      - "Hong Chen"
+      - "Zidong Chen"
+      - "Zhishan Quan"
+      - "Bertrand Laratte"
+      - "Mark Walsh"
+      - "Jing Pu"
+      - "Jose L. Casamayor"
+    venue: "Procedia CIRP"
     year: 2025
-    area: LCA
-    link: https://doi.org/10.1016/j.procir.2025.01.046
+    area: "LCA"
+    link: "https://doi.org/10.1016/j.procir.2025.01.046"
+  -
+    id: "dac-2024-every-failure"
+    title: "Every Failure Is a Lesson: Utilizing All Failure Samples to Deliver Tuning-Free Efficient Yield Evaluation"
+    authors:
+      - "Wei Xing"
+      - "Yanfang Liu"
+      - "Weijian Fan"
+      - "Lei He"
+    venue: "DAC"
+    year: 2024
+    area: "EDA"
+    link: "https://dl.acm.org/doi/abs/10.1145/3649329.3657381"
+  -
+    id: "dac-2024-kato"
+    title: "Kato: Knowledge Alignment and Transfer for Transistor Sizing of Different Design and Technology"
+    authors:
+      - "Wei W. Xing"
+      - "Weijian Fan"
+      - "Zhuohua Liu"
+      - "Yuan Yao"
+      - "Yuanqi Hu"
+    venue: "DAC"
+    year: 2024
+    area: "EDA"
+    link: "https://dl.acm.org/doi/abs/10.1145/3649329.3657380"
+  -
+    id: "iccad-2024-aro"
+    title: "Aro: Autoregressive Operator Learning for Transferable and Multi-fidelity 3D-IC Thermal Analysis with Active Learning"
+    authors:
+      - "Mingyue Wang"
+      - "Yuanqing Cheng"
+      - "Weiheng Zeng"
+      - "zhenjie Lu"
+      - "Vasilis F. Pavlidis"
+      - "Wei Xing"
+    venue: "ICCAD"
+    year: 2024
+    area: "EDA"
+    link: "https://dl.acm.org/doi/abs/10.1145/3676536.3676713"
+  -
+    id: "aspdac-2023-entropy-reduction"
+    title: "High-dimensional Yield Estimation Using Shrinkage Deep Features and Maximization of Integral Entropy Reduction"
+    authors:
+      - "Shuo Yin"
+      - "Guohao Dai"
+      - "Wei W. Xing"
+    venue: "ASP-DAC"
+    year: 2023
+    area: "EDA"
+    link: "https://dl.acm.org/doi/abs/10.1145/3566097.3567907"
+  -
+    id: "dac-2023-yield-barrier"
+    title: "Seeking the Yield Barrier: High-dimensional SRAM Evaluation Through Optimal Manifold"
+    authors:
+      - "Yanfang Liu"
+      - "Guohao Dai"
+      - "Wei W. Xing"
+    venue: "DAC"
+    year: 2023
+    area: "EDA"
+    link: "https://ieeexplore.ieee.org/abstract/document/10247952/"
+  -
+    id: "iccad-2023-opt"
+    title: "OPT: Optimal Proposal Transfer for Efficient Yield Optimization for Analog and SRAM Circuits"
+    authors:
+      - "Yanfang Liu"
+      - "Guohao Dai"
+      - "Yuanqing Cheng"
+      - "Wang Kang"
+      - "Wei W. Xing"
+    venue: "ICCAD"
+    year: 2023
+    area: "EDA"
+    link: "https://ieeexplore.ieee.org/abstract/document/10323689/"
+  -
+    id: "ijhe-2023-sofc"
+    title: "Multi-fidelity Design Optimization of Solid Oxide Fuel Cells Using a Bayesian Feature Enhanced Stochastic Collocation"
+    authors:
+      - "Wei W. Xing"
+      - "Akeel A. Shah"
+      - "Guohao Dai"
+      - "Ziyang Zhang"
+      - "Ting Guo"
+      - "Hong Qiu"
+      - "Puiki Leung"
+      - "Qian Xu"
+      - "Xun Zhu"
+      - "Qiang Liao"
+    venue: "IJHE"
+    year: 2023
+    area: "EDA"
+    link: "https://www.sciencedirect.com/science/article/pii/S0360319923017007"

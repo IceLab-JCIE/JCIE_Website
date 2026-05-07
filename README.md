@@ -10,12 +10,26 @@ This folder contains the Hugo implementation intended for GitHub Pages deploymen
 - Projects (single file): `data/projects.yaml`
 - Publications (single file): `data/publications.yaml`
 - News posts (one file per post, per language): `content/news/*.zh.md` and `content/news/*.en.md`
-- People (one file per person, per language): `content/people/<id>.zh.md` and `content/people/<id>.en.md`
+- People (single file): `data/people.yaml`
 - Join page: `content/join/_index.zh.md` and `content/join/_index.en.md`
 
 Images:
 
 - People photos: `static/people/*` (referenced as `/people/<file>.png`)
+
+## XLSX Import (Optional)
+
+If you prefer maintaining `people/publications/projects` in a single XLSX, import it into Hugo data files:
+
+```bash
+python scripts/import_xlsx.py path/to/data.xlsx --root .
+```
+
+Sheets required: `people`, `publications`, `projects`.
+
+GitHub Pages build:
+
+- If `data/site.xlsx` exists in the repo, GitHub Actions will automatically run the import step before `hugo --minify`.
 
 ## Local Preview
 
