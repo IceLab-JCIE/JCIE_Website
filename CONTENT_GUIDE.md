@@ -1,129 +1,62 @@
-# JCIE 网站内容维护指南（Hugo）
+# JCIE 网站内容维护指南（Hugo + 1 个 XLSX 驱动）
 
-本仓库已切换为 Hugo 静态站点。日常维护基本只需要修改 `data/*.yaml` 与 `content/**/*.md`。
+## 一句话
+- 日常只需要修改 `xlsx/site.xlsx`，push 到 GitHub 后会在 CI 中自动解析并生成 `data/*.yaml`，再由 Hugo 构建部署。
+- `News` / `Join` / 首页文案仍然用 `content/**/*.md` 手写维护。
 
-## 内容改动对应文件
+## 哪些内容改哪里
+- 全站基础信息（站点名、联系邮箱、SEO 等）：`data/site.yaml`（手写）
+- 首页文案（Hero/Overview/Research 等）：`content/_index.zh.md`、`content/_index.en.md`
+- Join 页面：`content/join/_index.zh.md`、`content/join/_index.en.md`（正文可写 `{{contactEmail}}`，构建时会替换成 `data/site.yaml` 的值）
+- News：`content/news/*.md`（每条新闻一个 Markdown 文件）
+- People / Publications / Projects：只改 `xlsx/site.xlsx`（不要直接改 `data/people.yaml`、`data/publications.yaml`、`data/projects.yaml`）
 
-### 1) 全站基础信息（站点名 / 邮箱 / GitHub / SEO 文案）
+## XLSX 规范（`xlsx/site.xlsx`）
+包含 3 个 sheet：`people` / `publications` / `projects`。按列名解析，列可以调整顺序，但列名必须一致。
 
-编辑：`data/site.yaml`
+### Sheet: `people`
+必填列：
+- `id`（唯一）
+- `role`（只允许：`mentor` / `member` / `alumni`）
+- `name_en`、`name_zh`
 
-常见字段：
-- `contactEmail`：加入页的 `{{contactEmail}}` 会自动替换为这里的邮箱
-- `githubUrl`：页脚 GitHub 链接
-- `meta.title/meta.description/meta.tagline`：中英 SEO 文案
-
-### 2) 首页文案（Hero / Overview / Research 等）
-
-编辑：
-- 中文：`content/_index.zh.md`
-- 英文：`content/_index.en.md`
-
-首页采用 frontmatter（`---` 包裹部分）驱动，不需要改模板。
-
-### 3) 加入页面（Join）
-
-编辑：
-- 中文：`content/join/_index.zh.md`
-- 英文：`content/join/_index.en.md`
+推荐列：
+- `title_en`、`title_zh`
+- `join_year`（加入年份；整数或留空）
+- `photo`（例如：`/people/xxx.png`）
+- `bio_en`、`bio_zh`（Markdown 字符串）
+- `is_outstanding`（空=FALSE；支持 TRUE/FALSE 或 1/0）
+- `outstanding_order`（整数；可留空，导入时会自动补齐）
+- `destination_en`、`destination_zh`（优秀学生去向；可留空）
+- `pub_ids`（分号分隔的 publication id 列表；可留空）
 
 说明：
-- 正文里可以写 `{{contactEmail}}`，构建时会替换成 `data/site.yaml` 的 `contactEmail`
-- 邮件按钮文案/标题模板在 frontmatter：`email_subject_template`、`email_button_label`
+- `pub_ids` 留空时，导入脚本会尝试根据 `publications.authors` 自动推断该成员的论文列表并填入 YAML（便于首页展示）。
 
-### 4) 人员页面（People）
+### Sheet: `publications`
+必填列：
+- `id`、`title`、`venue`、`year`、`area`、`authors`、`link`
 
-编辑（每个人 2 个文件，中英各一份）：
-- `content/people/<id>.zh.md`
-- `content/people/<id>.en.md`
+可选列：
+- `type`、`note`
 
-头像资源：
-- 放到：`static/people/xxx.png`
-- 在 frontmatter 写：`photo: /people/xxx.png`
+规则：
+- `area` 只允许 `EDA` / `LCA`
+- `authors` 用 `;` 分隔，允许混用 `people.id` 与外部作者姓名；命中 `people.id` 时导出为该人的 `name_en`
 
-示例（`content/people/wei.zh.md`）：
+### Sheet: `projects`
+必填列：
+- `id`、`area`、`status`、`github`
+- `lead_en`、`lead_zh`
+- `title_en`、`title_zh`
+- `summary_en`、`summary_zh`
+- `start_year`（开始年份；整数或留空）
 
-```md
----
-id: wei
-role: wei   # wei / member
-name: 邢炜
-title: 导师
-photo: /people/wei.png
-github: https://github.com/xxx   # 可选
-email: someone@example.com       # 可选
-researchArea: AI for EDA         # 可选
-year: 2024                       # 可选
----
+规则：
+- `area` 只允许 `EDA` / `LCA`
+- `status` 只允许 `ongoing` / `completed`
 
-这里写简介正文（Markdown）。
-```
-
-### 5) 新闻动态（News）
-
-编辑（每条新闻 2 个文件，中英各一份）：
-- `content/news/YYYY-MM-DD-slug.zh.md`
-- `content/news/YYYY-MM-DD-slug.en.md`
-
-示例：
-
-```md
----
-title: 网站上线
-date: 2026-04-24
-summary: 一句话摘要（列表页会显示）
----
-
-正文（Markdown）。
-```
-
-### 6) 项目页面（Projects，单文件维护）
-
-编辑：`data/projects.yaml`
-
-每个项目在 `projects:` 下新增一段，支持 `zh/en` 双语：
-
-```yaml
-projects:
-  - id: "proj-10"
-    area: "EDA"      # EDA / LCA
-    status: "ongoing"
-    github: "#"
-    lead:
-      zh: "张三"
-      en: "San Zhang"
-    title:
-      zh: "项目中文名"
-      en: "Project Title"
-    summary:
-      zh: "中文简介"
-      en: "English summary"
-```
-
-### 7) 论文页面（Publications，单文件维护）
-
-编辑：`data/publications.yaml`
-
-结构：
-
-```yaml
-publications:
-  - id: iccad-2023-opt
-    title: 'Design Space Folding: A "Free-lunch" ...'
-    authors:
-      - Alice
-      - Bob
-    venue: ICCAD
-    year: 2023
-    area: EDA
-    link: https://...
-```
-
-## 常见坑（很重要）
-
-1. YAML/Frontmatter 里如果值包含 `:` 或包含双引号，务必加引号。
-   - 最稳妥：用单引号包起来，例如：
-     - `mission_body: "People look beyond GPA: project experience ..."`
-     - `title: 'A "Free-lunch" Add-on ...'`
-2. 文件名区分中英：`.zh.md` / `.en.md`。只改中文就改 `.zh.md`，但建议两边同步维护。
+## 本地可选操作（一般不需要）
+如需在本地预览前先生成 YAML（CI 中会自动做）：
+- `python scripts/import_xlsx.py xlsx/site.xlsx --root .`
 

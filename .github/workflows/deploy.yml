@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ['master']
+    branches: ['master', 'staging']
   workflow_dispatch:
 
 env:
@@ -43,7 +43,7 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: 'latest'
+          hugo-version: '0.161.1'
           extended: true
 
       - name: Hugo Version
@@ -61,6 +61,7 @@ jobs:
           path: './public'
 
   deploy:
+    if: github.ref == 'refs/heads/master'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

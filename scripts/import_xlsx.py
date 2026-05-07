@@ -45,6 +45,13 @@ def _split_semicolon(v: Any) -> List[str]:
         return []
     return [p.strip() for p in s.split(";") if p.strip()]
 
+def _norm_name(s: str) -> str:
+    s = _strip(s).lower()
+    for ch in [".", ",", "’", "'", "\"", "–", "-", "鈥?", "�"]:
+        s = s.replace(ch, " ")
+    s = " ".join(s.split())
+    return s
+
 
 def _yaml_quote(s: str) -> str:
     return json.dumps(s, ensure_ascii=False)
@@ -144,12 +151,14 @@ def _require_columns(headers: List[str], required: Iterable[str], *, sheet: str)
 @dataclass
 class PeopleIndex:
     id_to_name_en: Dict[str, str]
+    name_norm_to_id: Dict[str, str]
 
 
 def _parse_people(rows: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], PeopleIndex]:
     seen: set[str] = set()
     people: List[Dict[str, Any]] = []
     id_to_name_en: Dict[str, str] = {}
+    name_norm_to_id: Dict[str, str] = {}
 
     for i, r in enumerate(rows, start=2):
         pid = _strip(r.get("id"))
@@ -175,6 +184,10 @@ def _parse_people(rows: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], Peo
         title_zh = _strip(r.get("title_zh"))
         bio_en = _strip(r.get("bio_en"))
         bio_zh = _strip(r.get("bio_zh"))
+        destination_en = _strip(r.get("destination_en"))
+        destination_zh = _strip(r.get("destination_zh"))
+        pub_ids_raw = _strip(r.get("pub_ids"))
+        pub_ids = _split_semicolon(pub_ids_raw)
 
         is_outstanding = False
         if _strip(r.get("is_outstanding")) != "":
@@ -204,6 +217,11 @@ def _parse_people(rows: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], Peo
         bio_obj = {"en": bio_en, "zh": bio_zh}
         if bio_en or bio_zh:
             person["bio"] = bio_obj
+        dest_obj = {"en": destination_en, "zh": destination_zh}
+        if destination_en or destination_zh:
+            person["destination"] = dest_obj
+        if pub_ids:
+            person["pub_ids"] = pub_ids
         if is_outstanding:
             person["is_outstanding"] = True
         if outstanding_order is not None:
@@ -211,6 +229,9 @@ def _parse_people(rows: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], Peo
 
         people.append(person)
         id_to_name_en[pid] = name_en
+        nn = _norm_name(name_en)
+        if nn and nn not in name_norm_to_id:
+            name_norm_to_id[nn] = pid
 
     # Validate outstanding_order uniqueness for those set.
     order_to_id: Dict[int, str] = {}
@@ -251,12 +272,15 @@ def _parse_people(rows: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], Peo
 
     # Stable ordering in YAML
     people.sort(key=lambda p: str(p.get("id")))
-    return people, PeopleIndex(id_to_name_en=id_to_name_en)
+    return people, PeopleIndex(id_to_name_en=id_to_name_en, name_norm_to_id=name_norm_to_id)
 
 
-def _parse_publications(rows: List[Dict[str, Any]], people_index: PeopleIndex) -> List[Dict[str, Any]]:
+def _parse_publications(
+    rows: List[Dict[str, Any]], people_index: PeopleIndex
+) -> Tuple[List[Dict[str, Any]], Dict[str, List[Tuple[int, str]]]]:
     seen: set[str] = set()
     pubs: List[Dict[str, Any]] = []
+    inferred: Dict[str, List[Tuple[int, str]]] = {}
     for i, r in enumerate(rows, start=2):
         pid = _strip(r.get("id"))
         if not pid:
@@ -279,7 +303,16 @@ def _parse_publications(rows: List[Dict[str, Any]], people_index: PeopleIndex) -
         authors_tokens = _split_semicolon(authors_raw)
         authors: List[str] = []
         for tok in authors_tokens:
-            authors.append(people_index.id_to_name_en.get(tok, tok))
+            tok_s = _strip(tok)
+            # record inferred relationships (by id token or by matching name_en)
+            if tok_s in people_index.id_to_name_en:
+                inferred.setdefault(tok_s, []).append((int(year), pid))
+            else:
+                nn = _norm_name(tok_s)
+                mid = people_index.name_norm_to_id.get(nn)
+                if mid:
+                    inferred.setdefault(mid, []).append((int(year), pid))
+            authors.append(people_index.id_to_name_en.get(tok_s, tok_s))
 
         pub: Dict[str, Any] = {
             "id": pid,
@@ -301,7 +334,7 @@ def _parse_publications(rows: List[Dict[str, Any]], people_index: PeopleIndex) -
 
     # Sort by year desc then id asc (matches existing display intent)
     pubs.sort(key=lambda p: (-int(p["year"]), str(p["id"])))
-    return pubs
+    return pubs, inferred
 
 
 def _parse_projects(rows: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
@@ -404,7 +437,7 @@ def main(argv: List[str]) -> int:
     # publications
     pub_headers, pub_rows = _read_sheet_rows(wb["publications"])
     _require_columns(pub_headers, ["id", "title", "venue", "year", "area", "authors", "link"], sheet="publications")
-    pubs = _parse_publications(pub_rows, people_index)
+    pubs, inferred_pub_ids = _parse_publications(pub_rows, people_index)
 
     # projects
     proj_headers, proj_rows = _read_sheet_rows(wb["projects"])
@@ -426,6 +459,21 @@ def main(argv: List[str]) -> int:
         sheet="projects",
     )
     projs = _parse_projects(proj_rows)
+
+    # Validate/fill people.pub_ids against publications.
+    pub_id_set = {p["id"] for p in pubs}
+    for p in people:
+        pid = p["id"]
+        pub_ids = p.get("pub_ids") or []
+        if pub_ids:
+            missing = [x for x in pub_ids if x not in pub_id_set]
+            if missing:
+                raise ImportErrorExit(f"people id={pid}: pub_ids references unknown publications: {', '.join(missing)}")
+        else:
+            inferred = inferred_pub_ids.get(pid) or []
+            if inferred:
+                inferred_sorted = sorted(inferred, key=lambda t: (-int(t[0]), t[1]))
+                p["pub_ids"] = [pub_id for _, pub_id in inferred_sorted]
 
     # write yaml
     written: List[Path] = []

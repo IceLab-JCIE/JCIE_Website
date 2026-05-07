@@ -6,7 +6,8 @@
     "description" (cond (eq $lang "zh") "真实问题，真实产出" "Real problems, real outputs")
   ) }}
 
-  {{ $data := (index hugo.Data "projects").projects }}
+  {{ $projectsData := index hugo.Data "projects" | default (dict) }}
+  {{ $data := $projectsData.projects | default (slice) }}
   {{ $eda := where $data "area" "EDA" }}
   {{ $lca := where $data "area" "LCA" }}
 
@@ -41,7 +42,7 @@
   </section>
 
   <section class="card-muted" style="margin-top:54px; text-align:center;">
-    <h3 class="font-display" style="margin:0;">{{ cond (eq $lang "zh") "想参与这些项目" "Want to work on these projects" }}</h3>
+    <h3 class="font-display" style="margin:0;">{{ cond (eq $lang "zh") "想参与这些项目？" "Want to work on these projects" }}</h3>
     <div class="small muted" style="margin-top:10px;">{{ cond (eq $lang "zh") "加入后直接进入真实项目，我们没有练手期" "Join and enter real projects immediately, no sandbox period" }}</div>
     <div style="margin-top:14px;">
       <a class="btn btn-primary" href="{{ relLangURL "join/" }}">{{ cond (eq $lang "zh") "申请加入" "Apply Now" }}</a>

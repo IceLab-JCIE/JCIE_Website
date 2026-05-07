@@ -6,7 +6,8 @@
     "description" (.Params.description | default "")
   ) }}
 
-  {{ $pubs := (index hugo.Data "publications").publications | default (slice) }}
+  {{ $pubsData := index hugo.Data "publications" | default (dict) }}
+  {{ $pubs := $pubsData.publications | default (slice) }}
   {{ $eda := sort (where $pubs "area" "EDA") "year" "desc" }}
   {{ $lca := sort (where $pubs "area" "LCA") "year" "desc" }}
 
