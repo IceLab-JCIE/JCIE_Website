@@ -29,7 +29,7 @@ Sheets required: `people`, `publications`, `projects`.
 
 GitHub Pages build:
 
-- If `data/site.xlsx` exists in the repo, GitHub Actions will automatically run the import step before `hugo --minify`.
+- If `xlsx/site.xlsx` exists in the repo, GitHub Actions will automatically run the import step before `hugo --minify`.
 
 ## Local Preview
 

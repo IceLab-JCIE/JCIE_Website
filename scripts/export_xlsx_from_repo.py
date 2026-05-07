@@ -131,7 +131,7 @@ def _write_sheet(ws, *, headers: List[str], rows: List[Dict[str, Any]]) -> None:
 def main(argv: List[str]) -> int:
     ap = argparse.ArgumentParser(description="Export repo YAML data to a single XLSX template.")
     ap.add_argument("--root", default=".", help="Repo root (default: current directory)")
-    ap.add_argument("--out", default="data/site.xlsx", help="Output XLSX path (default: data/site.xlsx)")
+    ap.add_argument("--out", default="xlsx/site.xlsx", help="Output XLSX path (default: xlsx/site.xlsx)")
     args = ap.parse_args(argv)
 
     root = Path(args.root).resolve()

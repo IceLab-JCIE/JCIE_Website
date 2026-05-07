@@ -371,8 +371,8 @@ def main(argv: List[str]) -> int:
     ap.add_argument(
         "xlsx",
         nargs="?",
-        default="data/site.xlsx",
-        help="Path to XLSX with sheets: people/publications/projects (default: data/site.xlsx)",
+        default="xlsx/site.xlsx",
+        help="Path to XLSX with sheets: people/publications/projects (default: xlsx/site.xlsx)",
     )
     ap.add_argument("--root", default=".", help="Repo root (default: current directory)")
     ap.add_argument(
