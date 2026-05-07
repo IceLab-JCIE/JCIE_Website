@@ -2,11 +2,11 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
 import yaml
-import sys
 
 
 def _strip(v: Any) -> str:
@@ -22,19 +22,71 @@ def _load_yaml(path: Path) -> Dict[str, Any]:
 def _norm_name(s: str) -> str:
     s = _strip(s).lower()
     # normalize common punctuation/spaces for matching
-    for ch in [".", ",", "’", "'", "\""]:
-        s = s.replace(ch, "")
+    for ch in [".", ",", "’", "'", "\"", "–", "-", "鈥?", "�"]:
+        s = s.replace(ch, " ")
     s = " ".join(s.split())
     return s
 
 
-def _build_people_sheet_rows(people_yaml: Dict[str, Any]) -> List[Dict[str, Any]]:
+def _split_semicolon(v: Any) -> List[str]:
+    s = _strip(v)
+    if not s:
+        return []
+    return [p.strip() for p in s.split(";") if p.strip()]
+
+
+def _parse_front_matter(md_text: str) -> Dict[str, Any]:
+    # Minimal Hugo front matter: --- yaml --- body
+    parts = md_text.split("---")
+    if len(parts) < 3:
+        return {}
+    fm = parts[1]
+    try:
+        data = yaml.safe_load(fm) or {}
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
+def _load_alumni_destinations(root: Path) -> Dict[str, Dict[str, str]]:
+    out: Dict[str, Dict[str, str]] = {}
+    alumni_dir = root / "content" / "alumni"
+    if not alumni_dir.exists():
+        return out
+    for path in alumni_dir.glob("*.md"):
+        if path.name.startswith("_index."):
+            continue
+        # filename: <id>.<lang>.md
+        stem = path.name[:-3]
+        if stem.endswith(".en"):
+            pid, lang = stem[:-3], "en"
+        elif stem.endswith(".zh"):
+            pid, lang = stem[:-3], "zh"
+        else:
+            continue
+        fm = _parse_front_matter(path.read_text(encoding="utf-8", errors="replace"))
+        dest = _strip(fm.get("destination"))
+        if not dest:
+            continue
+        out.setdefault(pid, {"en": "", "zh": ""})
+        out[pid][lang] = dest
+    return out
+
+
+def _build_people_sheet_rows(
+    people_yaml: Dict[str, Any],
+    *,
+    destinations: Dict[str, Dict[str, str]],
+    pub_ids_by_person: Dict[str, List[str]],
+) -> List[Dict[str, Any]]:
     people = people_yaml.get("people") or []
     rows: List[Dict[str, Any]] = []
     for p in people:
         name = p.get("name") or {}
         title = p.get("title") or {}
         bio = p.get("bio") or {}
+        dest = p.get("destination") or destinations.get(_strip(p.get("id")), {}) or {}
+        pub_ids = p.get("pub_ids") or pub_ids_by_person.get(_strip(p.get("id")), []) or []
         rows.append(
             {
                 "id": _strip(p.get("id")),
@@ -47,6 +99,9 @@ def _build_people_sheet_rows(people_yaml: Dict[str, Any]) -> List[Dict[str, Any]
                 "photo": _strip(p.get("photo")),
                 "bio_en": _strip(bio.get("en")),
                 "bio_zh": _strip(bio.get("zh")),
+                "destination_en": _strip(dest.get("en")),
+                "destination_zh": _strip(dest.get("zh")),
+                "pub_ids": ";".join([_strip(x) for x in pub_ids if _strip(x)]),
                 "is_outstanding": "TRUE" if p.get("is_outstanding") else "",
                 "outstanding_order": p.get("outstanding_order") or "",
             }
@@ -63,6 +118,33 @@ def _build_people_name_index(people_rows: List[Dict[str, Any]]) -> Dict[str, str
         if n:
             idx[n] = r["id"]
     return idx
+
+
+def _build_person_pub_ids_from_publications(
+    pub_rows: List[Dict[str, Any]], *, people_name_index: Dict[str, str]
+) -> Dict[str, List[str]]:
+    # person_id -> list of (year, pub_id)
+    tmp: Dict[str, List[Tuple[int, str]]] = {}
+    for r in pub_rows:
+        pub_id = _strip(r.get("id"))
+        year_val = r.get("year")
+        try:
+            year = int(year_val)
+        except Exception:
+            year = 0
+        for tok in _split_semicolon(r.get("authors")):
+            # authors column may contain person ids (preferred) or names
+            if tok in people_name_index.values():
+                tmp.setdefault(tok, []).append((year, pub_id))
+            else:
+                pid = people_name_index.get(_norm_name(tok))
+                if pid:
+                    tmp.setdefault(pid, []).append((year, pub_id))
+    out: Dict[str, List[str]] = {}
+    for pid, lst in tmp.items():
+        lst_sorted = sorted(lst, key=lambda t: (-t[0], t[1]))
+        out[pid] = [pub for _, pub in lst_sorted]
+    return out
 
 
 def _build_publications_sheet_rows(
@@ -141,11 +223,23 @@ def main(argv: List[str]) -> int:
     pubs_yaml = _load_yaml(root / "data" / "publications.yaml")
     projects_yaml = _load_yaml(root / "data" / "projects.yaml")
 
-    people_rows = _build_people_sheet_rows(people_yaml)
-    people_name_index = _build_people_name_index(people_rows)
+    # Build a name index from people.yaml (name_en -> id) for author/id substitution.
+    people_tmp_rows = []
+    for p in (people_yaml.get("people") or []):
+        name = p.get("name") or {}
+        people_tmp_rows.append({"id": _strip(p.get("id")), "name_en": _strip(name.get("en"))})
+    people_name_index = _build_people_name_index(people_tmp_rows)
 
     pub_rows = _build_publications_sheet_rows(pubs_yaml, people_name_index=people_name_index)
     proj_rows = _build_projects_sheet_rows(projects_yaml)
+    pub_ids_by_person = _build_person_pub_ids_from_publications(pub_rows, people_name_index=people_name_index)
+    destinations = _load_alumni_destinations(root)
+
+    people_rows = _build_people_sheet_rows(
+        people_yaml,
+        destinations=destinations,
+        pub_ids_by_person=pub_ids_by_person,
+    )
 
     try:
         import openpyxl  # type: ignore
@@ -170,6 +264,9 @@ def main(argv: List[str]) -> int:
         "photo",
         "bio_en",
         "bio_zh",
+        "destination_en",
+        "destination_zh",
+        "pub_ids",
         "is_outstanding",
         "outstanding_order",
     ]

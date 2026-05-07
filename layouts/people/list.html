@@ -1,6 +1,7 @@
 {{ define "main" }}
   {{ $lang := .Lang }}
   {{ $page := . }}
+
   {{ partial "section_heading.html" (dict
     "eyebrow" (cond (eq $lang "zh") "团队" "People")
     "title" (cond (eq $lang "zh") "团队成员" "Team Members")

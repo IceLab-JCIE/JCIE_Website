@@ -1,0 +1,75 @@
+{{ $person := .person }}
+{{ $lang := .lang }}
+{{ $page := .page }}
+{{ $pubIndex := .pubIndex }}
+
+{{ $name := "" }}
+{{ with $person.name }}
+  {{ $name = (index . $lang) | default (index . "en") | default "" }}
+{{ end }}
+
+{{ $photo := $person.photo }}
+{{ $photoSrc := "" }}
+{{ if $photo }}
+  {{ $photoSrc = relURL (strings.TrimPrefix "/" $photo) }}
+{{ end }}
+
+{{ $dest := "" }}
+{{ with $person.destination }}
+  {{ $dest = (index . $lang) | default "" }}
+{{ end }}
+
+{{ $pubIds := $person.pub_ids | default (slice) }}
+
+<article class="card" style="position:relative; overflow:hidden;">
+  <div style="position:absolute; right:-56px; top:-56px; width:112px; height:112px; border-radius:999px; background:rgba(15,23,42,0.05); filter:blur(18px);"></div>
+  <div style="position:relative;">
+    <div style="display:flex; gap:12px; align-items:center;">
+      {{ if $photoSrc }}
+        <img
+          src="{{ $photoSrc }}"
+          alt="{{ $name }}"
+          width="44"
+          height="44"
+          loading="lazy"
+          decoding="async"
+          style="width:44px;height:44px;flex:0 0 44px;border-radius:12px;background:#f1f5f9;object-fit:cover;"
+        >
+      {{ else }}
+        <div style="width:44px;height:44px;border-radius:12px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-weight:600;color:rgba(15,23,42,0.45);">
+          {{ if $name }}{{ slicestr $name 0 1 }}{{ else }}?{{ end }}
+        </div>
+      {{ end }}
+      <div style="min-width:0;">
+        <h3 style="margin:0; line-height:1.2;">{{ $name }}</h3>
+        {{ with $dest }}
+          <div class="tiny" style="margin-top:6px;">
+            <span class="tiny" style="font-weight:600; color:rgba(15,23,42,0.55);">{{ cond (eq $lang "zh") "去向" "Destination" }}:</span>
+            {{ . }}
+          </div>
+        {{ end }}
+      </div>
+    </div>
+
+    {{ if gt (len $pubIds) 0 }}
+      <div style="margin-top:12px; border:1px solid rgba(15,23,42,0.06); background:rgba(245,247,250,0.65); border-radius:14px; padding:12px;">
+        <div class="tiny" style="font-weight:600;">{{ cond (eq $lang "zh") "论文成果" "Publications" }}</div>
+        <ul style="margin:10px 0 0; padding-left:18px;">
+          {{ range $pubIds }}
+            {{ $pub := $pubIndex.Get . }}
+            {{ if $pub }}
+              <li class="small muted">
+                {{ if and $pub.link (ne $pub.link "#") }}
+                  <a href="{{ $pub.link }}" target="_blank" rel="noopener noreferrer">{{ $pub.title }}</a>
+                {{ else }}
+                  {{ $pub.title }}
+                {{ end }}
+                <span class="tiny"> — {{ $pub.venue }}, {{ $pub.year }}</span>
+              </li>
+            {{ end }}
+          {{ end }}
+        </ul>
+      </div>
+    {{ end }}
+  </div>
+</article>

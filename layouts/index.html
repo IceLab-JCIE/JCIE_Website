@@ -75,6 +75,13 @@
   {{ $page := . }}
   {{ $peopleData := index hugo.Data "people" | default (dict) }}
   {{ $people := $peopleData.people | default (slice) }}
+  {{ $pubData := index hugo.Data "publications" | default (dict) }}
+  {{ $pubs := $pubData.publications | default (slice) }}
+  {{ $pubIndex := newScratch }}
+  {{ range $pubs }}
+    {{ $pubIndex.Set .id . }}
+  {{ end }}
+
   {{ $outstanding := where $people "is_outstanding" true }}
   {{ $outstanding = where $outstanding "role" "member" }}
   {{ $outstanding = sort $outstanding "outstanding_order" "asc" }}
@@ -86,7 +93,7 @@
     ) }}
     <section class="grid-4" style="margin-top:18px;">
       {{ range (first 4 $outstanding) }}
-        {{ partial "people_card.html" (dict "page" $page "person" . "lang" $lang "compact" true) }}
+        {{ partial "outstanding_student_card.html" (dict "page" $page "person" . "lang" $lang "pubIndex" $pubIndex) }}
       {{ end }}
     </section>
   {{ end }}
