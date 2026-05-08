@@ -15,7 +15,14 @@
     <h3 class="font-display" style="margin:0; font-size:18px;">AI for EDA</h3>
     {{ if gt (len $eda) 0 }}
       <div style="margin-top:12px; display:flex; flex-direction:column; gap:12px;">
+        {{ $curYear := -1 }}
         {{ range $eda }}
+          {{ if ne .year $curYear }}
+            {{ $curYear = .year }}
+            <div class="tiny" style="margin-top:6px; font-weight:650; letter-spacing:0.06em; text-transform:uppercase; color:rgba(15,23,42,0.55);">
+              {{ $curYear }}
+            </div>
+          {{ end }}
           {{ partial "pub_data_card.html" (dict "pub" . "lang" $lang) }}
         {{ end }}
       </div>
@@ -30,7 +37,14 @@
     <h3 class="font-display" style="margin:0; font-size:18px;">AI for LCA</h3>
     {{ if gt (len $lca) 0 }}
       <div style="margin-top:12px; display:flex; flex-direction:column; gap:12px;">
+        {{ $curYear := -1 }}
         {{ range $lca }}
+          {{ if ne .year $curYear }}
+            {{ $curYear = .year }}
+            <div class="tiny" style="margin-top:6px; font-weight:650; letter-spacing:0.06em; text-transform:uppercase; color:rgba(15,23,42,0.55);">
+              {{ $curYear }}
+            </div>
+          {{ end }}
           {{ partial "pub_data_card.html" (dict "pub" . "lang" $lang) }}
         {{ end }}
       </div>
