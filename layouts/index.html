@@ -2,7 +2,8 @@
   {{ $p := .Params }}
   {{ $lang := .Lang }}
 
-  <section class="hero hero--split">
+  <section class="hero hero--split hero--mit">
+    {{ partial "hero_bg.html" . }}
     <div class="hero-grid">
       <div class="hero-inner">
         <h1>{{ $p.hero_title }}</h1>
