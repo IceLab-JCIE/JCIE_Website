@@ -1,24 +1,33 @@
 {{ $pub := .pub }}
 {{ $lang := .lang }}
 
+{{ $venue := $pub.venue | default "" }}
+{{ $year := $pub.year }}
+{{ $hasLink := and $pub.link (ne $pub.link "#") }}
+
 <article class="card">
   <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
-    <div>
+    <div style="min-width:0;">
       <h3 style="margin:0;">{{ $pub.title }}</h3>
+
+      {{ if or $venue $year }}
+        <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+          {{ with $venue }}<span class="badge badge--pub">{{ . }}</span>{{ end }}
+          {{ with $year }}<span class="badge">{{ . }}</span>{{ end }}
+        </div>
+      {{ end }}
+
       {{ if $pub.authors }}
         <div class="small muted" style="margin-top:10px;">
           {{ delimit $pub.authors ", " }}
         </div>
       {{ end }}
-      <div class="tiny" style="margin-top:6px;">
-        {{ if $pub.venue }}{{ $pub.venue }}{{ end }}{{ if and $pub.venue $pub.year }}, {{ end }}{{ $pub.year }}
-      </div>
     </div>
-    {{ if and $pub.link (ne $pub.link "#") }}
+
+    {{ if $hasLink }}
       <a class="btn btn-ghost" style="padding:8px 12px; border-radius:10px; font-size:12px;" href="{{ $pub.link }}" target="_blank" rel="noopener noreferrer">
         {{ cond (eq $lang "zh") "查看" "View" }}
       </a>
     {{ end }}
   </div>
 </article>
-
