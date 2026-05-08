@@ -15,44 +15,48 @@
 
 {{ $pubIds := $person.pub_ids | default (slice) }}
 
-<article class="card" style="position:relative; overflow:hidden;">
-  <div style="position:absolute; right:-56px; top:-56px; width:112px; height:112px; border-radius:999px; background:rgba(15,23,42,0.05); filter:blur(18px);"></div>
+<article class="card card--tint-blue" style="position:relative; overflow:hidden;">
+  <div style="position:absolute; right:-56px; top:-56px; width:112px; height:112px; border-radius:999px; background:rgba(11,95,255,0.10); filter:blur(18px);"></div>
   <div style="position:relative;">
-    <div>
-      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
-        <div style="min-width:0;">
-          <h3 style="margin:0; line-height:1.2;">{{ $name }}</h3>
-          {{ with $dest }}
-            <div class="tiny" style="margin-top:8px;">
-              <span class="tiny" style="font-weight:600; color:rgba(15,23,42,0.55);">{{ cond (eq $lang "zh") "去向" "Destination" }}:</span>
-              {{ . }}
-            </div>
-          {{ end }}
-        </div>
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
+      <div style="min-width:0;">
+        <h3 style="margin:0; line-height:1.2;">{{ $name }}</h3>
+        {{ with $dest }}
+          <div class="tiny" style="margin-top:8px;">
+            <span class="tiny" style="font-weight:650; color:rgba(15,23,42,0.55);">{{ cond (eq $lang "zh") "去向" "Destination" }}:</span>
+            {{ . }}
+          </div>
+        {{ end }}
       </div>
+    </div>
 
-      {{ if gt (len $pubIds) 0 }}
-        <div style="margin-top:14px; padding-top:14px; border-top:1px solid rgba(15,23,42,0.06);">
-          <div style="background:rgba(245,247,250,0.62); border-radius:14px; padding:12px;">
-            <div class="tiny" style="font-weight:600;">{{ cond (eq $lang "zh") "论文成果" "Publications" }}</div>
-            <ul style="margin:10px 0 0; padding-left:18px;">
-              {{ range $pubIds }}
-                {{ $pub := $pubIndex.Get . }}
-                {{ if $pub }}
-                  <li class="small muted">
+    {{ if gt (len $pubIds) 0 }}
+      <div style="margin-top:14px; padding-top:14px; border-top:1px solid rgba(15,23,42,0.06);">
+        <div style="background:rgba(255,255,255,0.55); border:1px solid rgba(148,163,184,0.28); border-radius:14px; padding:12px;">
+          <div class="tiny" style="font-weight:650;">{{ cond (eq $lang "zh") "论文成果" "Publications" }}</div>
+          <div style="margin-top:10px; display:flex; flex-direction:column; gap:8px;">
+            {{ range $pubIds }}
+              {{ $pub := $pubIndex.Get . }}
+              {{ if $pub }}
+                <div style="display:flex; gap:10px; align-items:flex-start; justify-content:space-between;">
+                  <div class="small muted" style="min-width:0;">
                     {{ if and $pub.link (ne $pub.link "#") }}
                       <a href="{{ $pub.link }}" target="_blank" rel="noopener noreferrer">{{ $pub.title }}</a>
                     {{ else }}
                       {{ $pub.title }}
                     {{ end }}
-                    <span class="tiny"> — {{ $pub.venue }}, {{ $pub.year }}</span>
-                  </li>
-                {{ end }}
+                  </div>
+                  <div style="flex:0 0 auto; display:flex; gap:8px; align-items:center;">
+                    {{ with $pub.venue }}<span class="badge badge--pub">{{ . }}</span>{{ end }}
+                    {{ with $pub.year }}<span class="badge">{{ . }}</span>{{ end }}
+                  </div>
+                </div>
               {{ end }}
-            </ul>
+            {{ end }}
           </div>
         </div>
-      {{ end }}
-    </div>
+      </div>
+    {{ end }}
   </div>
 </article>
+
