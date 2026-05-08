@@ -187,8 +187,8 @@ img[width][height] { height: auto; }
   position: relative;
   border-radius: 28px;
   border: 1px solid rgba(148, 163, 184, 0.35);
-  background: rgba(255,255,255,0.64);
-  box-shadow: var(--shadow);
+  background: rgba(255,255,255,0.72);
+  box-shadow: 0 34px 90px -78px rgba(2, 6, 23, 0.70);
   padding: 44px;
   overflow: hidden;
   backdrop-filter: blur(10px);
@@ -198,12 +198,12 @@ img[width][height] { height: auto; }
   content: "";
   position: absolute;
   inset: 0;
-  opacity: 0.14;
+  opacity: 0.22;
   background-image:
     radial-gradient(900px 520px at 15% 15%, rgba(11, 95, 255, 0.16), transparent 62%),
     radial-gradient(780px 520px at 85% 20%, rgba(20, 184, 166, 0.14), transparent 62%),
-    linear-gradient(to right, rgba(15, 23, 42, 0.10) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15, 23, 42, 0.10) 1px, transparent 1px);
+    linear-gradient(to right, rgba(15, 23, 42, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.08) 1px, transparent 1px);
   background-size: auto, auto, 44px 44px, 44px 44px;
   -webkit-mask-image: radial-gradient(ellipse at top, #000 0%, transparent 72%);
   mask-image: radial-gradient(ellipse at top, #000 0%, transparent 72%);
@@ -241,7 +241,7 @@ img[width][height] { height: auto; }
   width: min(440px, 100%);
   border-radius: 22px;
   border: 1px solid rgba(148, 163, 184, 0.38);
-  background: rgba(255,255,255,0.62);
+  background: rgba(239, 246, 255, 0.62);
   box-shadow: 0 28px 80px -70px rgba(2, 6, 23, 0.65);
   padding: 14px;
   position: relative;
@@ -253,13 +253,13 @@ img[width][height] { height: auto; }
   content: "";
   position: absolute;
   inset: 0;
-  opacity: 0.16;
+  opacity: 0.22;
   background-image:
-    radial-gradient(700px 520px at 20% 20%, rgba(11, 95, 255, 0.20), transparent 62%),
-    radial-gradient(520px 420px at 88% 12%, rgba(20, 184, 166, 0.18), transparent 62%),
-    linear-gradient(to right, rgba(15, 23, 42, 0.10) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15, 23, 42, 0.10) 1px, transparent 1px);
-  background-size: auto, auto, 40px 40px, 40px 40px;
+    radial-gradient(760px 520px at 20% 20%, rgba(11, 95, 255, 0.22), transparent 62%),
+    radial-gradient(560px 420px at 88% 12%, rgba(20, 184, 166, 0.20), transparent 62%),
+    linear-gradient(to right, rgba(15, 23, 42, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.08) 1px, transparent 1px);
+  background-size: auto, auto, 44px 44px, 44px 44px;
 }
 .hero-chip { position: relative; display:flex; justify-content:center; align-items:center; }
 .hero-chip svg { width: 100%; height: auto; display:block; }
@@ -333,11 +333,20 @@ img[width][height] { height: auto; }
 .card-icon--blue { color: rgba(11, 95, 255, 0.95); background: rgba(11, 95, 255, 0.07); border-color: rgba(11, 95, 255, 0.16); }
 .card-icon--teal { color: rgba(20, 184, 166, 0.95); background: rgba(20, 184, 166, 0.08); border-color: rgba(20, 184, 166, 0.18); }
 
+.overview-icon {
+  flex: 0 0 auto;
+  filter: drop-shadow(0 10px 18px rgba(2, 6, 23, 0.06));
+}
+.overview-icon--blue { color: rgba(11, 95, 255, 0.92); }
+.overview-icon--teal { color: rgba(20, 184, 166, 0.92); }
+
 .card--tint-blue {
   background: linear-gradient(180deg, rgba(11,95,255,0.045), rgba(255,255,255,0.92));
+  border-color: rgba(11,95,255,0.16);
 }
 .card--tint-teal {
   background: linear-gradient(180deg, rgba(20,184,166,0.050), rgba(255,255,255,0.92));
+  border-color: rgba(20,184,166,0.18);
 }
 .card--band {
   background:

@@ -22,13 +22,13 @@
   <section class="grid-2" style="margin-top:18px;">
     <div class="card card--tint-blue">
       <div class="card-head">
-        <div class="card-icon card-icon--blue" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <circle cx="12" cy="12" r="8"></circle>
-            <path d="M12 8v4l3 2"></path>
-            <path d="M12 4v2"></path>
-          </svg>
-        </div>
+        <svg class="overview-icon overview-icon--blue" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"></circle>
+          <circle cx="12" cy="12" r="5"></circle>
+          <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"></circle>
+          <path d="M20.5 3.5l-6.3 6.3"></path>
+          <path d="M16.9 3.2h3.9v3.9"></path>
+        </svg>
         <h3 class="font-display">{{ $p.mission_title }}</h3>
       </div>
       <div class="prose" style="margin-top:10px;">
@@ -37,12 +37,11 @@
     </div>
     <div class="card card--tint-teal">
       <div class="card-head">
-        <div class="card-icon card-icon--teal" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2c-3 4-5 6-5 10a5 5 0 0 0 10 0c0-4-2-6-5-10Z"></path>
-            <path d="M12 12v10"></path>
-          </svg>
-        </div>
+        <svg class="overview-icon overview-icon--teal" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 21v-7"></path>
+          <path d="M12 14c-1.8-2.2-4.5-3.1-7.5-2.6c.5 3 2.6 5.6 5.8 6.4c.9.2 1.6.2 1.7.2"></path>
+          <path d="M12 14c1.8-2.2 4.5-3.1 7.5-2.6c-.5 3-2.6 5.6-5.8 6.4c-.9.2-1.6.2-1.7.2"></path>
+        </svg>
         <h3 class="font-display">{{ $p.beliefs_title }}</h3>
       </div>
       <div class="prose" style="margin-top:10px;">
@@ -158,4 +157,3 @@
     </div>
   </section>
 {{ end }}
-
