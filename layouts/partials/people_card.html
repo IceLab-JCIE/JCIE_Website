@@ -27,44 +27,56 @@
   {{ $photoSrc = relURL (strings.TrimPrefix "/" $photo) }}
 {{ end }}
 
+{{ $initial := "?" }}
+{{ if $name }}
+  {{ $parts := split $name " " }}
+  {{ if ge (len $parts) 2 }}
+    {{ $initial = printf "%s%s" (slicestr (index $parts 0) 0 1) (slicestr (index $parts 1) 0 1) }}
+  {{ else }}
+    {{ $initial = slicestr $name 0 1 }}
+  {{ end }}
+{{ end }}
+
 {{ if $compact }}
   <article class="card">
-    {{ if $photoSrc }}
-      <img
-        src="{{ $photoSrc }}"
-        alt="{{ $name }}"
-        width="56"
-        height="56"
-        loading="lazy"
-        decoding="async"
-        style="width:56px;height:56px;flex:0 0 56px;border-radius:14px;background:#f1f5f9;object-fit:cover;"
-      >
-    {{ else }}
-      <div style="width:56px;height:56px;border-radius:14px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-weight:600;color:rgba(15,23,42,0.45);">
-        {{ if $name }}{{ slicestr $name 0 1 }}{{ else }}?{{ end }}
+    <div class="avatar {{ if not $photoSrc }}avatar--placeholder{{ end }}" aria-hidden="true">
+      <div class="avatar-inner">
+        {{ if $photoSrc }}
+          <img
+            src="{{ $photoSrc }}"
+            alt="{{ $name }}"
+            width="56"
+            height="56"
+            loading="lazy"
+            decoding="async"
+          >
+        {{ else }}
+          <span class="avatar-text">{{ $initial }}</span>
+        {{ end }}
       </div>
-    {{ end }}
+    </div>
     <h3 style="margin:12px 0 0;">{{ $name }}</h3>
     {{ with $joinYear }}<div class="tiny" style="margin-top:4px;">{{ . }}</div>{{ end }}
   </article>
 {{ else }}
   <article class="card">
     <div style="display:flex; gap:14px; align-items:flex-start;">
-      {{ if $photoSrc }}
-        <img
-          src="{{ $photoSrc }}"
-          alt="{{ $name }}"
-          width="56"
-          height="56"
-          loading="lazy"
-          decoding="async"
-          style="width:56px;height:56px;flex:0 0 56px;border-radius:14px;background:#f1f5f9;object-fit:cover;"
-        >
-      {{ else }}
-        <div style="width:56px;height:56px;border-radius:14px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-weight:600;color:rgba(15,23,42,0.45);">
-          {{ if $name }}{{ slicestr $name 0 1 }}{{ else }}?{{ end }}
+      <div class="avatar {{ if not $photoSrc }}avatar--placeholder{{ end }}" aria-hidden="true">
+        <div class="avatar-inner">
+          {{ if $photoSrc }}
+            <img
+              src="{{ $photoSrc }}"
+              alt="{{ $name }}"
+              width="56"
+              height="56"
+              loading="lazy"
+              decoding="async"
+            >
+          {{ else }}
+            <span class="avatar-text">{{ $initial }}</span>
+          {{ end }}
         </div>
-      {{ end }}
+      </div>
       <div style="flex:1;">
         <h3 style="margin:0;">{{ $name }}</h3>
         {{ with $title }}<div class="small muted" style="margin-top:4px;">{{ . }}</div>{{ end }}
