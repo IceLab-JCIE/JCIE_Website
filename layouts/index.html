@@ -19,9 +19,9 @@
 
   {{ partial "section_heading.html" (dict "eyebrow" $p.overview_eyebrow "title" $p.overview_title "description" $p.overview_description) }}
 
-  <section class="grid-2" style="margin-top:18px;">
-    <div class="home-panel home-panel--blue">
-      <div class="home-panel-head">
+  <section class="home-overview" style="margin-top:18px;">
+    <div class="home-overview-item">
+      <div class="home-overview-title">
         <svg class="overview-icon overview-icon--blue" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="12" cy="12" r="9"></circle>
           <circle cx="12" cy="12" r="5"></circle>
@@ -36,8 +36,8 @@
       </div>
     </div>
 
-    <div class="home-panel home-panel--teal">
-      <div class="home-panel-head">
+    <div class="home-overview-item home-overview-item--split">
+      <div class="home-overview-title">
         <svg class="overview-icon overview-icon--teal" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M12 21v-7"></path>
           <path d="M12 14c-1.8-2.2-4.5-3.1-7.5-2.6c.5 3 2.6 5.6 5.8 6.4c.9.2 1.6.2 1.7.2"></path>
@@ -46,7 +46,7 @@
         <h3 class="font-display" style="margin:0;">{{ $p.beliefs_title }}</h3>
       </div>
       <div class="prose" style="margin-top:10px;">
-        <ul>
+        <ul class="home-overview-list">
           {{ range $p.beliefs_items }}
             <li>{{ . }}</li>
           {{ end }}
@@ -169,4 +169,3 @@
     </div>
   </section>
 {{ end }}
-
