@@ -249,6 +249,7 @@ img[width][height] { height: auto; }
   gap: 28px;
   align-items: center;
 }
+.hero-grid--single { grid-template-columns: 1fr; }
 .hero-rule {
   width: 44px;
   height: 3px;
