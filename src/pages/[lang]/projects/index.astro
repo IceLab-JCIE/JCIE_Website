@@ -1,0 +1,59 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import { languages, t, type Lang } from "@/lib/i18n";
+import { getProjects } from "@/lib/data";
+import { langPath } from "@/lib/urls";
+
+export function getStaticPaths() {
+  return languages.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const projects = await getProjects();
+const eda = projects.filter((p) => p.area === "EDA");
+const lca = projects.filter((p) => p.area === "LCA");
+---
+
+<BaseLayout lang={lang} title={t(lang, "项目", "Projects")}>
+  <SectionHeading
+    eyebrow={t(lang, "项目", "Projects")}
+    title={t(lang, "研究项目", "Research Projects")}
+    description={t(lang, "真实问题，真实产出", "Real problems, real outputs")}
+  />
+
+  <section style="margin-top:18px;">
+    <h3 class="font-display" style="margin:0; font-size:18px;">AI for EDA</h3>
+    {eda.length ? (
+      <div class="grid-2" style="margin-top:12px;">
+        {eda.map((project) => <ProjectCard project={project} lang={lang} />)}
+      </div>
+    ) : (
+      <div class="card-muted" style="margin-top:12px; text-align:center;">
+        <div class="small muted">{t(lang, "EDA 项目待补充", "EDA projects to be added")}</div>
+      </div>
+    )}
+  </section>
+
+  <section style="margin-top:28px;">
+    <h3 class="font-display" style="margin:0; font-size:18px;">AI for LCA</h3>
+    {lca.length ? (
+      <div class="grid-2" style="margin-top:12px;">
+        {lca.map((project) => <ProjectCard project={project} lang={lang} />)}
+      </div>
+    ) : (
+      <div class="card-muted" style="margin-top:12px; text-align:center;">
+        <div class="small muted">{t(lang, "LCA 项目待补充", "LCA projects to be added")}</div>
+      </div>
+    )}
+  </section>
+
+  <section class="card-muted" style="margin-top:54px; text-align:center;">
+    <h3 class="font-display" style="margin:0;">{t(lang, "想参与这些项目？", "Want to work on these projects")}</h3>
+    <div class="small muted" style="margin-top:10px;">{t(lang, "加入后直接进入真实项目，我们没有练手期", "Join and enter real projects immediately, no sandbox period")}</div>
+    <div style="margin-top:14px;">
+      <a class="btn btn-primary" href={langPath(lang, "/join/")}>{t(lang, "申请加入", "Apply Now")}</a>
+    </div>
+  </section>
+</BaseLayout>

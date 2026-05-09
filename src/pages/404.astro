@@ -1,0 +1,12 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+---
+
+<BaseLayout lang="en" title="404">
+  <SectionHeading eyebrow="404" title="Page Not Found" description="The page you requested does not exist." />
+  <div class="card-muted" style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
+    <a class="btn btn-primary" href={import.meta.env.BASE_URL + "zh/"}>中文首页</a>
+    <a class="btn btn-ghost" href={import.meta.env.BASE_URL + "en/"}>English Home</a>
+  </div>
+</BaseLayout>

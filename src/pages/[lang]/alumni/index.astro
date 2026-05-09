@@ -1,0 +1,42 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import { languages, t, type Lang } from "@/lib/i18n";
+import { langPath } from "@/lib/urls";
+
+export function getStaticPaths() {
+  return languages.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const all = await getCollection("alumni");
+const items = all
+  .filter((e) => e.id.startsWith(`${lang}/`))
+  .sort((a, b) => a.data.name.localeCompare(b.data.name));
+
+function leafSlug(idOrSlug: string): string {
+  const parts = idOrSlug.split("/");
+  const last = parts[parts.length - 1] ?? "";
+  return last.replace(/\.md$/, "");
+}
+---
+
+<BaseLayout lang={lang} title={t(lang, "优秀成员", "Alumni")}>
+  <SectionHeading eyebrow={t(lang, "团队", "People")} title={t(lang, "优秀成员", "Alumni")} description="" />
+
+  {items.length ? (
+    <section style="margin-top:18px;" class="grid-2">
+      {items.map((it) => (
+        <a class="card" href={langPath(lang, `/alumni/${leafSlug(it.slug)}/`)}>
+          <h3>{it.data.name}</h3>
+          {it.data.destination ? <div class="small muted" style="margin-top:10px;">{t(lang, "去向", "Destination")}: {it.data.destination}</div> : null}
+        </a>
+      ))}
+    </section>
+  ) : (
+    <div class="card-muted" style="margin-top:18px; text-align:center;">
+      <div class="small muted">{t(lang, "暂无内容", "Nothing yet")}</div>
+    </div>
+  )}
+</BaseLayout>

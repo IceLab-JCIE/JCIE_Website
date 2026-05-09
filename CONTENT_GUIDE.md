@@ -1,14 +1,14 @@
-# JCIE 网站内容维护指南（Hugo + 1 个 XLSX 驱动）
+# JCIE 网站内容维护指南（Astro + 1 个 XLSX 驱动）
 
 ## 一句话
-- 日常只需要修改 `xlsx/site.xlsx`，push 到 GitHub 后会在 CI 中自动解析并生成 `data/*.yaml`，再由 Hugo 构建部署。
-- `News` / `Join` / 首页文案仍然用 `content/**/*.md` 手写维护。
+- 日常只需要修改 `xlsx/site.xlsx`，push 到 GitHub 后会在 CI 中自动解析并生成 `data/*.yaml`，再由 Astro 构建部署。
+- `News` / `Join` / 首页文案用 `src/content/**/*.md` 手写维护。
 
 ## 哪些内容改哪里
 - 全站基础信息（站点名、联系邮箱、SEO 等）：`data/site.yaml`（手写）
-- 首页文案（Hero/Overview/Research 等）：`content/_index.zh.md`、`content/_index.en.md`
-- Join 页面：`content/join/_index.zh.md`、`content/join/_index.en.md`（正文可写 `{{contactEmail}}`，构建时会替换成 `data/site.yaml` 的值）
-- News：`content/news/*.md`（每条新闻一个 Markdown 文件）
+- 首页文案（Hero/Overview/Research 等）：`src/content/home/zh.md`、`src/content/home/en.md`
+- Join 页面：`src/content/join/zh.md`、`src/content/join/en.md`（正文可写 `{{contactEmail}}`，构建时会替换成 `data/site.yaml` 的值）
+- News：`src/content/news/<lang>/*.md`（每条新闻一个 Markdown 文件）
 - People / Publications / Projects：只改 `xlsx/site.xlsx`（不要直接改 `data/people.yaml`、`data/publications.yaml`、`data/projects.yaml`）
 
 ## XLSX 规范（`xlsx/site.xlsx`）
@@ -59,4 +59,3 @@
 ## 本地可选操作（一般不需要）
 如需在本地预览前先生成 YAML（CI 中会自动做）：
 - `python scripts/import_xlsx.py xlsx/site.xlsx --root .`
-

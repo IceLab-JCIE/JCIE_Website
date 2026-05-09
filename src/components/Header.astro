@@ -1,0 +1,47 @@
+---
+import type { Lang } from "../lib/i18n";
+import { navItems, t } from "../lib/i18n";
+import { getSite } from "../lib/data";
+import { langPath, stripBase, withBase } from "../lib/urls";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+
+type Props = {
+  lang: Lang;
+  alternateHref?: string;
+};
+
+const { lang, alternateHref } = Astro.props;
+const site = await getSite();
+const here = stripBase(Astro.url.pathname);
+
+function isActive(key: string, href: string): boolean {
+  const hrefNoBase = stripBase(href);
+  if (here === hrefNoBase) return true;
+  if (key === "home") return false;
+  return here.startsWith(hrefNoBase);
+}
+---
+
+<header class="topbar">
+  <div class="container">
+    <div class="topbar-inner">
+      <a class="brand" href={langPath(lang, "/")}>
+        <span class="brand-title">{site.shortName ?? site.name}</span>
+        <span class="brand-sub">{site.meta?.tagline?.[lang] ?? ""}</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        {navItems.map((it) => {
+          const href = langPath(lang, it.path);
+          return (
+            <a href={href} class={isActive(it.key, href) ? "active" : undefined}>
+              {t(lang, it.labelZh, it.labelEn)}
+            </a>
+          );
+        })}
+        <LanguageSwitcher lang={lang} alternateHref={alternateHref ? withBase(alternateHref) : undefined} />
+      </nav>
+    </div>
+  </div>
+</header>
+

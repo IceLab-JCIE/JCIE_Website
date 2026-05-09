@@ -1,0 +1,73 @@
+<div class="hero-bg" aria-hidden="true">
+  <svg viewBox="0 0 1200 520" preserveAspectRatio="none">
+    <defs>
+      <filter id="hbBlur" x="-10%" y="-10%" width="120%" height="120%">
+        <feGaussianBlur stdDeviation="3.2" />
+      </filter>
+      <linearGradient id="hbCircuit" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="rgba(11,95,255,0.38)" />
+        <stop offset="60%" stop-color="rgba(11,95,255,0.10)" />
+        <stop offset="100%" stop-color="rgba(11,95,255,0.02)" />
+      </linearGradient>
+      <linearGradient id="hbClover" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="rgba(20,184,166,0.34)" />
+        <stop offset="70%" stop-color="rgba(20,184,166,0.10)" />
+        <stop offset="100%" stop-color="rgba(20,184,166,0.02)" />
+      </linearGradient>
+      <pattern id="hbMicroGrid" width="14" height="14" patternUnits="userSpaceOnUse">
+        <path d="M14 0H0V14" fill="none" stroke="rgba(15,23,42,0.03)" stroke-width="1" />
+      </pattern>
+    </defs>
+
+    <rect x="0" y="0" width="1200" height="520" fill="url(#hbMicroGrid)" opacity="0.8" />
+
+    <g
+      filter="url(#hbBlur)"
+      opacity="0.55"
+      fill="none"
+      stroke="url(#hbCircuit)"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M40 120 H260 C300 120 320 140 320 180 V220 C320 260 340 280 380 280 H520" />
+      <path d="M60 230 H220 C250 230 270 210 270 180 V160" />
+      <path d="M180 70 V150 C180 190 200 210 240 210 H300" />
+      <path d="M520 90 H680 C720 90 740 110 740 150 V210 C740 250 760 270 800 270 H1040" />
+      <path d="M620 320 H760 C800 320 820 300 820 260 V210" />
+      <path d="M900 150 V220 C900 260 880 280 840 280 H760" />
+      <path d="M980 380 H1160" />
+      <path d="M980 380 V240 C980 210 960 190 930 190 H820" />
+
+      <path d="M420 280 V360 C420 390 400 410 370 410 H220" />
+      <path d="M740 210 H640 C610 210 590 230 590 260 V320" />
+    </g>
+
+    <g opacity="0.22" fill="rgba(11,95,255,0.55)">
+      <circle cx="320" cy="180" r="3.5" />
+      <circle cx="520" cy="280" r="3.5" />
+      <circle cx="740" cy="150" r="3.5" />
+      <circle cx="740" cy="210" r="3.5" />
+      <circle cx="980" cy="240" r="3.5" />
+      <circle cx="980" cy="380" r="3.5" />
+      <circle cx="420" cy="280" r="3.5" />
+      <circle cx="590" cy="320" r="3.5" />
+    </g>
+
+    <g filter="url(#hbBlur)" opacity="0.55">
+      <g fill="url(#hbClover)">
+        <circle cx="1010" cy="120" r="64" />
+        <circle cx="1080" cy="120" r="64" />
+        <circle cx="1045" cy="62" r="64" />
+      </g>
+      <path
+        d="M1045 150 C1042 210 1010 250 950 290"
+        fill="none"
+        stroke="rgba(20,184,166,0.22)"
+        stroke-width="6"
+        stroke-linecap="round"
+      />
+    </g>
+  </svg>
+</div>
+

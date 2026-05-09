@@ -1,0 +1,33 @@
+---
+import type { Lang } from "../lib/i18n";
+import { t } from "../lib/i18n";
+import type { Project } from "../lib/data";
+
+type Props = { project: Project; lang: Lang };
+const { project, lang } = Astro.props;
+
+const title = project.title?.[lang] ?? "";
+const summary = project.summary?.[lang] ?? "";
+const lead = project.lead?.[lang] ?? "";
+const isOngoing = project.status === "ongoing";
+const status = t(lang, isOngoing ? "进行中" : "已完成", isOngoing ? "Ongoing" : "Completed");
+const hasLink = Boolean(project.github && project.github !== "#");
+const badgeClass = isOngoing ? "badge badge--ongoing" : "badge badge--completed";
+---
+
+<article class="card">
+  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
+    <div>
+      <div class={badgeClass}>{status}</div>
+      <h3 style="margin:10px 0 0;">{title}</h3>
+      <div class="small muted" style="margin-top:10px;">{summary}</div>
+      {lead ? <div class="tiny" style="margin-top:10px;">{t(lang, "负责人", "Lead")}: {lead}</div> : null}
+    </div>
+    {hasLink ? (
+      <a class="btn btn-ghost" style="padding:8px 12px; border-radius:10px; font-size:12px;" href={project.github} target="_blank" rel="noopener noreferrer">
+        GitHub
+      </a>
+    ) : null}
+  </div>
+</article>
+

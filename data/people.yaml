@@ -128,7 +128,7 @@ people:
       - "dac-2024-every-failure"
       - "dac-2024-kato"
     is_outstanding: true
-    outstanding_order: 2
+    outstanding_order: 3
   -
     id: "weilun-xie"
     role: "member"
@@ -181,7 +181,7 @@ people:
     pub_ids:
       - "iccad-2024-aro"
     is_outstanding: true
-    outstanding_order: 3
+    outstanding_order: 4
   -
     id: "zhuohua-liu"
     role: "member"
@@ -201,4 +201,4 @@ people:
       - "iseda-2025-design-space-folding"
       - "dac-2024-kato"
     is_outstanding: true
-    outstanding_order: 4
+    outstanding_order: 2

@@ -13,10 +13,13 @@
 # testing
 /coverage
 
-# hugo
-/public/
+# hugo (legacy)
 /resources/
 .hugo_build.lock
+
+# astro
+/dist/
+/.astro/
 
 # production
 /build

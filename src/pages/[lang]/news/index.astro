@@ -1,0 +1,52 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import { languages, t, type Lang } from "@/lib/i18n";
+import { langPath } from "@/lib/urls";
+
+export function getStaticPaths() {
+  return languages.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const all = await getCollection("news");
+const posts = all
+  .filter((e) => e.id.startsWith(`${lang}/`))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+function leafSlug(idOrSlug: string): string {
+  const parts = idOrSlug.split("/");
+  const last = parts[parts.length - 1] ?? "";
+  return last.replace(/\.md$/, "");
+}
+---
+
+<BaseLayout lang={lang} title={t(lang, "动态", "News")}>
+  <SectionHeading eyebrow={t(lang, "动态", "News")} title={t(lang, "新闻动态", "News")} description="" />
+
+  {posts.length ? (
+    <section style="margin-top:18px; display:flex; flex-direction:column; gap:12px;">
+      {posts.map((post) => (
+        <article class="card">
+          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
+            <div>
+              <h3 style="margin:0;">
+                <a href={langPath(lang, `/news/${leafSlug(post.slug)}/`)}>{post.data.title}</a>
+              </h3>
+              <div class="tiny" style="margin-top:6px;">{post.data.date.toISOString().slice(0, 10)}</div>
+              {post.data.summary ? <div class="small muted" style="margin-top:10px;">{post.data.summary}</div> : null}
+            </div>
+            <a class="btn btn-ghost" style="padding:8px 12px; border-radius:10px; font-size:12px;" href={langPath(lang, `/news/${leafSlug(post.slug)}/`)}>
+              {t(lang, "阅读", "Read")}
+            </a>
+          </div>
+        </article>
+      ))}
+    </section>
+  ) : (
+    <div class="card-muted" style="margin-top:18px; text-align:center;">
+      <div class="small muted">{t(lang, "动态待补充", "News to be added")}</div>
+    </div>
+  )}
+</BaseLayout>

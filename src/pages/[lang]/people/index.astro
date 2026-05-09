@@ -1,0 +1,51 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import PersonCard from "@/components/PersonCard.astro";
+import { languages, t, type Lang } from "@/lib/i18n";
+import { getPeople } from "@/lib/data";
+import { langPath } from "@/lib/urls";
+
+export function getStaticPaths() {
+  return languages.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const people = await getPeople();
+const mentor = people.filter((p) => p.role === "mentor");
+const members = people.filter((p) => p.role !== "mentor");
+---
+
+<BaseLayout lang={lang} title={t(lang, "成员", "People")}>
+  <SectionHeading eyebrow={t(lang, "团队", "People")} title={t(lang, "团队成员", "Team Members")} description={t(lang, "导师 / 成员", "Mentor / Members")} />
+
+  {mentor.length ? (
+    <section style="margin-top:18px;">
+      <h3 class="font-display" style="margin:0; font-size:18px;">{t(lang, "导师", "Mentor")}</h3>
+      <div class="grid-2" style="margin-top:12px;">
+        {mentor.map((person) => <PersonCard person={person} lang={lang} compact={false} />)}
+      </div>
+    </section>
+  ) : null}
+
+  <section style="margin-top:28px;">
+    <h3 class="font-display" style="margin:0; font-size:18px;">{t(lang, "成员", "Members")}</h3>
+    {members.length ? (
+      <div class="grid-4" style="margin-top:12px;">
+        {members.map((person) => <PersonCard person={person} lang={lang} compact />)}
+      </div>
+    ) : (
+      <div class="card-muted" style="margin-top:12px; text-align:center;">
+        <div class="small muted">{t(lang, "成员待补充", "Members to be added")}</div>
+      </div>
+    )}
+  </section>
+
+  <section class="card-muted" style="margin-top:54px; text-align:center;">
+    <h3 class="font-display" style="margin:0;">{t(lang, "想成为下一个 JCIE 成员", "Want to become a JCIE member")}</h3>
+    <div class="small muted" style="margin-top:10px;">{t(lang, "我们欢迎有想法、愿意自驱的同学", "We welcome students with ambition and self-drive")}</div>
+    <div style="margin-top:14px;">
+      <a class="btn btn-primary" href={langPath(lang, "/join/")}>{t(lang, "申请加入", "Apply Now")}</a>
+    </div>
+  </section>
+</BaseLayout>

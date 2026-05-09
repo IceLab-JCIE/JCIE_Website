@@ -1,0 +1,37 @@
+---
+import type { Lang } from "../lib/i18n";
+import { t } from "../lib/i18n";
+import type { Publication } from "../lib/data";
+
+type Props = { pub: Publication; lang: Lang };
+const { pub, lang } = Astro.props;
+
+const venue = pub.venue ?? "";
+const year = pub.year;
+const hasLink = Boolean(pub.link && pub.link !== "#");
+const authors = pub.authors ?? [];
+---
+
+<article class="card">
+  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
+    <div style="min-width:0;">
+      <h3 style="margin:0;">{pub.title}</h3>
+
+      {(venue || year) ? (
+        <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+          {venue ? <span class="badge badge--pub">{venue}</span> : null}
+          {year ? <span class="badge">{year}</span> : null}
+        </div>
+      ) : null}
+
+      {authors.length ? <div class="small muted" style="margin-top:10px;">{authors.join(", ")}</div> : null}
+    </div>
+
+    {hasLink ? (
+      <a class="btn btn-ghost" style="padding:8px 12px; border-radius:10px; font-size:12px;" href={pub.link} target="_blank" rel="noopener noreferrer">
+        {t(lang, "查看", "View")}
+      </a>
+    ) : null}
+  </div>
+</article>
+

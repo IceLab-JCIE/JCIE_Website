@@ -40,17 +40,17 @@ jobs:
             echo "xlsx/site.xlsx not found; skipping XLSX import."
           fi
 
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v3
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          hugo-version: '0.161.1'
-          extended: true
+          node-version: '20'
+          cache: 'npm'
 
-      - name: Hugo Version
-        run: hugo version
+      - name: Install dependencies
+        run: npm ci
 
       - name: Build
-        run: hugo --minify
+        run: npm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -58,7 +58,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
-          path: './public'
+          path: './dist'
 
   deploy:
     if: github.ref == 'refs/heads/master'

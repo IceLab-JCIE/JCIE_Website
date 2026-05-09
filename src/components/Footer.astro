@@ -1,0 +1,30 @@
+---
+import type { Lang } from "../lib/i18n";
+import { getSite } from "../lib/data";
+
+type Props = { lang: Lang };
+const { lang } = Astro.props;
+const site = await getSite();
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-row">
+      <div>
+        <div>
+          <strong>{site.shortName ?? site.name}</strong> · {site.fullName?.[lang] ?? ""}
+        </div>
+        <div class="tiny">© {year} {site.name}</div>
+      </div>
+      <div>
+        {site.contactEmail ? <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a> : null}
+        <span> · </span>
+        {site.githubUrl ? (
+          <a href={site.githubUrl} target="_blank" rel="noopener noreferrer">GitHub</a>
+        ) : null}
+      </div>
+    </div>
+  </div>
+</footer>
+

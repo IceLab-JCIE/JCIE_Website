@@ -1,0 +1,59 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import { languages, t, type Lang } from "@/lib/i18n";
+import { langPath } from "@/lib/urls";
+
+export async function getStaticPaths() {
+  const all = await getCollection("alumni");
+  const paths = [];
+  for (const lang of languages) {
+    const entries = all.filter((e) => e.id.startsWith(`${lang}/`));
+    for (const entry of entries) {
+      const slug = entry.slug.split("/").pop() ?? entry.slug;
+      paths.push({ params: { lang, slug }, props: { entry } });
+    }
+  }
+  return paths;
+}
+
+const lang = Astro.params.lang as Lang;
+const { entry } = Astro.props as { entry: Awaited<ReturnType<typeof getCollection>>[number] };
+
+const other = lang === "zh" ? "en" : "zh";
+const all = await getCollection("alumni");
+const leaf = entry.slug.split("/").pop() ?? entry.slug;
+const otherExists = all.some((e) => e.id === `${other}/${leaf}.md` || e.id === `${other}/${leaf}`);
+const alternateHref = otherExists ? `/${other}/alumni/${leaf}/` : undefined;
+---
+
+<BaseLayout lang={lang} title={entry.data.name} alternateHref={alternateHref}>
+  <SectionHeading
+    eyebrow={t(lang, "优秀成员", "Alumni")}
+    title={entry.data.name}
+    description={entry.data.destination ? `${t(lang, "去向", "Destination")}: ${entry.data.destination}` : ""}
+  />
+
+  <div style="margin-top:14px;">
+    <a class="tiny" href={langPath(lang, "/alumni/")}>{t(lang, "→ 返回列表", "→ Back to Alumni")}</a>
+  </div>
+
+  <section class="card prose" style="margin-top:18px;">
+    {entry.data.publications?.length ? (
+      <>
+        <h2>{t(lang, "论文成果", "Publications")}</h2>
+        <ul>
+          {entry.data.publications.map((pub: { title: string; venue?: string; year?: number; link?: string }) => (
+            <li>
+              {pub.link ? <a href={pub.link} target="_blank" rel="noopener noreferrer">{pub.title}</a> : pub.title}
+              {pub.venue || pub.year ? <span class="tiny"> ({[pub.venue, pub.year].filter(Boolean).join(", ")})</span> : null}
+            </li>
+          ))}
+        </ul>
+      </>
+    ) : (
+      <div class="small muted">{t(lang, "暂无内容", "Nothing yet")}</div>
+    )}
+  </section>
+</BaseLayout>
