@@ -1,0 +1,169 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import OutstandingStudentCard from "@/components/OutstandingStudentCard.astro";
+import HeroBg from "@/components/HeroBg.astro";
+import { languages, t, type Lang } from "@/lib/i18n";
+import { getPeople, getPublications, indexById } from "@/lib/data";
+import { langPath } from "@/lib/urls";
+
+export function getStaticPaths() {
+  return languages.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+
+const homeEntries = await getCollection("home");
+const home = homeEntries.find((e) => e.slug === lang);
+if (!home) throw new Error(`Missing home content for lang=${lang}`);
+
+const p = home.data;
+const people = await getPeople();
+const pubs = await getPublications();
+const pubIndex = indexById(pubs);
+
+const outstanding = people
+  .filter((x) => x.role === "member" && x.is_outstanding)
+  .sort((a, b) => (a.outstanding_order ?? 999) - (b.outstanding_order ?? 999))
+  .slice(0, 4);
+---
+
+<BaseLayout lang={lang}>
+  <section class="hero hero--split hero--mit">
+    <HeroBg />
+    <div class="hero-grid hero-grid--single">
+      <div class="hero-inner">
+        <h1>{p.hero_title}</h1>
+        <div class="hero-rule" aria-hidden="true"></div>
+        <p>{p.hero_lead}</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href={langPath(lang, "/join/")}>{p.hero_cta_primary}</a>
+          <a class="btn btn-ghost" href={langPath(lang, "/people/")}>{p.hero_cta_secondary}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SectionHeading eyebrow={p.overview_eyebrow} title={p.overview_title} description={p.overview_description} />
+
+  <section class="home-overview" style="margin-top:18px;">
+    <div class="home-overview-item">
+      <div class="home-overview-title">
+        <h3 class="font-display" style="margin:0;">{p.mission_title}</h3>
+      </div>
+      <div class="prose" style="margin-top:10px;">
+        <p>{p.mission_body}</p>
+      </div>
+    </div>
+
+    <div class="home-overview-item home-overview-item--split">
+      <div class="home-overview-title">
+        <h3 class="font-display" style="margin:0;">{p.beliefs_title}</h3>
+      </div>
+      <div class="prose" style="margin-top:10px;">
+        <ul class="home-overview-list">
+          {p.beliefs_items.map((it: string) => <li>{it}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <SectionHeading eyebrow={p.research_eyebrow} title={p.research_title} description={p.research_description} />
+
+  <section class="grid-2" style="margin-top:18px;">
+    <div class="home-track home-track--blue">
+      <div class="home-track-head">
+        <div class="home-track-left">
+          <div class="home-track-icon home-track-icon--blue" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <rect x="6" y="6" width="12" height="12" rx="2"></rect>
+              <path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"></path>
+            </svg>
+          </div>
+          <div style="min-width:0;">
+            <h3 class="font-display" style="margin:0;">{p.track_eda_title}</h3>
+            <div class="small muted" style="margin-top:6px;">{p.track_eda_description}</div>
+          </div>
+        </div>
+        <span class="chip chip--blue">{t(lang, "电路设计", "Circuit Design")}</span>
+      </div>
+      <div class="prose" style="margin-top:12px;">
+        <ul>
+          {p.track_eda_items.map((it: string) => <li>{it}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="home-track home-track--teal">
+      <div class="home-track-head">
+        <div class="home-track-left">
+          <div class="home-track-icon home-track-icon--teal" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2c4 4 7 7 7 11a7 7 0 0 1-14 0c0-4 3-7 7-11Z"></path>
+              <path d="M12 13c1.5 1.6 2.2 2.6 2.2 4.0A2.2 2.2 0 0 1 10 17c0-1.4.7-2.4 2-4Z"></path>
+            </svg>
+          </div>
+          <div style="min-width:0;">
+            <h3 class="font-display" style="margin:0;">{p.track_lca_title}</h3>
+            <div class="small muted" style="margin-top:6px;">{p.track_lca_description}</div>
+          </div>
+        </div>
+        <span class="chip chip--teal">{t(lang, "可持续", "Sustainability")}</span>
+      </div>
+      <div class="prose" style="margin-top:12px;">
+        <ul>
+          {p.track_lca_items.map((it: string) => <li>{it}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <SectionHeading eyebrow={p.publications_eyebrow} title={p.publications_title} description={p.publications_description} />
+  <section style="margin-top:18px;">
+    <div class="home-cta home-cta--blue">
+      <div class="home-cta-inner">
+        <div class="home-cta-left">
+          <div class="home-cta-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 3h10v18H7z"></path>
+              <path d="M9 7h6"></path>
+              <path d="M9 11h6"></path>
+              <path d="M9 15h4"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="small muted">{p.publications_card_text}</div>
+            <div class="tiny" style="margin-top:8px;">{t(lang, "查看完整列表获取更多细节", "See the full list for details")}</div>
+          </div>
+        </div>
+        <div class="home-cta-right">
+          <a class="btn btn-ghost" href={langPath(lang, "/publications/")}>{p.publications_card_button}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {outstanding.length ? (
+    <>
+      <SectionHeading
+        eyebrow={t(lang, "成果", "Achievements")}
+        title={t(lang, "优秀学生", "Outstanding Students")}
+        description={t(lang, "部分优秀成员展示", "Selected outstanding members")}
+      />
+      <section class="grid-2" style="margin-top:18px;">
+        {outstanding.map((person) => (
+          <OutstandingStudentCard person={person} lang={lang} pubIndex={pubIndex} />
+        ))}
+      </section>
+    </>
+  ) : null}
+
+  <section class="card-muted" style="margin-top:54px; text-align:center;">
+    <h3 class="font-display" style="margin:0;">{p.join_cta_title}</h3>
+    <div class="small muted" style="margin-top:10px;">{p.join_cta_body}</div>
+    <div style="margin-top:14px;">
+      <a class="btn btn-primary" href={langPath(lang, "/join/")}>{p.join_cta_button}</a>
+    </div>
+  </section>
+</BaseLayout>

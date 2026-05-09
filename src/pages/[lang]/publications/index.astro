@@ -1,0 +1,80 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import PublicationCard from "@/components/PublicationCard.astro";
+import { languages, t, type Lang } from "@/lib/i18n";
+import { getPublications } from "@/lib/data";
+
+export function getStaticPaths() {
+  return languages.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const pubs = await getPublications();
+const eda = pubs.filter((p) => p.area === "EDA").sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
+const lca = pubs.filter((p) => p.area === "LCA").sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
+---
+
+<BaseLayout lang={lang} title={t(lang, "论文", "Publications")}>
+  <SectionHeading eyebrow={t(lang, "论文", "Publications")} title={t(lang, "发表论文", "Published Papers")} description="" />
+
+  <section style="margin-top:18px;">
+    <h3 class="font-display" style="margin:0; font-size:18px;">AI for EDA</h3>
+    {eda.length ? (
+      <div style="margin-top:12px; display:flex; flex-direction:column; gap:12px;">
+        {(() => {
+          let curYear = -1;
+          return eda.map((pub) => {
+            const year = pub.year ?? -1;
+            const header = year !== curYear ? (
+              <div class="tiny" style="margin-top:6px; font-weight:650; letter-spacing:0.06em; text-transform:uppercase; color:rgba(15,23,42,0.55);">
+                {year}
+              </div>
+            ) : null;
+            curYear = year;
+            return (
+              <>
+                {header}
+                <PublicationCard pub={pub} lang={lang} />
+              </>
+            );
+          });
+        })()}
+      </div>
+    ) : (
+      <div class="card-muted" style="margin-top:12px; text-align:center;">
+        <div class="small muted">{t(lang, "EDA 论文待补充", "EDA publications to be added")}</div>
+      </div>
+    )}
+  </section>
+
+  <section style="margin-top:28px;">
+    <h3 class="font-display" style="margin:0; font-size:18px;">AI for LCA</h3>
+    {lca.length ? (
+      <div style="margin-top:12px; display:flex; flex-direction:column; gap:12px;">
+        {(() => {
+          let curYear = -1;
+          return lca.map((pub) => {
+            const year = pub.year ?? -1;
+            const header = year !== curYear ? (
+              <div class="tiny" style="margin-top:6px; font-weight:650; letter-spacing:0.06em; text-transform:uppercase; color:rgba(15,23,42,0.55);">
+                {year}
+              </div>
+            ) : null;
+            curYear = year;
+            return (
+              <>
+                {header}
+                <PublicationCard pub={pub} lang={lang} />
+              </>
+            );
+          });
+        })()}
+      </div>
+    ) : (
+      <div class="card-muted" style="margin-top:12px; text-align:center;">
+        <div class="small muted">{t(lang, "LCA 论文待补充", "LCA publications to be added")}</div>
+      </div>
+    )}
+  </section>
+</BaseLayout>

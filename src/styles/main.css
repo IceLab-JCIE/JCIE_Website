@@ -134,10 +134,28 @@ img[width][height] { height: auto; }
   position: sticky;
   top: 0;
   z-index: 20;
+  overflow: hidden;
+  isolation: isolate;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  background: rgba(255,255,255,0.70);
+  background: rgba(255,255,255,0.72);
   border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}
+.topbar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  background-image:
+    radial-gradient(900px 320px at 18% 10%, rgba(11, 95, 255, 0.18), transparent 62%),
+    radial-gradient(760px 300px at 82% 0%, rgba(20, 184, 166, 0.14), transparent 62%),
+    linear-gradient(to right, rgba(15, 23, 42, 0.10) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.10) 1px, transparent 1px);
+  background-size: auto, auto, 44px 44px, 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse at top, #000 0%, transparent 74%);
+  mask-image: radial-gradient(ellipse at top, #000 0%, transparent 74%);
+  z-index: 0;
 }
 .topbar-inner {
   display: flex;
@@ -145,6 +163,8 @@ img[width][height] { height: auto; }
   justify-content: space-between;
   padding: 14px 0;
   gap: 16px;
+  position: relative;
+  z-index: 1;
 }
 .brand {
   display: flex;

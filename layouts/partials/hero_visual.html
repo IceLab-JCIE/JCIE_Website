@@ -1,0 +1,118 @@
+<div class="hero-visual">
+  <div class="hero-visual-inner">
+    <div class="hero-chip" aria-hidden="true">
+      <svg viewBox="0 0 420 320" width="420" height="320" role="img" aria-label="">
+        <defs>
+          <linearGradient id="hv_bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="rgba(11,95,255,0.10)"/>
+            <stop offset="55%" stop-color="rgba(42,124,255,0.08)"/>
+            <stop offset="100%" stop-color="rgba(20,184,166,0.08)"/>
+          </linearGradient>
+          <linearGradient id="hv_chip" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="rgba(11,95,255,0.96)"/>
+            <stop offset="100%" stop-color="rgba(20,184,166,0.92)"/>
+          </linearGradient>
+          <filter id="hv_shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="rgba(2,6,23,0.22)"/>
+          </filter>
+          <filter id="hv_glow" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="6" result="b"/>
+            <feColorMatrix in="b" type="matrix" values="
+              1 0 0 0 0
+              0 1 0 0 0
+              0 0 1 0 0
+              0 0 0 0.55 0" result="o"/>
+            <feMerge>
+              <feMergeNode in="o"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- board -->
+        <rect x="18" y="18" width="384" height="284" rx="26" fill="url(#hv_bg)" stroke="rgba(148,163,184,0.28)" stroke-width="1.4"/>
+        <rect x="34" y="34" width="352" height="252" rx="22" fill="rgba(255,255,255,0.26)" stroke="rgba(148,163,184,0.18)" stroke-width="1.2"/>
+
+        <!-- circuit net -->
+        <g stroke="rgba(255,255,255,0.64)" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <!-- left -->
+          <path d="M78 86 H136 C152 86 160 94 160 110 V132"/>
+          <path d="M78 160 H132 C150 160 160 150 160 132"/>
+          <path d="M78 234 H136 C152 234 160 226 160 210 V188"/>
+          <!-- right -->
+          <path d="M342 86 H284 C268 86 260 94 260 110 V132"/>
+          <path d="M342 160 H288 C270 160 260 150 260 132"/>
+          <path d="M342 234 H284 C268 234 260 226 260 210 V188"/>
+          <!-- top -->
+          <path d="M124 62 V106 C124 122 132 132 148 132 H160"/>
+          <path d="M210 62 V96 C210 114 202 124 184 132 H172"/>
+          <path d="M296 62 V106 C296 122 288 132 272 132 H260"/>
+          <!-- bottom -->
+          <path d="M124 258 V214 C124 198 132 188 148 188 H160"/>
+          <path d="M210 258 V224 C210 206 202 196 184 188 H172"/>
+          <path d="M296 258 V214 C296 198 288 188 272 188 H260"/>
+          <!-- inner ring -->
+          <path d="M160 132 C170 110 250 110 260 132"/>
+          <path d="M160 188 C170 210 250 210 260 188"/>
+        </g>
+
+        <!-- nodes -->
+        <g fill="rgba(255,255,255,0.72)">
+          <circle cx="78" cy="86" r="3.2"/>
+          <circle cx="78" cy="160" r="3.2"/>
+          <circle cx="78" cy="234" r="3.2"/>
+          <circle cx="342" cy="86" r="3.2"/>
+          <circle cx="342" cy="160" r="3.2"/>
+          <circle cx="342" cy="234" r="3.2"/>
+          <circle cx="124" cy="62" r="3.2"/>
+          <circle cx="210" cy="62" r="3.2"/>
+          <circle cx="296" cy="62" r="3.2"/>
+          <circle cx="124" cy="258" r="3.2"/>
+          <circle cx="210" cy="258" r="3.2"/>
+          <circle cx="296" cy="258" r="3.2"/>
+        </g>
+
+        <!-- central chip -->
+        <g filter="url(#hv_shadow)">
+          <rect x="152" y="102" width="116" height="116" rx="22" fill="rgba(255,255,255,0.50)" stroke="rgba(148,163,184,0.28)" stroke-width="1.2"/>
+          <rect x="168" y="118" width="84" height="84" rx="18" fill="url(#hv_chip)" filter="url(#hv_glow)" opacity="0.92"/>
+          <text x="210" y="172" text-anchor="middle" font-size="22" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" fill="white" font-weight="700">JCIE</text>
+        </g>
+
+        <!-- widgets (top-left chart) -->
+        <g>
+          <rect x="54" y="52" width="92" height="66" rx="14" fill="rgba(255,255,255,0.52)" stroke="rgba(148,163,184,0.35)"/>
+          <path d="M66 104 L82 92 L96 98 L112 78 L130 88" stroke="rgba(11,95,255,0.55)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+
+        <!-- widgets (top-right leaf) -->
+        <g>
+          <rect x="274" y="52" width="92" height="66" rx="14" fill="rgba(255,255,255,0.52)" stroke="rgba(148,163,184,0.35)"/>
+          <path d="M320 70c-12 1-20 9-20 21c0 10 7 18 18 18c12 0 20-10 20-22c0-9-7-16-18-17Z" fill="rgba(20,184,166,0.22)" stroke="rgba(20,184,166,0.55)" stroke-width="2"/>
+          <path d="M312 98c10-8 18-12 28-14" stroke="rgba(20,184,166,0.55)" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- widgets (bottom-left cube) -->
+        <g>
+          <rect x="54" y="206" width="92" height="66" rx="14" fill="rgba(255,255,255,0.52)" stroke="rgba(148,163,184,0.35)"/>
+          <g stroke="rgba(11,95,255,0.38)" stroke-width="2" fill="none" stroke-linejoin="round">
+            <path d="M84 238l18-10l18 10l-18 10l-18-10Z"/>
+            <path d="M84 238v18l18 10v-18"/>
+            <path d="M120 238v18l-18 10"/>
+          </g>
+        </g>
+
+        <!-- widgets (bottom-right bars) -->
+        <g>
+          <rect x="274" y="206" width="92" height="66" rx="14" fill="rgba(255,255,255,0.52)" stroke="rgba(148,163,184,0.35)"/>
+          <g fill="rgba(11,95,255,0.30)">
+            <rect x="294" y="248" width="10" height="10" rx="3"/>
+            <rect x="310" y="238" width="10" height="20" rx="3"/>
+            <rect x="326" y="232" width="10" height="26" rx="3"/>
+            <rect x="342" y="242" width="10" height="16" rx="3"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>

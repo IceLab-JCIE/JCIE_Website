@@ -1,0 +1,46 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import { languages, t, type Lang } from "@/lib/i18n";
+import { langPath } from "@/lib/urls";
+
+export async function getStaticPaths() {
+  const all = await getCollection("news");
+  const paths = [];
+  for (const lang of languages) {
+    const entries = all.filter((e) => e.id.startsWith(`${lang}/`));
+    for (const entry of entries) {
+      const slug = entry.slug.split("/").pop() ?? entry.slug;
+      paths.push({ params: { lang, slug }, props: { entry } });
+    }
+  }
+  return paths;
+}
+
+const lang = Astro.params.lang as Lang;
+const { entry } = Astro.props as { entry: Awaited<ReturnType<typeof getCollection>>[number] };
+const { Content } = await entry.render();
+
+const other = lang === "zh" ? "en" : "zh";
+const all = await getCollection("news");
+const leaf = entry.slug.split("/").pop() ?? entry.slug;
+const otherExists = all.some((e) => e.id === `${other}/${leaf}.md` || e.id === `${other}/${leaf}`);
+const alternateHref = otherExists ? `/${other}/news/${leaf}/` : undefined;
+---
+
+<BaseLayout lang={lang} title={entry.data.title} alternateHref={alternateHref}>
+  <SectionHeading
+    eyebrow={t(lang, "动态", "News")}
+    title={entry.data.title}
+    description={entry.data.date.toISOString().slice(0, 10)}
+  />
+
+  <div style="margin-top:14px;">
+    <a class="tiny" href={langPath(lang, "/news/")}>{t(lang, "→ 返回动态", "→ Back to News")}</a>
+  </div>
+
+  <article class="card prose" style="margin-top:18px;">
+    <Content />
+  </article>
+</BaseLayout>

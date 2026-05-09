@@ -1,0 +1,51 @@
+---
+import "../styles/main.css";
+import type { Lang } from "../lib/i18n";
+import { getSite } from "../lib/data";
+import SiteAtmosphere from "../components/SiteAtmosphere.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+type Props = {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  alternateHref?: string;
+};
+
+const { lang, title, description, alternateHref } = Astro.props;
+const site = await getSite();
+
+const metaTitle = site.meta?.title?.[lang] ?? site.name;
+const metaDesc = description ?? site.meta?.description?.[lang] ?? "";
+const pageTitle = title ? `${title} | ${metaTitle}` : metaTitle;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={metaDesc} />
+    <link rel="canonical" href={canonical.toString()} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <SiteAtmosphere />
+    <Header lang={lang} alternateHref={alternateHref} />
+    <main class="page">
+      <div class="container">
+        <slot />
+      </div>
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

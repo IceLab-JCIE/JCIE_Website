@@ -1,0 +1,33 @@
+---
+import type { Lang } from "../lib/i18n";
+import { stripBase, withBase } from "../lib/urls";
+
+type Props = {
+  lang: Lang;
+  alternateHref?: string;
+};
+
+const { lang, alternateHref } = Astro.props;
+const other = lang === "zh" ? "en" : "zh";
+
+const pathname = stripBase(Astro.url.pathname);
+const guessedOther = pathname.replace(/^\/(zh|en)\//, `/${other}/`);
+const otherHref = alternateHref ?? withBase(guessedOther);
+---
+
+<span class="lang-pill" aria-label="Language switch">
+  {lang === "zh" ? (
+    <>
+      <a href={Astro.url.pathname} aria-current="true">中</a>
+      <span class="sep" aria-hidden="true"></span>
+      <a href={otherHref}>EN</a>
+    </>
+  ) : (
+    <>
+      <a href={otherHref}>中</a>
+      <span class="sep" aria-hidden="true"></span>
+      <a href={Astro.url.pathname} aria-current="true">EN</a>
+    </>
+  )}
+</span>
+

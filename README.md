@@ -1,6 +1,6 @@
-# Hugo Site (JCIE Website)
+# Astro Site (JCIE Website)
 
-This folder contains the Hugo implementation intended for GitHub Pages deployment under:
+This folder contains the Astro implementation intended for GitHub Pages deployment under:
 
 `https://icelab-jcie.github.io/JCIE_Website/`
 
@@ -9,13 +9,13 @@ This folder contains the Hugo implementation intended for GitHub Pages deploymen
 - Site-wide info: `data/site.yaml`
 - Projects (single file): `data/projects.yaml`
 - Publications (single file): `data/publications.yaml`
-- News posts (one file per post, per language): `content/news/*.zh.md` and `content/news/*.en.md`
+- News posts (one file per post, per language): `src/content/news/zh/*.md` and `src/content/news/en/*.md`
 - People (single file): `data/people.yaml`
-- Join page: `content/join/_index.zh.md` and `content/join/_index.en.md`
+- Join page: `src/content/join/zh.md` and `src/content/join/en.md`
 
 Images:
 
-- People photos: `static/people/*` (referenced as `/people/<file>.png`)
+- People photos: `public/people/*` (referenced as `/people/<file>.png`)
 
 ## XLSX Import (Optional)
 
@@ -29,16 +29,15 @@ Sheets required: `people`, `publications`, `projects`.
 
 GitHub Pages build:
 
-- If `xlsx/site.xlsx` exists in the repo, GitHub Actions will automatically run the import step before `hugo --minify`.
+- If `xlsx/site.xlsx` exists in the repo, GitHub Actions will automatically run the import step before `npm run build`.
 
 ## Local Preview
 
-Install Hugo (extended) and run:
-
 ```bash
-hugo server
+npm ci
+npm run dev
 ```
 
 ## Deployment
 
-GitHub Actions builds Hugo from repo root and deploys `./public` to GitHub Pages.
+GitHub Actions builds Astro from repo root and deploys `./dist` to GitHub Pages.
