@@ -12,8 +12,13 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Lang;
 const projects = await getProjects();
-const eda = projects.filter((p) => p.area === "EDA");
-const lca = projects.filter((p) => p.area === "LCA");
+const years = Array.from(
+  new Set(projects.map((p) => p.start_year).filter((y): y is number => typeof y === "number")),
+).sort((a, b) => b - a);
+
+const total = projects.length;
+const ongoingCount = projects.filter((p) => p.status === "ongoing").length;
+const completedCount = projects.filter((p) => p.status === "completed").length;
 ---
 
 <BaseLayout lang={lang} title={t(lang, "项目", "Projects")}>
@@ -23,30 +28,89 @@ const lca = projects.filter((p) => p.area === "LCA");
     description={t(lang, "真实问题，真实产出", "Real problems, real outputs")}
   />
 
-  <section style="margin-top:18px;">
-    <h3 class="font-display" style="margin:0; font-size:18px;">AI for EDA</h3>
-    {eda.length ? (
-      <div class="grid-2" style="margin-top:12px;">
-        {eda.map((project) => <ProjectCard project={project} lang={lang} />)}
+  <section class="projects-catalog" style="margin-top:18px;">
+    <div class="projects-head">
+      <div class="projects-kpis">
+        <div class="projects-kpi">
+          <div class="projects-kpi-num">{total}</div>
+          <div class="projects-kpi-label">{t(lang, "项目总数", "Total")}</div>
+        </div>
+        <div class="projects-kpi">
+          <div class="projects-kpi-num">{ongoingCount}</div>
+          <div class="projects-kpi-label">{t(lang, "进行中", "Ongoing")}</div>
+        </div>
+        <div class="projects-kpi">
+          <div class="projects-kpi-num">{completedCount}</div>
+          <div class="projects-kpi-label">{t(lang, "已完成", "Completed")}</div>
+        </div>
       </div>
-    ) : (
-      <div class="card-muted" style="margin-top:12px; text-align:center;">
-        <div class="small muted">{t(lang, "EDA 项目待补充", "EDA projects to be added")}</div>
-      </div>
-    )}
-  </section>
 
-  <section style="margin-top:28px;">
-    <h3 class="font-display" style="margin:0; font-size:18px;">AI for LCA</h3>
-    {lca.length ? (
-      <div class="grid-2" style="margin-top:12px;">
-        {lca.map((project) => <ProjectCard project={project} lang={lang} />)}
+      <div class="projects-search card">
+        <div class="tiny" style="font-weight:650; letter-spacing:0.08em; text-transform:uppercase; color:rgba(15,23,42,0.55);">
+          {t(lang, "搜索", "Search")}
+        </div>
+        <input
+          id="projectsSearch"
+          class="projects-search-input"
+          type="search"
+          autocomplete="off"
+          placeholder={t(lang, "搜索项目、关键词、负责人…", "Search projects, keywords, leads…")}
+        />
       </div>
-    ) : (
-      <div class="card-muted" style="margin-top:12px; text-align:center;">
-        <div class="small muted">{t(lang, "LCA 项目待补充", "LCA projects to be added")}</div>
+    </div>
+
+    <div class="projects-toolbar">
+      <div class="projects-chips" aria-label={t(lang, "筛选", "Filters")}>
+        <button class="chip chip--toggle chip--on" type="button" aria-pressed="true" data-filter="area" data-value="__all__">{t(lang, "全部", "All")}</button>
+        <button class="chip chip--toggle chip--blue" type="button" aria-pressed="false" data-filter="area" data-value="EDA">EDA</button>
+        <button class="chip chip--toggle chip--teal" type="button" aria-pressed="false" data-filter="area" data-value="LCA">LCA</button>
+        {years.length ? (
+          <>
+            {years.slice(0, 6).map((y) => (
+              <button class="chip chip--toggle" type="button" aria-pressed="false" data-filter="year" data-value={String(y)}>{y}</button>
+            ))}
+          </>
+        ) : null}
       </div>
-    )}
+
+      <div class="projects-sort">
+        <label class="tiny" for="projectsSort" style="font-weight:650; letter-spacing:0.08em; text-transform:uppercase; color:rgba(15,23,42,0.55);">
+          {t(lang, "排序", "Sort")}
+        </label>
+        <select id="projectsSort" class="projects-sort-select">
+          <option value="newest">{t(lang, "最新", "Newest")}</option>
+          <option value="oldest">{t(lang, "最早", "Oldest")}</option>
+          <option value="az">{t(lang, "按标题 A–Z", "Title A–Z")}</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="projectsGrid" class="projects-grid" style="margin-top:14px;">
+      {projects.map((project) => {
+        const title = project.title?.[lang] ?? "";
+        const summary = project.summary?.[lang] ?? "";
+        const lead = project.lead?.[lang] ?? "";
+        const text = `${title} ${summary} ${lead}`.trim().toLowerCase();
+        return (
+          <div
+            class="projects-item"
+            data-area={project.area ?? ""}
+            data-status={project.status ?? ""}
+            data-year={project.start_year ? String(project.start_year) : ""}
+            data-title={title}
+            data-text={text}
+          >
+            <ProjectCard project={project} lang={lang} />
+          </div>
+        );
+      })}
+    </div>
+
+    <div class="projects-foot">
+      <div id="projectsCount" class="tiny" style="font-weight:650; letter-spacing:0.06em; text-transform:uppercase; color:rgba(15,23,42,0.55);">
+        {t(lang, `显示 ${total} / ${total}`, `Showing ${total} / ${total}`)}
+      </div>
+    </div>
   </section>
 
   <section class="card-muted" style="margin-top:54px; text-align:center;">
@@ -57,3 +121,126 @@ const lca = projects.filter((p) => p.area === "LCA");
     </div>
   </section>
 </BaseLayout>
+
+<script type="module">
+  const root = document;
+  const grid = root.getElementById("projectsGrid");
+  const searchInput = root.getElementById("projectsSearch");
+  const sortSelect = root.getElementById("projectsSort");
+  const countEl = root.getElementById("projectsCount");
+
+  if (!grid || !searchInput || !sortSelect || !countEl) {
+    // Defensive: layout changed or JS disabled.
+  } else {
+    const items = Array.from(grid.querySelectorAll(".projects-item"));
+    const originalOrder = new Map(items.map((el, idx) => [el, idx]));
+
+    const selected = {
+      // area is single-select: "__all__" | "EDA" | "LCA" | ...
+      area: "__all__",
+      year: new Set(),
+    };
+
+    function normalizeText(v) {
+      return String(v || "").toLowerCase().trim();
+    }
+
+    function updateCount(visibleCount) {
+      const total = items.length;
+      const lang = document.documentElement.getAttribute("lang") || "en";
+      const isZh = lang.startsWith("zh");
+      countEl.textContent = isZh ? `显示 ${visibleCount} / ${total}` : `Showing ${visibleCount} / ${total}`;
+    }
+
+    function matches(el, query) {
+      const area = el.dataset.area || "";
+      const year = el.dataset.year || "";
+      const text = el.dataset.text || "";
+
+      if (selected.area !== "__all__" && selected.area !== area) return false;
+      if (selected.year.size && !selected.year.has(year)) return false;
+
+      if (query) {
+        if (!text.includes(query)) return false;
+      }
+      return true;
+    }
+
+    function sortKey(el) {
+      const year = Number(el.dataset.year || 0);
+      const title = el.dataset.title || "";
+      const status = el.dataset.status || "";
+      return { year, title, status };
+    }
+
+    function apply() {
+      const query = normalizeText(searchInput.value);
+      const mode = String(sortSelect.value || "newest");
+
+      let visible = 0;
+      for (const el of items) {
+        const ok = matches(el, query);
+        el.hidden = !ok;
+        if (ok) visible += 1;
+      }
+      updateCount(visible);
+
+      const sorted = items.slice().sort((a, b) => {
+        const ka = sortKey(a);
+        const kb = sortKey(b);
+        if (mode === "az") {
+          const t = ka.title.localeCompare(kb.title);
+          if (t) return t;
+          return (originalOrder.get(a) ?? 0) - (originalOrder.get(b) ?? 0);
+        }
+        if (mode === "oldest") {
+          if (ka.year !== kb.year) return ka.year - kb.year;
+          return (originalOrder.get(a) ?? 0) - (originalOrder.get(b) ?? 0);
+        }
+        // newest (default)
+        if (ka.year !== kb.year) return kb.year - ka.year;
+        // ongoing first when years tie
+        if (ka.status !== kb.status) {
+          if (ka.status === "ongoing") return -1;
+          if (kb.status === "ongoing") return 1;
+        }
+        return (originalOrder.get(a) ?? 0) - (originalOrder.get(b) ?? 0);
+      });
+
+      for (const el of sorted) grid.appendChild(el);
+    }
+
+    function setChipActive(btn, on) {
+      btn.classList.toggle("chip--on", Boolean(on));
+      if (btn && btn.setAttribute) btn.setAttribute("aria-pressed", on ? "true" : "false");
+    }
+
+    root.addEventListener("click", (e) => {
+      const btn = e.target && e.target.closest ? e.target.closest("button") : null;
+      if (!btn) return;
+
+      const filter = btn.getAttribute("data-filter");
+      const value = btn.getAttribute("data-value");
+      if (!filter || value == null) return;
+      if (!selected[filter]) return;
+
+      if (filter === "area") {
+        selected.area = value;
+        for (const b of root.querySelectorAll('.projects-toolbar .chip--toggle[data-filter="area"]')) {
+          setChipActive(b, b === btn);
+        }
+      } else {
+        const set = selected[filter];
+        if (set.has(value)) set.delete(value);
+        else set.add(value);
+        setChipActive(btn, set.has(value));
+      }
+      apply();
+    });
+
+    searchInput.addEventListener("input", () => apply());
+    sortSelect.addEventListener("change", () => apply());
+
+    apply();
+  }
+</script>

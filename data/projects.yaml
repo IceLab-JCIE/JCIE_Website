@@ -3,7 +3,7 @@ projects:
     id: "proj-1"
     area: "EDA"
     status: "ongoing"
-    github: "#"
+    github: "https://github.com/IceLab-JCIE/Operator-Learning"
     lead:
       zh: "黄凯期"
       en: "Kaiqi Huang"
@@ -123,5 +123,5 @@ projects:
       zh: "良率优化"
       en: "Yield Optimization"
     summary:
-      zh: "面向良率的 sizing 优化。"
+      zh: "在 process variation 和多个 PVT corners 下，寻找一组晶体管尺寸，使电路在满足最低成品率要求的前提下，最小化某个设计目标。"
       en: "Yield-aware sizing optimization."

@@ -31,17 +31,21 @@ function isActive(key: string, href: string): boolean {
       </a>
 
       <nav class="nav" aria-label="Primary">
-        {navItems.map((it) => {
-          const href = langPath(lang, it.path);
-          return (
-            <a href={href} class={isActive(it.key, href) ? "active" : undefined}>
-              {t(lang, it.labelZh, it.labelEn)}
-            </a>
-          );
-        })}
-        <LanguageSwitcher lang={lang} alternateHref={alternateHref ? withBase(alternateHref) : undefined} />
+        <div class="nav-links">
+          {navItems.map((it) => {
+            const href = langPath(lang, it.path);
+            return (
+              <a href={href} class={isActive(it.key, href) ? "active" : undefined}>
+                {t(lang, it.labelZh, it.labelEn)}
+              </a>
+            );
+          })}
+        </div>
       </nav>
+
+      <div class="nav-utils">
+        <LanguageSwitcher lang={lang} alternateHref={alternateHref ? withBase(alternateHref) : undefined} />
+      </div>
     </div>
   </div>
 </header>
-
