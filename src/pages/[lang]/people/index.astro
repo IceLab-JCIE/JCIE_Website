@@ -3,7 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
 import PersonCard from "@/components/PersonCard.astro";
 import { languages, t, type Lang } from "@/lib/i18n";
-import { getPeople } from "@/lib/data";
+import { getPeople, getPublications, indexById } from "@/lib/data";
 import { langPath } from "@/lib/urls";
 
 export function getStaticPaths() {
@@ -12,8 +12,53 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Lang;
 const people = await getPeople();
+const pubs = await getPublications();
+const pubIndex = indexById(pubs);
 const mentor = people.filter((p) => p.role === "mentor");
 const members = people.filter((p) => p.role !== "mentor");
+
+function inferredTracks(p) {
+  const dom = p.domain;
+  const explicit = Array.isArray(dom) ? dom : dom ? [dom] : [];
+  const normalized = Array.from(
+    new Set(
+      explicit
+        .map((x) => String(x ?? "").toUpperCase())
+        .flatMap((s) => s.split(/[;,/|]+/).map((t) => t.trim()).filter(Boolean)),
+    ),
+  ).filter((x) => x === "EDA" || x === "LCA");
+  if (normalized.length) return normalized;
+  const ids = p.pub_ids ?? [];
+  let eda = 0;
+  let lca = 0;
+  for (const id of ids) {
+    const pub = pubIndex.get(id);
+    const area = pub?.area;
+    if (area === "EDA") eda += 1;
+    else if (area === "LCA") lca += 1;
+  }
+  if (eda === 0 && lca === 0) return ["EDA"];
+  if (lca > eda) return ["LCA"];
+  if (eda > lca) return ["EDA"];
+  return ["EDA", "LCA"];
+}
+
+function inferredJoinYear(p) {
+  if (typeof p.join_year === "number") return p.join_year;
+  const ids = p.pub_ids ?? [];
+  let minYear = Infinity;
+  for (const id of ids) {
+    const pub = pubIndex.get(id);
+    const y = pub?.year;
+    if (typeof y === "number" && y < minYear) minYear = y;
+  }
+  if (Number.isFinite(minYear)) return minYear;
+  return new Date().getFullYear();
+}
+
+const membersSorted = members
+  .map((p) => ({ person: p, joinYear: inferredJoinYear(p), tracks: inferredTracks(p) }))
+  .sort((a, b) => (b.joinYear - a.joinYear) || String(a.person.id).localeCompare(String(b.person.id)));
 ---
 
 <BaseLayout lang={lang} title={t(lang, "成员", "People")}>
@@ -32,7 +77,14 @@ const members = people.filter((p) => p.role !== "mentor");
     <h3 class="font-display" style="margin:0; font-size:18px;">{t(lang, "成员", "Members")}</h3>
     {members.length ? (
       <div class="people-grid" style="margin-top:12px;">
-        {members.map((person) => <PersonCard person={person} lang={lang} mode="member" />)}
+        {membersSorted.map(({ person, joinYear, tracks }) => (
+          <PersonCard
+            person={{ ...person, join_year: joinYear }}
+            lang={lang}
+            mode="member"
+            track={tracks}
+          />
+        ))}
       </div>
     ) : (
       <div class="card-muted" style="margin-top:12px; text-align:center;">
@@ -49,4 +101,3 @@ const members = people.filter((p) => p.role !== "mentor");
     </div>
   </section>
 </BaseLayout>
-

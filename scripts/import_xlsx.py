@@ -45,6 +45,24 @@ def _split_semicolon(v: Any) -> List[str]:
         return []
     return [p.strip() for p in s.split(";") if p.strip()]
 
+def _split_domain(v: Any) -> List[str]:
+    s = _strip(v).upper()
+    if not s:
+        return []
+    # Accept common separators: "EDA;LCA", "EDA/LCA", "EDA,LCA", "EDA|LCA"
+    for ch in ["/", ",", "|"]:
+        s = s.replace(ch, ";")
+    parts = [p.strip() for p in s.split(";") if p.strip()]
+    out: List[str] = []
+    seen: set[str] = set()
+    for p in parts:
+        if p in ("EDA", "LCA") and p not in seen:
+            out.append(p)
+            seen.add(p)
+        elif p:
+            raise ImportErrorExit(f"domain: invalid token {p!r} (expected EDA/LCA)")
+    return out
+
 def _norm_name(s: str) -> str:
     s = _strip(s).lower()
     for ch in [".", ",", "’", "'", "\"", "–", "-", "鈥?", "�"]:
@@ -178,6 +196,7 @@ def _parse_people(rows: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], Peo
             raise ImportErrorExit(f"people row {i} (id={pid}): name_en and name_zh are required")
 
         join_year = _to_int(r.get("join_year"), ctx=f"people row {i} (id={pid}) join_year")
+        domain_list = _split_domain(r.get("domain"))
         photo = _strip(r.get("photo"))
 
         title_en = _strip(r.get("title_en"))
@@ -212,6 +231,8 @@ def _parse_people(rows: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], Peo
             person["title"] = title_obj
         if join_year is not None:
             person["join_year"] = join_year
+        if domain_list:
+            person["domain"] = domain_list if len(domain_list) > 1 else domain_list[0]
         if photo:
             person["photo"] = photo
         bio_obj = {"en": bio_en, "zh": bio_zh}

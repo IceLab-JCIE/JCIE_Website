@@ -1,5 +1,6 @@
 ---
 import type { Lang } from "../lib/i18n";
+import { t } from "../lib/i18n";
 import { withBase } from "../lib/urls";
 import { renderMarkdown } from "../lib/markdown";
 import type { Person } from "../lib/data";
@@ -9,10 +10,12 @@ type Props = {
   lang: Lang;
   compact?: boolean;
   mode?: "member" | "detail";
+  track?: ("EDA" | "LCA" | string)[] | "EDA" | "LCA" | string;
 };
 
-const { person, lang, compact = false, mode } = Astro.props;
+const { person, lang, compact = false, mode, track = "" } = Astro.props;
 const effectiveMode: "member" | "detail" = mode ?? (compact ? "member" : "detail");
+const trackList = Array.isArray(track) ? track : track ? [track] : [];
 
 const name = person.name?.[lang] ?? person.name?.en ?? "";
 const title = person.title?.[lang] ?? person.title?.en ?? "";
@@ -32,14 +35,25 @@ const bioHtml = bio ? renderMarkdown(bio) : "";
 
 {effectiveMode === "member" ? (
   <article class="card person-card person-card--member">
-    <div class={`avatar avatar--lg ${photo ? "" : "avatar--placeholder"}`} aria-hidden="true">
-      <div class="avatar-inner">
-        {photo ? <img src={photo} alt={name} width="72" height="72" loading="lazy" decoding="async" /> : <span class="avatar-text">{initial}</span>}
+    <div class="person-card-member-row">
+      <div class={`avatar avatar--lg ${photo ? "" : "avatar--placeholder"}`} aria-hidden="true">
+        <div class="avatar-inner">
+          {photo ? <img src={photo} alt={name} width="72" height="72" loading="lazy" decoding="async" /> : <span class="avatar-text">{initial}</span>}
+        </div>
+      </div>
+      <div class="person-card-body">
+        <h3 class="person-card-name">{name}</h3>
+        <div class="person-card-meta">
+          {trackList.length
+            ? trackList.map((x) => (
+                <span class={`chip ${x === "EDA" ? "chip--blue" : x === "LCA" ? "chip--teal" : ""}`}>{x}</span>
+              ))
+            : null}
+          {joinYear ? <span class="chip">{t(lang, "加入时间:", "Joined:")} {joinYear}</span> : null}
+        </div>
+        {title ? <div class="small muted person-card-title">{title}</div> : null}
       </div>
     </div>
-    <h3 class="person-card-name">{name}</h3>
-    {title ? <div class="small muted person-card-title">{title}</div> : null}
-    {joinYear ? <div class="tiny person-card-year">{joinYear}</div> : null}
   </article>
 ) : (
   <article class="card person-card person-card--detail">

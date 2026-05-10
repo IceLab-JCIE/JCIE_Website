@@ -21,6 +21,7 @@ export type Person = {
   role: "mentor" | "member" | "alumni" | string;
   name?: { zh?: string; en?: string };
   title?: { zh?: string; en?: string };
+  domain?: ("EDA" | "LCA" | string)[] | "EDA" | "LCA" | string;
   join_year?: number;
   photo?: string;
   bio?: { zh?: string; en?: string };
@@ -89,4 +90,3 @@ export function indexById<T extends { id: string }>(items: T[]): Map<string, T> 
   for (const it of items) m.set(it.id, it);
   return m;
 }
-

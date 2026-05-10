@@ -646,7 +646,6 @@ img[width][height] { height: auto; }
 .person-card--detail .person-card-year { margin-top: 10px; }
 
 .person-card--member {
-  text-align: center;
   transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
 }
 .person-card--member:hover {
@@ -654,8 +653,20 @@ img[width][height] { height: auto; }
   box-shadow: 0 30px 90px -78px rgba(2, 6, 23, 0.75);
   transform: translateY(-1px);
 }
-.person-card--member .avatar { margin: 2px auto 0; }
-.person-card--member .person-card-year { margin-top: 6px; }
+.person-card-member-row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.person-card--member .person-card-body { flex: 1; min-width: 0; }
+.person-card--member .person-card-name { margin: 0; }
+.person-card-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.person-card--member .person-card-title { margin-top: 10px; }
 
 .section-h {
   margin-top: 54px;
