@@ -3,14 +3,23 @@ type Props = {
   eyebrow: string;
   title: string;
   description?: string;
+  actionHref?: string;
+  actionLabel?: string;
 };
 
-const { eyebrow, title, description } = Astro.props;
+const { eyebrow, title, description, actionHref, actionLabel } = Astro.props;
 ---
 
 <div class="section-h">
   <div class="eyebrow">{eyebrow}</div>
-  <h2 class="section-title">{title}</h2>
+  <div class="section-title-row">
+    <h2 class="section-title">{title}</h2>
+    {actionHref && actionLabel ? (
+      <a class="section-title-action" href={actionHref}>
+        <span>{actionLabel}</span>
+        <span class="section-title-action-arrow" aria-hidden="true">→</span>
+      </a>
+    ) : null}
+  </div>
   {description ? <div class="section-desc">{description}</div> : null}
 </div>
-

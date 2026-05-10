@@ -13,21 +13,27 @@ const isOngoing = project.status === "ongoing";
 const status = t(lang, isOngoing ? "进行中" : "已完成", isOngoing ? "Ongoing" : "Completed");
 const hasLink = Boolean(project.github && project.github !== "#");
 const badgeClass = isOngoing ? "badge badge--ongoing" : "badge badge--completed";
+const area = project.area ?? "";
+const areaChipClass =
+  area === "EDA" ? "chip chip--blue" : area === "LCA" ? "chip chip--teal" : area ? "chip" : "";
+const year = project.start_year ? String(project.start_year) : "";
 ---
 
-<article class="card">
-  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
-    <div>
-      <div class={badgeClass}>{status}</div>
-      <h3 style="margin:10px 0 0;">{title}</h3>
-      <div class="small muted" style="margin-top:10px;">{summary}</div>
-      {lead ? <div class="tiny" style="margin-top:10px;">{t(lang, "负责人", "Lead")}: {lead}</div> : null}
+<article class={`card card--tint-${area === "LCA" ? "teal" : "blue"} project-card`}>
+  <div class="project-card-top">
+    <div class="project-card-badges">
+      <span class={badgeClass}>{status}</span>
+      {areaChipClass ? <span class={areaChipClass}>{area}</span> : null}
+      {year ? <span class="chip">{year}</span> : null}
     </div>
     {hasLink ? (
-      <a class="btn btn-ghost" style="padding:8px 12px; border-radius:10px; font-size:12px;" href={project.github} target="_blank" rel="noopener noreferrer">
+      <a class="btn btn-ghost project-card-action" href={project.github} target="_blank" rel="noopener noreferrer">
         GitHub
       </a>
     ) : null}
   </div>
-</article>
 
+  <h3 class="project-card-title">{title}</h3>
+  <div class="small muted project-card-summary">{summary}</div>
+  {lead ? <div class="tiny project-card-lead">{t(lang, "负责人", "Lead")}: {lead}</div> : null}
+</article>

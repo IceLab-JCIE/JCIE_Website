@@ -5,6 +5,7 @@ import { getSite } from "../lib/data";
 import SiteAtmosphere from "../components/SiteAtmosphere.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import { withBase } from "../lib/urls";
 
 type Props = {
   lang: Lang;
@@ -30,6 +31,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <title>{pageTitle}</title>
     <meta name="description" content={metaDesc} />
     <link rel="canonical" href={canonical.toString()} />
+    <link rel="icon" href={withBase("/favicon.ico")} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
