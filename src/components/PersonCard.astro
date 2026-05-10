@@ -8,9 +8,11 @@ type Props = {
   person: Person;
   lang: Lang;
   compact?: boolean;
+  mode?: "member" | "detail";
 };
 
-const { person, lang, compact = false } = Astro.props;
+const { person, lang, compact = false, mode } = Astro.props;
+const effectiveMode: "member" | "detail" = mode ?? (compact ? "member" : "detail");
 
 const name = person.name?.[lang] ?? person.name?.en ?? "";
 const title = person.title?.[lang] ?? person.title?.en ?? "";
@@ -28,31 +30,31 @@ const initial = initialFromName(name);
 const bioHtml = bio ? renderMarkdown(bio) : "";
 ---
 
-{compact ? (
-  <article class="card">
-    <div class={`avatar ${photo ? "" : "avatar--placeholder"}`} aria-hidden="true">
+{effectiveMode === "member" ? (
+  <article class="card person-card person-card--member">
+    <div class={`avatar avatar--lg ${photo ? "" : "avatar--placeholder"}`} aria-hidden="true">
       <div class="avatar-inner">
-        {photo ? <img src={photo} alt={name} width="56" height="56" loading="lazy" decoding="async" /> : <span class="avatar-text">{initial}</span>}
+        {photo ? <img src={photo} alt={name} width="72" height="72" loading="lazy" decoding="async" /> : <span class="avatar-text">{initial}</span>}
       </div>
     </div>
-    <h3 style="margin:12px 0 0;">{name}</h3>
-    {joinYear ? <div class="tiny" style="margin-top:4px;">{joinYear}</div> : null}
+    <h3 class="person-card-name">{name}</h3>
+    {title ? <div class="small muted person-card-title">{title}</div> : null}
+    {joinYear ? <div class="tiny person-card-year">{joinYear}</div> : null}
   </article>
 ) : (
-  <article class="card">
-    <div style="display:flex; gap:14px; align-items:flex-start;">
-      <div class={`avatar ${photo ? "" : "avatar--placeholder"}`} aria-hidden="true">
+  <article class="card person-card person-card--detail">
+    <div class="person-card-detail">
+      <div class={`avatar avatar--lg ${photo ? "" : "avatar--placeholder"}`} aria-hidden="true">
         <div class="avatar-inner">
-          {photo ? <img src={photo} alt={name} width="56" height="56" loading="lazy" decoding="async" /> : <span class="avatar-text">{initial}</span>}
+          {photo ? <img src={photo} alt={name} width="72" height="72" loading="lazy" decoding="async" /> : <span class="avatar-text">{initial}</span>}
         </div>
       </div>
-      <div style="flex:1;">
-        <h3 style="margin:0;">{name}</h3>
-        {title ? <div class="small muted" style="margin-top:4px;">{title}</div> : null}
-        {bioHtml ? <div class="prose small" style="margin-top:10px;" set:html={bioHtml} /> : null}
-        {joinYear ? <div class="tiny" style="margin-top:10px;">{joinYear}</div> : null}
+      <div class="person-card-body">
+        <h3 class="person-card-name">{name}</h3>
+        {title ? <div class="small muted person-card-title">{title}</div> : null}
+        {bioHtml ? <div class="prose small person-card-bio" set:html={bioHtml} /> : null}
+        {joinYear ? <div class="tiny person-card-year">{joinYear}</div> : null}
       </div>
     </div>
   </article>
 )}
-

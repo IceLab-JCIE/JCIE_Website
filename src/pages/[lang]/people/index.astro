@@ -23,7 +23,7 @@ const members = people.filter((p) => p.role !== "mentor");
     <section style="margin-top:18px;">
       <h3 class="font-display" style="margin:0; font-size:18px;">{t(lang, "导师", "Mentor")}</h3>
       <div class="grid-2" style="margin-top:12px;">
-        {mentor.map((person) => <PersonCard person={person} lang={lang} compact={false} />)}
+        {mentor.map((person) => <PersonCard person={person} lang={lang} mode="detail" />)}
       </div>
     </section>
   ) : null}
@@ -31,8 +31,8 @@ const members = people.filter((p) => p.role !== "mentor");
   <section style="margin-top:28px;">
     <h3 class="font-display" style="margin:0; font-size:18px;">{t(lang, "成员", "Members")}</h3>
     {members.length ? (
-      <div class="grid-4" style="margin-top:12px;">
-        {members.map((person) => <PersonCard person={person} lang={lang} compact />)}
+      <div class="people-grid" style="margin-top:12px;">
+        {members.map((person) => <PersonCard person={person} lang={lang} mode="member" />)}
       </div>
     ) : (
       <div class="card-muted" style="margin-top:12px; text-align:center;">
@@ -49,3 +49,4 @@ const members = people.filter((p) => p.role !== "mentor");
     </div>
   </section>
 </BaseLayout>
+
