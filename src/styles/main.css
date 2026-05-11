@@ -595,6 +595,13 @@ img[width][height] { height: auto; }
   border: 1px solid rgba(148, 163, 184, 0.26);
   box-shadow: 0 22px 50px -48px rgba(2, 6, 23, 0.70);
 }
+.avatar--lg {
+  width: 72px;
+  height: 72px;
+  flex: 0 0 72px;
+  border-radius: 18px;
+}
+.avatar--lg .avatar-inner { border-radius: 16px; }
 .avatar-inner {
   width: 100%;
   height: 100%;
@@ -622,6 +629,44 @@ img[width][height] { height: auto; }
   letter-spacing: 0.02em;
   color: rgba(15, 23, 42, 0.58);
 }
+
+.person-card-name { margin: 12px 0 0; font-size: 16px; }
+.person-card-title { margin-top: 6px; }
+.person-card-year { margin-top: 10px; }
+
+.person-card--detail .person-card-detail {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.person-card--detail .person-card-body { flex: 1; min-width: 0; }
+.person-card--detail .person-card-name { margin: 0; }
+.person-card--detail .person-card-title { margin-top: 4px; }
+.person-card--detail .person-card-bio { margin-top: 10px; }
+.person-card--detail .person-card-year { margin-top: 10px; }
+
+.person-card--member {
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+.person-card--member:hover {
+  border-color: rgba(11, 95, 255, 0.14);
+  box-shadow: 0 30px 90px -78px rgba(2, 6, 23, 0.75);
+  transform: translateY(-1px);
+}
+.person-card-member-row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.person-card--member .person-card-body { flex: 1; min-width: 0; }
+.person-card--member .person-card-name { margin: 0; }
+.person-card-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.person-card--member .person-card-title { margin-top: 10px; }
 
 .section-h {
   margin-top: 54px;
@@ -688,13 +733,14 @@ img[width][height] { height: auto; }
 .grid-2 { display: grid; gap: 18px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .grid-3 { display: grid; gap: 18px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .grid-4 { display: grid; gap: 18px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.people-grid { display: grid; gap: 18px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 @media (max-width: 980px) {
-  .grid-3, .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid-3, .grid-4, .people-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 720px) {
   .hero { padding: 32px; }
   .hero h1 { font-size: 34px; }
-  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .grid-2, .grid-3, .grid-4, .people-grid { grid-template-columns: 1fr; }
 }
 
 .card {

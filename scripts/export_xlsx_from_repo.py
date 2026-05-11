@@ -87,6 +87,11 @@ def _build_people_sheet_rows(
         bio = p.get("bio") or {}
         dest = p.get("destination") or destinations.get(_strip(p.get("id")), {}) or {}
         pub_ids = p.get("pub_ids") or pub_ids_by_person.get(_strip(p.get("id")), []) or []
+        domain = p.get("domain")
+        if isinstance(domain, list):
+            domain_str = ";".join([_strip(x) for x in domain if _strip(x)])
+        else:
+            domain_str = _strip(domain)
         rows.append(
             {
                 "id": _strip(p.get("id")),
@@ -96,6 +101,7 @@ def _build_people_sheet_rows(
                 "title_en": _strip(title.get("en")),
                 "title_zh": _strip(title.get("zh")),
                 "join_year": p.get("join_year") or "",
+                "domain": domain_str,
                 "photo": _strip(p.get("photo")),
                 "bio_en": _strip(bio.get("en")),
                 "bio_zh": _strip(bio.get("zh")),
@@ -261,6 +267,7 @@ def main(argv: List[str]) -> int:
         "title_en",
         "title_zh",
         "join_year",
+        "domain",
         "photo",
         "bio_en",
         "bio_zh",

@@ -5,6 +5,11 @@ people:
     name:
       en: "Baowen Ou"
       zh: "区宝文"
+    join_year: 2024
+    domain:
+      - "EDA"
+      - "LCA"
+    photo: "/people/none.jpg"
     pub_ids:
       - "iccad-2025-astra"
   -
@@ -13,6 +18,11 @@ people:
     name:
       en: "Bohao Liu"
       zh: "刘博豪"
+    join_year: 2025
+    domain:
+      - "EDA"
+      - "LCA"
+    photo: "/people/none.jpg"
     pub_ids:
       - "dac-2026-openacmv2"
   -
@@ -21,6 +31,9 @@ people:
     name:
       en: "Guohao Dai"
       zh: "戴国浩"
+    join_year: 2022
+    domain: "EDA"
+    photo: "/people/none.jpg"
     destination:
       en: "HKUST(GZ)"
       zh: "港科广"
@@ -32,11 +45,33 @@ people:
     is_outstanding: true
     outstanding_order: 1
   -
+    id: "han-tan"
+    role: "member"
+    name:
+      en: "Han Tan"
+      zh: "谭涵"
+    join_year: 2026
+    domain: "LCA"
+    photo: "/people/none.jpg"
+  -
+    id: "hongwei-wu"
+    role: "member"
+    name:
+      en: "Hongwei Wu"
+      zh: "吴鸿威"
+    join_year: 2026
+    domain: "EDA"
+    photo: "/people/none.jpg"
+  -
     id: "jiazhan-liu"
     role: "member"
     name:
       en: "Jiazhan Liu"
       zh: "刘佳展"
+    join_year: 2024
+    domain:
+      - "EDA"
+      - "LCA"
     photo: "/people/jiazhan_liu.png"
     pub_ids:
       - "dac-2026-breaking-tuning-barrier"
@@ -46,12 +81,19 @@ people:
     name:
       en: "Jinghai Shang"
       zh: "商靖海"
+    join_year: 2024
+    domain:
+      - "EDA"
+      - "LCA"
+    photo: "/people/none.jpg"
   -
     id: "jiyi-wang"
     role: "member"
     name:
       en: "Jiyi Wang"
       zh: "王继熠"
+    join_year: 2026
+    domain: "LCA"
     photo: "/people/jiyi_wang.png"
   -
     id: "kaiqi-huang"
@@ -59,6 +101,11 @@ people:
     name:
       en: "Kaiqi Huang"
       zh: "黄凯期"
+    join_year: 2025
+    domain:
+      - "EDA"
+      - "LCA"
+    photo: "/people/none.jpg"
     pub_ids:
       - "dac-2025-exploiting"
       - "dac-2026-breaking-tuning-barrier"
@@ -69,6 +116,8 @@ people:
     name:
       en: "Hongshang Liao"
       zh: "廖宏商"
+    join_year: 2026
+    domain: "EDA"
     photo: "/people/hongshang_liao.png"
   -
     id: "lin-weibin"
@@ -76,28 +125,58 @@ people:
     name:
       en: "Lin Weibin"
       zh: "林伟斌"
+    join_year: 2026
+    domain: "EDA"
+    photo: "/people/none.jpg"
+  -
+    id: "linhai-peng"
+    role: "member"
+    name:
+      en: "Linhai Peng"
+      zh: "彭林海"
+    join_year: 2026
+    domain: "LCA"
+    photo: "/people/none.jpg"
   -
     id: "maizirui-mai"
     role: "member"
     name:
       en: "Maizirui Mai"
       zh: "麦梓睿"
+    join_year: 2026
+    domain: "EDA"
+    photo: "/people/none.jpg"
   -
     id: "qinxin-mei"
     role: "member"
     name:
       en: "Qinxin Mei"
       zh: "梅沁心"
+    join_year: 2025
+    domain: "EDA"
+    photo: "/people/none.jpg"
     pub_ids:
       - "dac-2025-exploiting"
       - "dac-2026-openacmv2"
       - "iseda-2026-portable"
+  -
+    id: "ruihan-wang"
+    role: "member"
+    name:
+      en: "Ruihan Wang"
+      zh: "汪睿涵"
+    join_year: 2026
+    domain: "LCA"
+    photo: "/people/none.jpg"
   -
     id: "tang-haohao"
     role: "member"
     name:
       en: "Tang Haohao"
       zh: "唐浩浩"
+    join_year: 2026
+    domain: "EDA"
+    photo: "/people/none.jpg"
   -
     id: "wei"
     role: "mentor"
@@ -121,6 +200,9 @@ people:
     name:
       en: "Weijian Fan"
       zh: "范炜建"
+    join_year: 2022
+    domain: "EDA"
+    photo: "/people/none.jpg"
     destination:
       en: "PhD at Peking University"
       zh: "北京大学直博"
@@ -135,6 +217,9 @@ people:
     name:
       en: "Weilun Xie"
       zh: "谢炜伦"
+    join_year: 2023
+    domain: "EDA"
+    photo: "/people/none.jpg"
     pub_ids:
       - "iccad-2025-dive"
       - "iseda-2025-design-space-folding"
@@ -144,24 +229,53 @@ people:
     name:
       en: "Xixi Zhou"
       zh: "周熙曦"
+    join_year: 2025
+    domain: "EDA"
+    photo: "/people/none.jpg"
   -
     id: "xu-yipeng"
     role: "member"
     name:
       en: "Xu Yipeng"
       zh: "徐一鹏"
+    join_year: 2026
+    domain: "EDA"
+    photo: "/people/none.jpg"
+  -
+    id: "yinlong-wang"
+    role: "member"
+    name:
+      en: "Yinlong Wang"
+      zh: "王胤龙"
+    join_year: 2026
+    domain: "EDA"
+    photo: "/people/none.jpg"
+  -
+    id: "yizhou-zhang"
+    role: "member"
+    name:
+      en: "Yizhou Zhang"
+      zh: "周逸彰"
+    join_year: 2026
+    domain: "LCA"
+    photo: "/people/none.jpg"
   -
     id: "yuan-yizhong"
     role: "member"
     name:
       en: "Yuan Yizhong"
       zh: "苑艺钟"
+    join_year: 2026
+    domain: "EDA"
+    photo: "/people/none.jpg"
   -
     id: "zexi-zhu"
     role: "member"
     name:
       en: "Zhu Zexi"
       zh: "朱则熹"
+    join_year: 2026
+    domain: "EDA"
     photo: "/people/zexi_zhu.png"
   -
     id: "zhao-junan"
@@ -169,12 +283,27 @@ people:
     name:
       en: "Zhao Junan"
       zh: "招俊安"
+    join_year: 2026
+    domain: "EDA"
+    photo: "/people/none.jpg"
+  -
+    id: "zhe-zhang"
+    role: "member"
+    name:
+      en: "Zhe Zhang"
+      zh: "张哲"
+    join_year: 2026
+    domain: "EDA"
+    photo: "/people/none.jpg"
   -
     id: "zhenjie-lu"
     role: "member"
     name:
       en: "zhenjie Lu"
       zh: "卢振杰"
+    join_year: 2022
+    domain: "EDA"
+    photo: "/people/none.jpg"
     destination:
       en: "Southern University of Science and Technology"
       zh: "南方科技大学"
@@ -188,6 +317,9 @@ people:
     name:
       en: "Zhuohua Liu"
       zh: "刘卓铧"
+    join_year: 2022
+    domain: "EDA"
+    photo: "/people/none.jpg"
     destination:
       en: "PhD at Beihang University"
       zh: "北京航空航天大学直博"
