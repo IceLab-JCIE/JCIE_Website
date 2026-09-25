@@ -59,6 +59,11 @@ const news = defineCollection({
     title: z.string(),
     date: z.coerce.date(),
     summary: z.string().optional(),
+    kind: z.enum(["article", "video", "event"]).optional(),
+    speaker: z.string().optional(),
+    cover: z.string().optional(),
+    bilibili_bvid: z.string().optional(),
+    bilibili_url: z.string().url().optional(),
   }),
 });
 
@@ -82,4 +87,3 @@ const alumni = defineCollection({
 });
 
 export const collections = { home, join, news, alumni };
-

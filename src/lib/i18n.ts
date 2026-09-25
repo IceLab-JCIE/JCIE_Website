@@ -14,7 +14,6 @@ export const navItems: Array<{ key: string; path: string; labelZh: string; label
   { key: "people", path: "/people/", labelZh: "成员", labelEn: "People" },
   { key: "projects", path: "/projects/", labelZh: "项目", labelEn: "Projects" },
   { key: "publications", path: "/publications/", labelZh: "论文", labelEn: "Publications" },
-  { key: "news", path: "/news/", labelZh: "动态", labelEn: "News" },
+  { key: "news", path: "/news/", labelZh: "内容专区", labelEn: "Content Zone" },
   { key: "join", path: "/join/", labelZh: "加入", labelEn: "Join" },
 ];
-

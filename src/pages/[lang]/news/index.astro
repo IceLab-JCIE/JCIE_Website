@@ -1,9 +1,10 @@
 ---
 import { getCollection } from "astro:content";
-import BaseLayout from "@/layouts/BaseLayout.astro";
+
 import SectionHeading from "@/components/SectionHeading.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { languages, t, type Lang } from "@/lib/i18n";
-import { langPath } from "@/lib/urls";
+import { langPath, withBase } from "@/lib/urls";
 
 export function getStaticPaths() {
   return languages.map((lang) => ({ params: { lang } }));
@@ -12,7 +13,7 @@ export function getStaticPaths() {
 const lang = Astro.params.lang as Lang;
 const all = await getCollection("news");
 const posts = all
-  .filter((e) => e.id.startsWith(`${lang}/`))
+  .filter((entry) => entry.id.startsWith(`${lang}/`))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 function leafSlug(idOrSlug: string): string {
@@ -20,33 +21,66 @@ function leafSlug(idOrSlug: string): string {
   const last = parts[parts.length - 1] ?? "";
   return last.replace(/\.md$/, "");
 }
+
+function getArchiveMeta(post: (typeof posts)[number]) {
+  const kind = post.data.kind ?? "article";
+  const cover = post.data.cover ? withBase(post.data.cover.replace(/^\//, "")) : "";
+
+  return {
+    kind,
+    cover,
+    badge: kind === "video" ? t(lang, "视频", "Video") : kind === "event" ? t(lang, "活动", "Event") : t(lang, "文章", "Article"),
+    cta: kind === "video" ? t(lang, "观看内容", "Watch content") : kind === "event" ? t(lang, "查看内容", "View content") : t(lang, "阅读内容", "Read content"),
+  };
+}
 ---
 
-<BaseLayout lang={lang} title={t(lang, "动态", "News")}>
-  <SectionHeading eyebrow={t(lang, "动态", "News")} title={t(lang, "新闻动态", "News")} description="" />
+<BaseLayout lang={lang} title={t(lang, "内容专区", "Content Zone")}>
+  <SectionHeading
+    eyebrow={t(lang, "内容专区", "Content Zone")}
+    title={t(lang, "内容专区", "Content Zone")}
+    description={t(lang, "收录讲座、活动回顾与实验室对外内容。", "Lectures, recaps, and public-facing lab content.")}
+  />
 
   {posts.length ? (
     <section style="margin-top:18px; display:flex; flex-direction:column; gap:12px;">
-      {posts.map((post) => (
-        <article class="card">
-          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
-            <div>
-              <h3 style="margin:0;">
-                <a href={langPath(lang, `/news/${leafSlug(post.slug)}/`)}>{post.data.title}</a>
-              </h3>
-              <div class="tiny" style="margin-top:6px;">{post.data.date.toISOString().slice(0, 10)}</div>
-              {post.data.summary ? <div class="small muted" style="margin-top:10px;">{post.data.summary}</div> : null}
+      {posts.map((post) => {
+        const meta = getArchiveMeta(post);
+        const href = langPath(lang, `/news/${leafSlug(post.slug)}/`);
+
+        return (
+          <article class={`card archive-card${meta.cover ? " archive-card--media" : ""}`}>
+            {meta.cover ? (
+              <a class="archive-card-media" href={href} aria-hidden="true" tabindex="-1">
+                <img src={meta.cover} alt="" loading="lazy" decoding="async" />
+              </a>
+            ) : null}
+
+            <div class="archive-card-body">
+              <div class="archive-card-head">
+                <div class="archive-card-meta">
+                  <span class={`archive-kind-badge archive-kind-badge--${meta.kind}`}>{meta.badge}</span>
+                  <div class="tiny">{post.data.date.toISOString().slice(0, 10)}</div>
+                </div>
+                <a class="btn btn-ghost archive-card-cta" href={href}>
+                  {meta.cta}
+                </a>
+              </div>
+
+              <div>
+                <h3 style="margin:0;">
+                  <a href={href}>{post.data.title}</a>
+                </h3>
+                {post.data.summary ? <div class="small muted" style="margin-top:10px;">{post.data.summary}</div> : null}
+              </div>
             </div>
-            <a class="btn btn-ghost" style="padding:8px 12px; border-radius:10px; font-size:12px;" href={langPath(lang, `/news/${leafSlug(post.slug)}/`)}>
-              {t(lang, "阅读", "Read")}
-            </a>
-          </div>
-        </article>
-      ))}
+          </article>
+        );
+      })}
     </section>
   ) : (
     <div class="card-muted" style="margin-top:18px; text-align:center;">
-      <div class="small muted">{t(lang, "动态待补充", "News to be added")}</div>
+      <div class="small muted">{t(lang, "内容整理中", "Archive updates coming soon")}</div>
     </div>
   )}
 </BaseLayout>
